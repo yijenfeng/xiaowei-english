@@ -239,7 +239,34 @@
   .hl2{ background:var(--hl-ts); border-radius:3px; padding:0 2px; }
   .hl3{ background:var(--hl-sup); border-radius:3px; padding:0 2px; }
   .formula{ background:var(--surface); border:1px solid var(--line); border-radius:8px; padding:0.8rem 1.1rem; font-family:var(--f-mono); font-size:0.9rem; line-height:1.9; overflow-x:auto; }
+</style><style>
+  .opt-list{ display:grid; gap:0.4rem; }
+  .opt-btn{
+    display:block; width:100%; text-align:left; cursor:pointer;
+    font-family:var(--f-en); font-size:1rem; line-height:1.5; color:var(--ink);
+    background:var(--surface-2); border:1px solid var(--line); border-radius:6px; padding:0.45rem 0.8rem;
+  }
+  .opt-btn:hover{ border-color:var(--accent); }
+  .opt-btn.right{ background:var(--accent); color:var(--accent-ink); border-color:var(--accent); }
+  .opt-btn.wrong{ background:var(--bad-soft); color:var(--bad); border-color:var(--bad); }
+  .opt-btn:disabled{ cursor:default; }
+  .scorebar{ display:flex; flex-wrap:wrap; gap:0.5rem; align-items:center; font-size:0.9rem; color:var(--ink-muted); }
+  .scorebar .meter{ font-size:0.85rem; }
+  .passage{ background:var(--surface); border:1px solid var(--line); border-radius:8px; padding:1rem 1.2rem; font-family:var(--f-en); font-size:1.04rem; line-height:1.9; box-shadow:var(--shadow); }
+  .passage p + p{ margin-top:0.7rem; }
+  .blank{ font-family:var(--f-mono); font-size:0.85rem; font-weight:700; color:var(--accent); background:var(--accent-soft); border-radius:4px; padding:0 0.35rem; }
+  .optgrid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:0.4rem; font-family:var(--f-en); }
+  .optgrid span{ background:var(--surface-2); border:1px solid var(--line); border-radius:6px; padding:0.3rem 0.6rem; }
+  .fill{ width:100%; font:inherit; font-family:var(--f-en); background:var(--surface); color:var(--ink); border:1px solid var(--line); border-radius:6px; padding:0.4rem 0.6rem; }
+  .fill:focus{ outline:2px solid var(--accent); outline-offset:1px; }
+  .panels{ display:grid; grid-template-columns:repeat(auto-fit,minmax(160px,1fr)); gap:0.6rem; }
+  .panel{ background:var(--surface); border:1px solid var(--line); border-radius:8px; padding:0.7rem 0.8rem; font-size:0.9rem; }
+  .panel b{ font-family:var(--f-mono); color:var(--accent); display:block; font-size:0.78rem; }
+  .log-form{ display:grid; grid-template-columns:repeat(auto-fit,minmax(170px,1fr)); gap:0.6rem; align-items:end; }
+  .log-form label{ display:grid; gap:0.2rem; font-size:0.82rem; color:var(--ink-muted); }
+  select.fill{ appearance:auto; }
 </style>
+
 <div class="page">
 <a class="back" href="index.html">← 回到英文學習地圖</a>
 <header class="hero">
@@ -372,6 +399,44 @@
       b.setAttribute('aria-pressed', on ? 'true' : 'false');
       b.textContent = on ? '顯示中文' : '遮住中文自我測驗';
     });
+  });
+
+  // interactive multiple choice
+  var total=0, correct=0, done=0;
+  var mcqs=document.querySelectorAll('.mcq[data-ans]');
+  var sb=document.getElementById('score');
+  function upd(){ if(sb) sb.textContent='答對 '+correct+' / '+mcqs.length+(done===mcqs.length?'・全部完成':''); }
+  mcqs.forEach(function(q){
+    var ans=q.getAttribute('data-ans'); var answered=false;
+    q.querySelectorAll('.opt-btn').forEach(function(b){
+      b.addEventListener('click', function(){
+        if(answered) return; answered=true; done++;
+        var k=b.getAttribute('data-k');
+        if(k===ans){ b.classList.add('right'); correct++; }
+        else{ b.classList.add('wrong'); var r=q.querySelector('.opt-btn[data-k="'+ans+'"]'); if(r) r.classList.add('right'); }
+        q.querySelectorAll('.opt-btn').forEach(function(x){ x.disabled=true; });
+        var d=q.querySelector('details'); if(d) d.open=true;
+        upd();
+      });
+    });
+  });
+  upd();
+  // essay draft counters
+  document.querySelectorAll('textarea[data-draft]').forEach(function(ta){
+    var key='draft-'+ta.getAttribute('data-draft');
+    var box=ta.parentNode;
+    var mW=box.querySelector('.mWords'), mP=box.querySelector('.mParas');
+    var need=parseInt(ta.getAttribute('data-min')||'120',10);
+    try{ ta.value=localStorage.getItem(key)||''; }catch(e){}
+    function u(){
+      var t=ta.value;
+      var w=(t.match(/[A-Za-z][A-Za-z'’-]*/g)||[]).length;
+      var p=t.split(/\n\s*\n/).filter(function(x){return /[A-Za-z]/.test(x);}).length;
+      if(mW){ mW.textContent=w+' 詞'+(w>=need?'・已達 '+need:'・還差 '+(need-w)); mW.className='meter mWords '+(w>=need+20?'ok':w>=need?'warn':''); }
+      if(mP){ mP.textContent=p+' 段'+(p===2?'・符合':'・題目要求 2 段'); mP.className='meter mParas '+(p===2?'ok':p>0?'warn':''); }
+    }
+    ta.addEventListener('input',function(){ u(); try{ localStorage.setItem(key,ta.value); }catch(e){} });
+    u();
   });
 })();
 </script>

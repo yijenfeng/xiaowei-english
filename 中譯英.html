@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>非選擇題 1-1 中譯英｜筱葳學測英文</title>
+</head>
+<body>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@500;600;700&family=Noto+Sans+TC:wght@400;500;700&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&family=JetBrains+Mono:wght@400;500;700&display=swap">
+<style>
+  /* Layout: single reading column, PART sections in sequence, English passages set apart as "answer sheet" panels */
+  :root{
+    --bg:#F2F6F3;
+    --surface:#FFFFFF;
+    --surface-2:#E6EEE9;
+    --ink:#1C2A24;
+    --ink-muted:#58695F;
+    --line:#CADBD1;
+    --accent:#2E7D5B;
+    --accent-ink:#FFFFFF;
+    --accent-soft:#DDEFE5;
+    --amber:#E0973C;  --amber-ink:#3A2306;
+    --teal:#4E9C8C;   --teal-ink:#0B241F;
+    --bad:#B5483B;    --bad-soft:#F6E1DD;
+    --hl-ts:#CFE8DA;  --hl-sup:#DCE8F5;  --hl-ex:#F7E3C6;  --hl-cs:#E9DDF2;
+    --grid-line:rgba(46,125,91,0.07);
+    --shadow:0 1px 2px rgba(28,42,36,0.06), 0 8px 24px rgba(28,42,36,0.05);
+    --f-display:'Noto Serif TC','Songti TC','PMingLiU',serif;
+    --f-body:'Noto Sans TC','PingFang TC','Microsoft JhengHei',sans-serif;
+    --f-en:'Source Serif 4','Georgia','Times New Roman',serif;
+    --f-mono:'JetBrains Mono','Cascadia Code',ui-monospace,monospace;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --bg:#0F1914; --surface:#16231C; --surface-2:#1B2B23; --ink:#E6EEE9; --ink-muted:#93A89C;
+      --line:#2A3D33; --accent:#7CC9A2; --accent-ink:#0B1A12; --accent-soft:#1E3A2E;
+      --amber:#C97E2E; --amber-ink:#2A1A05; --teal:#3E8776; --teal-ink:#E7F5F1;
+      --bad:#E48A7D; --bad-soft:#3A201C;
+      --hl-ts:#24452F; --hl-sup:#22334A; --hl-ex:#4A3519; --hl-cs:#3A2A48;
+      --grid-line:rgba(124,201,162,0.07);
+      --shadow:0 1px 2px rgba(0,0,0,0.3), 0 8px 24px rgba(0,0,0,0.35);
+      color-scheme:dark;
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#0F1914; --surface:#16231C; --surface-2:#1B2B23; --ink:#E6EEE9; --ink-muted:#93A89C;
+    --line:#2A3D33; --accent:#7CC9A2; --accent-ink:#0B1A12; --accent-soft:#1E3A2E;
+    --amber:#C97E2E; --amber-ink:#2A1A05; --teal:#3E8776; --teal-ink:#E7F5F1;
+    --bad:#E48A7D; --bad-soft:#3A201C;
+    --hl-ts:#24452F; --hl-sup:#22334A; --hl-ex:#4A3519; --hl-cs:#3A2A48;
+    --grid-line:rgba(124,201,162,0.07);
+    --shadow:0 1px 2px rgba(0,0,0,0.3), 0 8px 24px rgba(0,0,0,0.35);
+    color-scheme:dark;
+  }
+
+  *{ box-sizing:border-box; }
+  html{ -webkit-text-size-adjust:100%; scroll-behavior:smooth; }
+  body{
+    margin:0;
+    background:
+      repeating-linear-gradient(0deg, var(--grid-line) 0 1px, transparent 1px 32px),
+      repeating-linear-gradient(90deg, var(--grid-line) 0 1px, transparent 1px 32px),
+      var(--bg);
+    color:var(--ink);
+    font-family:var(--f-body);
+    font-size:17px;
+    line-height:1.8;
+    -webkit-font-smoothing:antialiased;
+  }
+  @media (prefers-reduced-motion: reduce){ *{ scroll-behavior:auto !important; transition:none !important; } }
+  h1,h2,h3{ font-family:var(--f-display); font-weight:600; text-wrap:balance; margin:0; color:var(--ink); }
+  a{ color:var(--accent); }
+  p{ margin:0; }
+  :focus-visible{ outline:2px solid var(--accent); outline-offset:2px; }
+  .mono{ font-family:var(--f-mono); font-variant-numeric:tabular-nums; }
+
+  .page{ max-width:780px; margin:0 auto; padding-inline:1.25rem; padding-block:0 5rem; }
+
+  .back{ display:inline-block; margin-top:1.6rem; font-size:0.85rem; color:var(--ink-muted); text-decoration:none; }
+  .back:hover{ color:var(--accent); }
+
+  .hero{ padding-block:2rem 1.6rem; display:grid; gap:0.9rem; }
+  .eyebrow{
+    justify-self:start;
+    font-family:var(--f-mono); font-size:0.78rem; letter-spacing:0.06em;
+    color:var(--accent); background:var(--accent-soft); border:1px solid var(--line);
+    padding:0.3rem 0.7rem; border-radius:4px;
+  }
+  .hero h1{ font-size:clamp(1.9rem,5vw,2.5rem); line-height:1.25; }
+  .hero .sub{ color:var(--ink-muted); font-size:1.03rem; max-width:640px; }
+
+  .lede{
+    background:var(--surface); border:1px solid var(--line); border-radius:10px;
+    padding:1.1rem 1.3rem; box-shadow:var(--shadow); display:grid; gap:0.9rem;
+  }
+  .toc{ display:flex; flex-wrap:wrap; gap:0.5rem; padding:0; margin:0; list-style:none; }
+  .toc a{
+    display:inline-flex; gap:0.45rem; align-items:center; text-decoration:none;
+    font-size:0.88rem; color:var(--ink); background:var(--surface-2); border:1px solid var(--line);
+    padding:0.25rem 0.75rem; border-radius:999px;
+  }
+  .toc a:hover{ border-color:var(--accent); color:var(--accent); }
+  .toc b{ font-family:var(--f-mono); color:var(--accent); font-weight:700; }
+
+  section.part{ margin-top:3.2rem; display:grid; gap:1.1rem; }
+  .part-kicker{ font-family:var(--f-mono); font-size:0.78rem; letter-spacing:0.08em; color:var(--accent); }
+  .part h2{ font-size:1.55rem; line-height:1.35; }
+  .part h3{ font-size:1.08rem; margin-top:0.4rem; }
+
+  .step{ display:grid; gap:0.5rem; }
+  .step-tag{
+    justify-self:start; font-family:var(--f-mono); font-size:0.72rem; font-weight:700;
+    padding:0.1rem 0.55rem; border-radius:4px; background:var(--surface-2); color:var(--ink-muted); border:1px solid var(--line);
+  }
+  .step-tag.rule{ background:var(--accent); color:var(--accent-ink); border-color:var(--accent); }
+
+  .prompt{
+    background:var(--surface); border:1px solid var(--line); border-left:4px solid var(--amber);
+    border-radius:6px; padding:0.9rem 1.1rem; font-size:0.95rem;
+  }
+  .prompt .label{ font-family:var(--f-mono); font-size:0.72rem; color:var(--amber); font-weight:700; letter-spacing:0.05em; display:block; margin-bottom:0.2rem; }
+
+  .sheet{
+    background:var(--surface); border:1px solid var(--line); border-radius:8px;
+    padding:1rem 1.2rem; box-shadow:var(--shadow);
+    font-family:var(--f-en); font-size:1.06rem; line-height:1.85;
+  }
+  .sheet p + p{ margin-top:0.8rem; }
+  .sheet-head{
+    display:flex; justify-content:space-between; align-items:baseline; flex-wrap:wrap; gap:0.3rem 1rem;
+    font-family:var(--f-mono); font-size:0.75rem; color:var(--ink-muted); margin-bottom:0.5rem;
+  }
+  .sheet.weak{ border-color:var(--bad); }
+  .sheet .err{ text-decoration:underline wavy var(--bad); text-underline-offset:4px; }
+
+  .compare{ display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:0.9rem; }
+  .compare > *{ min-width:0; }
+
+  .note{
+    background:var(--accent-soft); border:1px solid var(--line); border-radius:8px;
+    padding:0.8rem 1rem; font-size:0.93rem;
+  }
+
+  .table-wrap{ overflow-x:auto; border:1px solid var(--line); border-radius:8px; background:var(--surface); }
+  table{ border-collapse:collapse; width:100%; font-size:0.92rem; min-width:520px; }
+  th,td{ text-align:left; padding:0.6rem 0.85rem; border-bottom:1px solid var(--line); vertical-align:top; }
+  th{ background:var(--surface-2); font-weight:700; font-size:0.85rem; }
+  tr:last-child td{ border-bottom:none; }
+  td.en{ font-family:var(--f-en); font-size:1rem; }
+
+  /* score band bar, drawn to scale 0–20 */
+  .bands{ display:grid; gap:0.4rem; }
+  .band-bar{ display:flex; gap:2px; border-radius:6px; overflow:hidden; height:40px; }
+  .band-bar div{ display:flex; flex-direction:column; align-items:center; justify-content:center; line-height:1.15; font-size:0.78rem; font-weight:700; }
+  .band-bar small{ font-family:var(--f-mono); font-weight:400; font-size:0.68rem; }
+  .b0{ background:var(--bad-soft); color:var(--bad); }
+  .b1{ background:var(--surface-2); color:var(--ink-muted); }
+  .b2{ background:var(--hl-sup); color:var(--ink); }
+  .b3{ background:var(--hl-ts); color:var(--ink); }
+  .b4{ background:var(--accent); color:var(--accent-ink); }
+  .band-scale{ display:flex; justify-content:space-between; font-family:var(--f-mono); font-size:0.7rem; color:var(--ink-muted); }
+
+  /* paragraph anatomy */
+  .anatomy-ctrl{ display:flex; flex-wrap:wrap; gap:0.5rem 1rem; align-items:center; }
+  button.toggle{
+    font:inherit; font-size:0.88rem; cursor:pointer;
+    background:var(--accent); color:var(--accent-ink); border:none; border-radius:6px; padding:0.4rem 0.9rem;
+  }
+  button.toggle[aria-pressed="false"]{ background:var(--surface); color:var(--accent); border:1px solid var(--accent); }
+  .key{ display:flex; flex-wrap:wrap; gap:0.3rem 0.9rem; font-size:0.82rem; color:var(--ink-muted); }
+  .key span{ display:inline-flex; align-items:center; gap:0.35rem; }
+  .key i{ width:12px; height:12px; border-radius:3px; display:inline-block; }
+  .anatomy.on .ts{ background:var(--hl-ts); }
+  .anatomy.on .sup{ background:var(--hl-sup); }
+  .anatomy.on .ex{ background:var(--hl-ex); }
+  .anatomy.on .cs{ background:var(--hl-cs); }
+  .anatomy .ts,.anatomy .sup,.anatomy .ex,.anatomy .cs{ border-radius:3px; padding:0 2px; transition:background .2s ease; box-decoration-break:clone; -webkit-box-decoration-break:clone; }
+  .anatomy .tr{ font-weight:600; }
+  .anatomy.on .tr{ color:var(--accent); }
+
+  .skeleton{ display:grid; gap:0.4rem; counter-reset:sk; }
+  .skeleton div{
+    display:grid; grid-template-columns:7.5rem 1fr; gap:0.8rem; align-items:baseline;
+    padding:0.55rem 0.9rem; border-radius:6px; font-size:0.92rem;
+  }
+  .skeleton div > *{ min-width:0; }
+  .skeleton b{ font-size:0.86rem; }
+  @media (max-width:480px){ .skeleton div{ grid-template-columns:1fr; gap:0.1rem; } }
+
+  ul.clean{ margin:0; padding-left:1.2rem; display:grid; gap:0.3rem; }
+
+  .timeline{ display:flex; gap:2px; border-radius:6px; overflow:hidden; height:46px; }
+  .timeline div{ display:flex; flex-direction:column; justify-content:center; align-items:center; font-size:0.78rem; font-weight:700; line-height:1.15; text-align:center; padding:0 0.2rem; }
+  .timeline small{ font-family:var(--f-mono); font-weight:400; font-size:0.68rem; }
+
+  .checklist{ display:grid; gap:0.35rem; }
+  .checklist label{ display:flex; gap:0.6rem; align-items:flex-start; font-size:0.93rem; cursor:pointer; }
+  .checklist input{ margin-top:0.45rem; accent-color:var(--accent); }
+
+  /* practice */
+  .practice{ margin-top:3.2rem; display:grid; gap:1rem; }
+  .qcard{ background:var(--surface); border:1px solid var(--line); border-radius:8px; padding:1rem 1.2rem; display:grid; gap:0.6rem; }
+  .qhead{ display:flex; gap:0.6rem; align-items:baseline; }
+  .qnum{ font-family:var(--f-mono); font-weight:700; color:var(--accent); flex:none; }
+  .qcard .en{ font-family:var(--f-en); font-size:1.02rem; }
+  .opts{ margin:0; padding-left:1.4rem; font-family:var(--f-en); font-size:1rem; display:grid; gap:0.15rem; }
+  details{ border-top:1px dashed var(--line); padding-top:0.5rem; }
+  summary{ cursor:pointer; color:var(--accent); font-size:0.88rem; font-weight:500; }
+  details .ans{ margin-top:0.5rem; font-size:0.93rem; }
+
+  /* draft box */
+  .draft{ display:grid; gap:0.6rem; }
+  textarea{
+    width:100%; min-height:260px; resize:vertical;
+    font-family:var(--f-en); font-size:1.02rem; line-height:1.75;
+    background:var(--surface); color:var(--ink); border:1px solid var(--line); border-radius:8px; padding:0.9rem 1rem;
+  }
+  textarea:focus{ outline:2px solid var(--accent); outline-offset:1px; }
+  .meters{ display:flex; flex-wrap:wrap; gap:0.5rem; }
+  .meter{ font-family:var(--f-mono); font-size:0.8rem; padding:0.25rem 0.7rem; border-radius:999px; border:1px solid var(--line); background:var(--surface-2); color:var(--ink-muted); }
+  .meter.ok{ background:var(--accent); color:var(--accent-ink); border-color:var(--accent); }
+  .meter.warn{ background:var(--amber); color:var(--amber-ink); border-color:var(--amber); }
+
+  footer{ margin-top:3rem; padding-top:1.5rem; border-top:1px solid var(--line); color:var(--ink-muted); font-size:0.85rem; display:grid; gap:0.4rem; }
+  footer .id{ font-family:var(--f-mono); font-size:0.8rem; display:flex; justify-content:space-between; flex-wrap:wrap; gap:0.5rem; margin-top:0.6rem; }
+</style>
+<style>
+  .wt td.zh{ transition:filter .2s ease, opacity .2s ease; }
+  .masked td.zh{ filter:blur(6px); opacity:.55; user-select:none; }
+  .masked td.zh:hover,.masked td.zh:focus{ filter:none; opacity:1; }
+  .tools{ display:flex; flex-wrap:wrap; gap:0.5rem; align-items:center; font-size:0.85rem; color:var(--ink-muted); }
+  .pair{ display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:0.8rem; }
+  .pair > *{ min-width:0; }
+  .ex-line{ font-family:var(--f-en); font-size:1.02rem; }
+  .ex-line + .ex-line{ margin-top:0.3rem; }
+  .ok{ color:var(--accent); font-weight:600; }
+  .no{ color:var(--bad); text-decoration:line-through; text-decoration-thickness:1px; }
+  .hl{ background:var(--hl-ex); border-radius:3px; padding:0 2px; }
+  .hl2{ background:var(--hl-ts); border-radius:3px; padding:0 2px; }
+  .hl3{ background:var(--hl-sup); border-radius:3px; padding:0 2px; }
+  .formula{ background:var(--surface); border:1px solid var(--line); border-radius:8px; padding:0.8rem 1.1rem; font-family:var(--f-mono); font-size:0.9rem; line-height:1.9; overflow-x:auto; }
+</style><style>
+  .opt-list{ display:grid; gap:0.4rem; }
+  .opt-btn{
+    display:block; width:100%; text-align:left; cursor:pointer;
+    font-family:var(--f-en); font-size:1rem; line-height:1.5; color:var(--ink);
+    background:var(--surface-2); border:1px solid var(--line); border-radius:6px; padding:0.45rem 0.8rem;
+  }
+  .opt-btn:hover{ border-color:var(--accent); }
+  .opt-btn.right{ background:var(--accent); color:var(--accent-ink); border-color:var(--accent); }
+  .opt-btn.wrong{ background:var(--bad-soft); color:var(--bad); border-color:var(--bad); }
+  .opt-btn:disabled{ cursor:default; }
+  .scorebar{ display:flex; flex-wrap:wrap; gap:0.5rem; align-items:center; font-size:0.9rem; color:var(--ink-muted); }
+  .scorebar .meter{ font-size:0.85rem; }
+  .passage{ background:var(--surface); border:1px solid var(--line); border-radius:8px; padding:1rem 1.2rem; font-family:var(--f-en); font-size:1.04rem; line-height:1.9; box-shadow:var(--shadow); }
+  .passage p + p{ margin-top:0.7rem; }
+  .blank{ font-family:var(--f-mono); font-size:0.85rem; font-weight:700; color:var(--accent); background:var(--accent-soft); border-radius:4px; padding:0 0.35rem; }
+  .optgrid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:0.4rem; font-family:var(--f-en); }
+  .optgrid span{ background:var(--surface-2); border:1px solid var(--line); border-radius:6px; padding:0.3rem 0.6rem; }
+  .fill{ width:100%; font:inherit; font-family:var(--f-en); background:var(--surface); color:var(--ink); border:1px solid var(--line); border-radius:6px; padding:0.4rem 0.6rem; }
+  .fill:focus{ outline:2px solid var(--accent); outline-offset:1px; }
+  .panels{ display:grid; grid-template-columns:repeat(auto-fit,minmax(160px,1fr)); gap:0.6rem; }
+  .panel{ background:var(--surface); border:1px solid var(--line); border-radius:8px; padding:0.7rem 0.8rem; font-size:0.9rem; }
+  .panel b{ font-family:var(--f-mono); color:var(--accent); display:block; font-size:0.78rem; }
+  .log-form{ display:grid; grid-template-columns:repeat(auto-fit,minmax(170px,1fr)); gap:0.6rem; align-items:end; }
+  .log-form label{ display:grid; gap:0.2rem; font-size:0.82rem; color:var(--ink-muted); }
+  select.fill{ appearance:auto; }
+</style>
+
+<div class="page">
+<a class="back" href="index.html">← 回到英文學習地圖</a>
+<header class="hero">
+  <span class="eyebrow">第參部分 非選擇題・1-1</span>
+  <h1>中譯英句型與常見失分點</h1>
+  <p class="sub">中譯英兩題、每題 4 分，原則上每個錯誤扣 0.5 分，相同的錯誤只扣一次。評量的字詞大致以詞彙表一到四級為主，所以它考的不是難字，而是「句子骨架正確、用字搭配正確、拼字正確」。</p>
+</header>
+
+<div class="lede">
+  <p>這一節回答同一個問題的四個面向：「怎麼把一句中文，穩穩翻成沒有錯的英文？」</p>
+  <ul class="toc">
+    <li><a href="#p1"><b>1</b>評分方式</a></li>
+    <li><a href="#p2"><b>2</b>五步驟翻譯法</a></li>
+    <li><a href="#p3"><b>3</b>高頻句型</a></li>
+    <li><a href="#p4"><b>4</b>常見失分點</a></li>
+    <li><a href="#practice"><b>✎</b>五句練習</a></li>
+  </ul>
+</div>
+
+<section class="part" id="p1">
+  <span class="part-kicker">PART 1 ・ 評分方式</span>
+  <h2>一個錯誤 0.5 分，八個錯就沒分</h2>
+  <div class="step"><span class="step-tag">情境</span><p>113 學測的中譯英是選舉主題：</p>
+    <p>（1）每逢選舉季節，總會看到政治人物造訪各地著名廟宇。</p>
+    <p>（2）除了祈求好的選舉結果，他們也希望展現對在地文化與習俗的尊重。</p></div>
+  <div class="step"><span class="step-tag">觀察</span><p>閱卷評析指出的常見錯誤是：第一句<b>漏掉主詞</b>（中文「總會看到」沒有主詞）、<b>拼錯字</b>（election、politicians、temples），以及把「尊重」寫成不相干的字。這些都不是難字，卻每個都扣分。</p></div>
+  <div class="step"><span class="step-tag rule">參考譯法</span>
+    <p class="ex-line">(1) Every election season, we always see politicians visiting famous temples around the country.</p>
+    <p class="ex-line">(2) Besides praying for good election results, they also hope to show respect for local culture and customs.</p>
+    <p>「除了」可用 besides、aside from、in addition to，後面接 V-ing。</p></div>
+</section>
+
+<section class="part" id="p2">
+  <span class="part-kicker">PART 2 ・ 五步驟翻譯法</span>
+  <h2>先搭骨架，再放配件</h2>
+  <div class="step"><span class="step-tag rule">規律 → 五個步驟</span></div>
+  <div class="skeleton">
+    <div style="background:var(--hl-ts)"><b>① 找主詞</b><span>中文常省略主詞，英文一定要補：we、people、you、it</span></div>
+    <div style="background:var(--hl-sup)"><b>② 找主要動詞</b><span>一句只能有一個主要動詞，其他動作變成 V-ing、to V 或子句</span></div>
+    <div style="background:var(--hl-ex)"><b>③ 定時態</b><span>看時間詞：每逢、總是 → 現在式；去年 → 過去式；已經 → 完成式</span></div>
+    <div style="background:var(--hl-cs)"><b>④ 選句型</b><span>題目通常藏著一個句型：越…越、不只…也、除了、雖然</span></div>
+    <div style="background:var(--surface-2)"><b>⑤ 檢查用字與拼字</b><span>動詞＋名詞搭配對不對（見字彙 2-2），每個字拼一次</span></div>
+  </div>
+  <div class="note"><b>用有把握的字。</b>中譯英不加分給難字，只扣分給錯字。想不起「造訪」的 visit 以外說法，就用 visit。</div>
+</section>
+
+<section class="part" id="p3">
+  <span class="part-kicker">PART 3 ・ 高頻句型</span>
+  <h2>中文的提示字，對應英文的句型</h2>
+  <div class="table-wrap"><table>
+    <thead><tr><th>中文</th><th>英文句型</th><th>例</th></tr></thead>
+    <tbody>
+      <tr><td>越…就越…</td><td class="en">The 比較級 S V, the 比較級 S V</td><td class="en">The more you practice, the more confident you become.</td></tr>
+      <tr><td>不只…也…</td><td class="en">not only … but (also) …</td><td class="en">She not only sings well but also writes her own songs.</td></tr>
+      <tr><td>除了…（還）</td><td class="en">Besides / In addition to + N / V-ing</td><td class="en">Besides studying, he works part-time.</td></tr>
+      <tr><td>雖然…</td><td class="en">Although S V, S V（不加 but）</td><td class="en">Although it rained, we went out.</td></tr>
+      <tr><td>…是很重要的</td><td class="en">It is important (for 人) to V</td><td class="en">It is important for students to get enough sleep.</td></tr>
+      <tr><td>花了…時間</td><td class="en">It takes 人 時間 to V / 人 spend 時間 V-ing</td><td class="en">It took me an hour to finish it.</td></tr>
+      <tr><td>…的人</td><td class="en">those who / people who</td><td class="en">Those who exercise regularly sleep better.</td></tr>
+      <tr><td>與其…不如…</td><td class="en">would rather A than B / Instead of V-ing</td><td class="en">Instead of complaining, we should act.</td></tr>
+    </tbody>
+  </table></div>
+  <div class="step"><p>這些句型的完整說明在「文法 2-2 比較句型與連接詞」和「字彙 1-2 動詞的固定句型」。</p></div>
+</section>
+
+<section class="part" id="p4">
+  <span class="part-kicker">PART 4 ・ 常見失分點</span>
+  <h2>八種最常被扣的錯</h2>
+  <div class="table-wrap"><table>
+    <thead><tr><th>錯誤</th><th>錯例</th><th>正確</th></tr></thead>
+    <tbody>
+      <tr><td>漏主詞</td><td class="en no">Every summer can see many tourists.</td><td class="en ok">Every summer, we can see many tourists.</td></tr>
+      <tr><td>兩個動詞沒連接</td><td class="en no">He likes play basketball.</td><td class="en ok">He likes playing basketball.</td></tr>
+      <tr><td>時態不一致</td><td class="en no">Last year she visit Japan.</td><td class="en ok">Last year she visited Japan.</td></tr>
+      <tr><td>主詞動詞不一致</td><td class="en no">Each of the students have a phone.</td><td class="en ok">Each of the students has a phone.</td></tr>
+      <tr><td>不可數名詞加 s</td><td class="en no">many informations</td><td class="en ok">a lot of information</td></tr>
+      <tr><td>中式搭配</td><td class="en no">learn knowledge / open the light</td><td class="en ok">gain knowledge / turn on the light</td></tr>
+      <tr><td>冠詞與單複數</td><td class="en no">visit famous temple</td><td class="en ok">visit famous temples</td></tr>
+      <tr><td>拼字</td><td class="en no">eletion / polititions</td><td class="en ok">election / politicians</td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<section class="practice" id="practice">
+  <span class="part-kicker">五句練習</span>
+  <h2>先寫在框裡，再打開參考譯法</h2>
+  <p style="font-size:0.92rem;color:var(--ink-muted)">題目為自編。參考譯法不是唯一答案，句型和用字正確都可以。</p>
+  <div class="qcard"><div class="qhead"><span class="qnum">1</span><span>越來越多年輕人選擇在網路上購買二手衣物。</span></div>
+    <input class="fill" id="t1" type="text" aria-label="第 1 句作答">
+    <details><summary>參考譯法</summary><div class="ans"><span class="ex-line">More and more young people choose to buy secondhand clothes online.</span> 「越來越多」＝ more and more；choose to V。</div></details></div>
+  <div class="qcard"><div class="qhead"><span class="qnum">2</span><span>除了減少浪費，這麼做也能幫他們省錢。</span></div>
+    <input class="fill" id="t2" type="text" aria-label="第 2 句作答">
+    <details><summary>參考譯法</summary><div class="ans"><span class="ex-line">Besides reducing waste, doing so can also help them save money.</span> Besides + V-ing；「這麼做」當主詞用 doing so，動詞用單數。</div></details></div>
+  <div class="qcard"><div class="qhead"><span class="qnum">3</span><span>我花了整個週末準備這場演講比賽。</span></div>
+    <input class="fill" id="t3" type="text" aria-label="第 3 句作答">
+    <details><summary>參考譯法</summary><div class="ans"><span class="ex-line">I spent the whole weekend preparing for the speech contest.</span> spend + 時間 + V-ing；prepare for。</div></details></div>
+  <div class="qcard"><div class="qhead"><span class="qnum">4</span><span>雖然下著大雨，球迷們仍然在體育場外排隊等候。</span></div>
+    <input class="fill" id="t4" type="text" aria-label="第 4 句作答">
+    <details><summary>參考譯法</summary><div class="ans"><span class="ex-line">Although it was raining heavily, the fans still waited in line outside the stadium.</span> Although 不配 but；「下大雨」用 it rained heavily 或 it was raining heavily。</div></details></div>
+  <div class="qcard"><div class="qhead"><span class="qnum">5</span><span>對學生而言，學會管理時間和認真讀書一樣重要。</span></div>
+    <input class="fill" id="t5" type="text" aria-label="第 5 句作答">
+    <details><summary>參考譯法</summary><div class="ans"><span class="ex-line">For students, learning to manage time is as important as studying hard.</span> 動名詞當主詞；as … as 原級比較，前後都用 V-ing 保持平行。</div></details></div>
+</section>
+
+<section class="part">
+  <span class="part-kicker">本節重點</span>
+  <ul class="clean">
+    <li>每錯扣 0.5 分，相同錯誤只扣一次；評量字詞以詞彙表一到四級為主。</li>
+    <li>五步驟：主詞 → 主要動詞 → 時態 → 句型 → 用字拼字。</li>
+    <li>中文的「越…越、不只…也、除了、雖然」是句型提示。</li>
+    <li>用有把握的字，寫完逐字檢查拼字。</li>
+  </ul>
+</section>
+
+<footer>
+  <p>評分方式依大考中心公布之學測英文非選擇題評分原則整理；113 學測題目與常見錯誤參考當年試題評析報導，參考譯法為自擬。練習題為自編。</p>
+  <div class="id"><span>筱葳學測英文</span><span>非選擇題 1-1</span></div>
+</footer>
+
+</div>
+
+<script>
+(function(){
+  document.querySelectorAll('button[data-mask]').forEach(function(b){
+    var t = document.getElementById(b.getAttribute('data-mask'));
+    if(!t) return;
+    b.addEventListener('click', function(){
+      var on = t.classList.toggle('masked');
+      b.setAttribute('aria-pressed', on ? 'true' : 'false');
+      b.textContent = on ? '顯示中文' : '遮住中文自我測驗';
+    });
+  });
+
+  // interactive multiple choice
+  var total=0, correct=0, done=0;
+  var mcqs=document.querySelectorAll('.mcq[data-ans]');
+  var sb=document.getElementById('score');
+  function upd(){ if(sb) sb.textContent='答對 '+correct+' / '+mcqs.length+(done===mcqs.length?'・全部完成':''); }
+  mcqs.forEach(function(q){
+    var ans=q.getAttribute('data-ans'); var answered=false;
+    q.querySelectorAll('.opt-btn').forEach(function(b){
+      b.addEventListener('click', function(){
+        if(answered) return; answered=true; done++;
+        var k=b.getAttribute('data-k');
+        if(k===ans){ b.classList.add('right'); correct++; }
+        else{ b.classList.add('wrong'); var r=q.querySelector('.opt-btn[data-k="'+ans+'"]'); if(r) r.classList.add('right'); }
+        q.querySelectorAll('.opt-btn').forEach(function(x){ x.disabled=true; });
+        var d=q.querySelector('details'); if(d) d.open=true;
+        upd();
+      });
+    });
+  });
+  upd();
+  // essay draft counters
+  document.querySelectorAll('textarea[data-draft]').forEach(function(ta){
+    var key='draft-'+ta.getAttribute('data-draft');
+    var box=ta.parentNode;
+    var mW=box.querySelector('.mWords'), mP=box.querySelector('.mParas');
+    var need=parseInt(ta.getAttribute('data-min')||'120',10);
+    try{ ta.value=localStorage.getItem(key)||''; }catch(e){}
+    function u(){
+      var t=ta.value;
+      var w=(t.match(/[A-Za-z][A-Za-z'’-]*/g)||[]).length;
+      var p=t.split(/\n\s*\n/).filter(function(x){return /[A-Za-z]/.test(x);}).length;
+      if(mW){ mW.textContent=w+' 詞'+(w>=need?'・已達 '+need:'・還差 '+(need-w)); mW.className='meter mWords '+(w>=need+20?'ok':w>=need?'warn':''); }
+      if(mP){ mP.textContent=p+' 段'+(p===2?'・符合':'・題目要求 2 段'); mP.className='meter mParas '+(p===2?'ok':p>0?'warn':''); }
+    }
+    ta.addEventListener('input',function(){ u(); try{ localStorage.setItem(key,ta.value); }catch(e){} });
+    u();
+  });
+})();
+</script>
+
+</body>
+</html>
