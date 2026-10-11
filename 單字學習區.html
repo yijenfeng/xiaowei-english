@@ -293,6 +293,23 @@
   .vz-stat{ background:var(--surface); border:1px solid var(--line); border-radius:8px; padding:0.8rem 0.9rem; box-shadow:var(--shadow); }
   .vz-stat b{ display:block; font-family:var(--f-mono); font-size:1.6rem; line-height:1.1; color:var(--accent); font-variant-numeric:tabular-nums; }
   .vz-stat span{ font-size:0.8rem; color:var(--ink-muted); }
+  a.vz-link{ text-decoration:none; color:inherit; transition:border-color .15s ease, transform .15s ease; }
+  a.vz-link:hover{ border-color:var(--accent); transform:translateY(-1px); }
+  a.vz-link.bad b{ color:var(--bad); }
+  .vz-bank{ display:grid; grid-template-columns:1fr 1fr; gap:0.5rem; width:100%; }
+  .vz-bank button{ font:inherit; cursor:pointer; border-radius:10px; padding:0.65rem 0.4rem; font-weight:700; border:1px solid var(--line); }
+  .vz-bank .bf{ background:var(--accent); color:var(--accent-ink); border-color:var(--accent); }
+  .vz-bank .bu{ background:var(--bad-soft); color:var(--bad); border-color:var(--bad); }
+  .vz-bank small{ display:block; font-weight:400; font-size:0.72rem; opacity:0.85; }
+  .vz-rate.four{ grid-template-columns:repeat(4,1fr); }
+  .vz-rate .r3{ background:var(--surface-2); color:var(--accent); border-color:var(--accent); }
+  .vz-li .acts button.on-f{ background:var(--accent); color:var(--accent-ink); border-color:var(--accent); }
+  .vz-li .acts button.on-u{ background:var(--bad-soft); color:var(--bad); border-color:var(--bad); }
+  .st.sf{ background:var(--accent-soft); color:var(--accent); }
+  .st.su{ background:var(--bad-soft); color:var(--bad); }
+  .vz-banktitle{ display:flex; flex-wrap:wrap; gap:0.4rem 1rem; align-items:baseline; justify-content:space-between; }
+  .vz-banktitle h2{ font-size:1.25rem; }
+  @media (max-width:480px){ .vz-rate.four{ grid-template-columns:1fr 1fr; } }
   .vz-row{ display:flex; flex-wrap:wrap; gap:0.4rem; align-items:center; }
   .vz-chip{ font:inherit; font-size:0.85rem; cursor:pointer; padding:0.3rem 0.8rem; border-radius:999px; border:1px solid var(--line); background:var(--surface); color:var(--ink); }
   .vz-chip[aria-pressed="true"]{ background:var(--accent); color:var(--accent-ink); border-color:var(--accent); }
@@ -357,7 +374,8 @@
 <div class="vz-stats">
   <div class="vz-stat"><b id="stDue">0</b><span>今天要複習</span></div>
   <div class="vz-stat"><b id="stNew">0/20</b><span>今天新學</span></div>
-  <div class="vz-stat"><b id="stKnown">0</b><span>已熟記（間隔 ≥ 7 天）</span></div>
+  <a class="vz-stat vz-link" href="#familiar"><b id="stFam">0</b><span>熟悉單字庫 →</span></a>
+  <a class="vz-stat vz-link bad" href="#unfamiliar"><b id="stUnf">0</b><span>不熟悉單字庫 →</span></a>
   <div class="vz-stat"><b id="stStreak">0</b><span>連續學習天數</span></div>
 </div>
 
@@ -401,17 +419,31 @@
     <button class="vz-chip" type="button" data-qdir="c2e" aria-pressed="false">看中文選英文</button>
     <span class="vz-hint" style="margin-left:auto" id="quizScore"></span>
   </div>
+  <div class="vz-row" role="group" aria-label="出題範圍">
+    <span class="vz-hint">出題範圍</span>
+    <button class="vz-chip" type="button" data-src="unf">不熟悉單字庫</button>
+    <button class="vz-chip" type="button" data-src="lv">本級（不含熟悉）</button>
+    <button class="vz-chip" type="button" data-src="learned">學過的字（不含熟悉）</button>
+  </div>
+  <p class="vz-hint">答錯的字會自動放進不熟悉單字庫。答完後按「熟悉」就會從測驗中移除，按「不熟」就留下來繼續考。</p>
   <div id="quizBox"></div>
 </section>
 
 <!-- SPELL -->
 <section class="vz-panel" id="pSpell" hidden>
   <div class="vz-row"><span class="vz-hint">看中文寫出英文。作文和中譯英要會拼，這裡專門練。</span><span class="vz-hint" style="margin-left:auto" id="spellScore"></span></div>
+  <div class="vz-row" role="group" aria-label="出題範圍">
+    <span class="vz-hint">出題範圍</span>
+    <button class="vz-chip" type="button" data-src="unf">不熟悉單字庫</button>
+    <button class="vz-chip" type="button" data-src="lv">本級（不含熟悉）</button>
+    <button class="vz-chip" type="button" data-src="learned">學過的字（不含熟悉）</button>
+  </div>
   <div id="spellBox"></div>
 </section>
 
 <!-- LIST -->
 <section class="vz-panel" id="pList" hidden>
+  <div class="vz-banktitle"><h2 id="listTitle">單字表</h2><span class="vz-hint" id="bankHint"></span></div>
   <div class="lvbars" id="lvBars"></div>
   <input class="vz-search" id="q" type="search" placeholder="搜尋英文或中文，例如 environment 或 環境" autocomplete="off">
   <div class="vz-row" role="group" aria-label="篩選">
@@ -419,6 +451,8 @@
     <button class="vz-chip" type="button" data-f="new" aria-pressed="false">還沒學</button>
     <button class="vz-chip" type="button" data-f="learning" aria-pressed="false">學習中</button>
     <button class="vz-chip" type="button" data-f="known" aria-pressed="false">已熟記</button>
+    <button class="vz-chip" type="button" data-f="fam" aria-pressed="false">熟悉單字庫</button>
+    <button class="vz-chip" type="button" data-f="unf" aria-pressed="false">不熟悉單字庫</button>
     <button class="vz-chip" type="button" data-f="star" aria-pressed="false">★ 難字</button>
   </div>
   <p class="vz-hint" id="listInfo"></p>
@@ -432,6 +466,7 @@
     <li><b>每天先做「今日任務」</b>：先複習到期的字，再學新字。翻面前先在心裡說出中文，說不出來就按「不認得」，不要對自己客氣。</li>
     <li><b>評分的意思</b>：不認得＝明天再見；有點印象＝隔 1 天再見；記得＝間隔加倍（1 → 2 → 4 → 7 → 15 → 30 天）。間隔到 7 天以上算「已熟記」。</li>
     <li><b>拼字練習</b>：第三級以內的字，作文和中譯英都可能要寫出來，學過的字每週至少拼一輪。</li>
+    <li><b>熟悉／不熟悉單字庫</b>：測驗和閃卡中按「熟悉」，這個字就移出所有測驗與複習；答錯或按「不熟」的字會留在不熟悉單字庫，四選一和拼字可以只考這一庫，直到它清空。熟悉單字庫裡的字隨時可以移回來。</li>
     <li><b>難字加星號</b>：在單字表按 ★，之後可以只看難字。</li>
     <li>學習紀錄存在這台裝置的瀏覽器裡；換手機或電腦會重新開始。</li>
   </ul>
@@ -449,7 +484,7 @@ var LEVEL_COUNTS = {"1": 1002, "2": 999, "3": 1002};
 <script>
 (function(){
   var KEY='vocab7000-v1', S;
-  function blank(){ return { w:{}, day:null, newToday:0, streak:0, lastDay:null, goal:20, lv:1, qdir:'e2c' }; }
+  function blank(){ return { w:{}, day:null, newToday:0, streak:0, lastDay:null, goal:20, lv:1, qdir:'e2c', src:'lv' }; }
   try{ S=JSON.parse(localStorage.getItem(KEY)||'null')||blank(); }catch(e){ S=blank(); }
   var B=blank(); for(var k in B){ if(S[k]===undefined) S[k]=B[k]; }
   function save(){ try{ localStorage.setItem(KEY, JSON.stringify(S)); }catch(e){} }
@@ -463,7 +498,14 @@ var LEVEL_COUNTS = {"1": 1002, "2": 999, "3": 1002};
   var byLv={}; W.forEach(function(x){ (byLv[x.lv]=byLv[x.lv]||[]).push(x); });
   function rec(x){ return S.w[x.w+'|'+x.lv]; }
   function setRec(x,r){ S.w[x.w+'|'+x.lv]=r; }
-  function status(x){ var r=rec(x); if(!r) return 'new'; return r.b>=4?'known':'learning'; }
+  function bank(x){ var r=rec(x); return (r&&r.k)||''; }
+  function status(x){ var r=rec(x); if(!r) return 'new'; if(r.k==='f') return 'fam'; return r.b>=4?'known':'learning'; }
+  function setBank(x,k){
+    var r=rec(x)||{b:0,d:T,n:0,x:0,s:false};
+    if(k) r.k=k; else delete r.k;
+    if(k==='u' && !r.b){ r.b=1; r.d=T+1; }
+    setRec(x,r); save(); stats();
+  }
   function $(id){ return document.getElementById(id); }
   function esc(s){ return String(s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];}); }
 
@@ -482,7 +524,7 @@ var LEVEL_COUNTS = {"1": 1002, "2": 999, "3": 1002};
   function grade(x, g){ // g: 0 forgot, 1 hazy, 2 good
     var r=rec(x)||{b:0,d:T,n:0,x:0,s:false};
     r.n++;
-    if(g===0){ r.b=1; r.x++; r.d=T+1; }
+    if(g===0){ r.b=1; r.x++; r.d=T+1; if(r.k!=='f') r.k='u'; }
     else if(g===1){ r.b=Math.max(1,r.b); r.d=T+1; }
     else { r.b=Math.min(6,r.b+1); r.d=T+INTERVALS[r.b]; }
     setRec(x,r); touchStreak(); save();
@@ -505,23 +547,22 @@ var LEVEL_COUNTS = {"1": 1002, "2": 999, "3": 1002};
   document.querySelectorAll('[data-goal]').forEach(function(b){ b.addEventListener('click',function(){ S.goal=+b.getAttribute('data-goal'); save(); paintChips(); resetAll(); }); });
 
   function stats(){
-    var due=0, known=0;
-    W.forEach(function(x){ var r=rec(x); if(r){ if(r.d<=T) due++; if(r.b>=4) known++; } });
-    $('stDue').textContent=due; $('stKnown').textContent=known;
+    var due=0, fam=0, unf=0;
+    W.forEach(function(x){ var r=rec(x); if(r){ if(r.k==='f') fam++; else { if(r.d<=T && r.b) due++; if(r.k==='u') unf++; } } });
+    $('stDue').textContent=due; $('stFam').textContent=fam; $('stUnf').textContent=unf;
     $('stNew').textContent=S.newToday+'/'+S.goal;
     $('stStreak').textContent=(S.lastDay===T||S.lastDay===T-1)?S.streak:0;
   }
 
   // ---------- tabs ----------
   var panels={study:'pStudy',quiz:'pQuiz',spell:'pSpell',list:'pList'};
-  document.querySelectorAll('.vz-tab').forEach(function(t){
-    t.addEventListener('click',function(){
-      document.querySelectorAll('.vz-tab').forEach(function(x){ x.setAttribute('aria-selected', x===t?'true':'false'); });
-      var k=t.getAttribute('data-tab'); cur=k;
-      for(var p in panels) $(panels[p]).hidden = (p!==k);
-      if(k==='quiz') nextQuiz(); if(k==='spell') nextSpell(); if(k==='list') renderList(true);
-    });
-  });
+  function openTab(k){
+    document.querySelectorAll('.vz-tab').forEach(function(x){ x.setAttribute('aria-selected', x.getAttribute('data-tab')===k?'true':'false'); });
+    cur=k;
+    for(var p in panels) $(panels[p]).hidden = (p!==k);
+    if(k==='quiz') nextQuiz(); if(k==='spell') nextSpell(); if(k==='list') renderList(true);
+  }
+  document.querySelectorAll('.vz-tab').forEach(function(t){ t.addEventListener('click',function(){ openTab(t.getAttribute('data-tab')); }); });
   var cur='study';
 
   // ---------- STUDY (spaced repetition) ----------
@@ -529,7 +570,7 @@ var LEVEL_COUNTS = {"1": 1002, "2": 999, "3": 1002};
   function buildQueue(){
     W.forEach(function(x){ delete x._new; });
     var lvWords=byLv[S.lv]||[];
-    var due=W.filter(function(x){ var r=rec(x); return r && r.d<=T; }).sort(function(a,b){ return rec(a).d-rec(b).d; });
+    var due=W.filter(function(x){ var r=rec(x); return r && r.b && r.k!=='f' && r.d<=T; }).sort(function(a,b){ return rec(a).d-rec(b).d; });
     var room=Math.max(0, S.goal-S.newToday);
     var fresh=lvWords.filter(function(x){ return !rec(x); }).slice(0, room);
     queue=due.concat(fresh.map(function(x){ x._new=true; return x; }));
@@ -557,10 +598,11 @@ var LEVEL_COUNTS = {"1": 1002, "2": 999, "3": 1002};
       sayBtn(x.w)+'</div>';
     if(flipped){
       var nb = r ? Math.min(6,r.b+1) : 1;
-      h+='<div class="vz-rate">'+
-        '<button class="r0" type="button" data-g="0">不認得<small>明天再見</small></button>'+
+      h+='<div class="vz-rate four">'+
+        '<button class="r0" type="button" data-g="0">不認得<small>放進不熟悉庫</small></button>'+
         '<button class="r1" type="button" data-g="1">有點印象<small>1 天後</small></button>'+
-        '<button class="r2" type="button" data-g="2">記得<small>'+INTERVALS[nb]+' 天後</small></button></div>';
+        '<button class="r2" type="button" data-g="2">記得<small>'+INTERVALS[nb]+' 天後</small></button>'+
+        '<button class="r3" type="button" data-g="3">很熟<small>移到熟悉庫</small></button></div>';
     }
     $('studyBox').innerHTML=h;
     $('flip').addEventListener('click',function(){ if(!flipped){ flipped=true; renderStudy(); say(x.w); } });
@@ -569,6 +611,7 @@ var LEVEL_COUNTS = {"1": 1002, "2": 999, "3": 1002};
   function rate(g){
     var x=queue.shift(); if(!x) return;
     if(x._new){ S.newToday++; delete x._new; }
+    if(g===3){ setBank(x,'f'); touchStreak(); flipped=false; save(); renderStudy(); return; }
     grade(x,g);
     if(g===0){ again.push(x); }
     flipped=false; save(); renderStudy();
@@ -576,19 +619,34 @@ var LEVEL_COUNTS = {"1": 1002, "2": 999, "3": 1002};
   document.addEventListener('keydown',function(e){
     if(cur!=='study' || /input|textarea/i.test((e.target.tagName||''))) return;
     if(e.code==='Space'){ e.preventDefault(); if(!flipped && queue[0]){ flipped=true; renderStudy(); say(queue[0].w); } }
-    if(flipped && (e.key==='1'||e.key==='2'||e.key==='3')){ rate(+e.key-1); }
+    if(flipped && (e.key==='1'||e.key==='2'||e.key==='3'||e.key==='4')){ rate(+e.key-1); }
   });
 
   // ---------- QUIZ ----------
   var qs={ok:0,n:0};
   function pool(){
-    var learned=W.filter(function(x){ return rec(x); });
-    var lvW=byLv[S.lv]||[];
-    return learned.length>=8 ? learned : lvW;
+    if(S.src==='unf') return W.filter(function(x){ return bank(x)==='u'; });
+    if(S.src==='learned') return W.filter(function(x){ return rec(x) && rec(x).b && bank(x)!=='f'; });
+    return (byLv[S.lv]||[]).filter(function(x){ return bank(x)!=='f'; });
+  }
+  function emptyMsg(box){
+    var msg = S.src==='unf' ? '不熟悉單字庫目前是空的 🎉 答錯或按「不熟」的字會出現在這裡。'
+            : S.src==='learned' ? '還沒有學過的字（或都已移到熟悉庫）。先到「今日任務」學幾個新字。'
+            : '這一級的字都已經在熟悉單字庫了 🎉';
+    $(box).innerHTML='<div class="vz-done"><span>'+msg+'</span><div class="vz-row" style="justify-content:center">'+
+      (S.src!=='lv'?'<button class="toggle" type="button" data-go-src="lv">改考第'+S.lv+'級</button>':'')+'</div></div>';
+    document.querySelectorAll('#'+box+' [data-go-src]').forEach(function(b){ b.addEventListener('click',function(){ setSrc(b.getAttribute('data-go-src')); }); });
+  }
+  function setSrc(s){ S.src=s; save(); paintSrc(); if(cur==='quiz') nextQuiz(); if(cur==='spell') nextSpell(); }
+  function paintSrc(){ document.querySelectorAll('[data-src]').forEach(function(b){ b.setAttribute('aria-pressed', b.getAttribute('data-src')===S.src?'true':'false'); }); }
+  document.querySelectorAll('[data-src]').forEach(function(b){ b.addEventListener('click',function(){ setSrc(b.getAttribute('data-src')); }); });
+  function bankButtons(){ return '<div class="vz-bank"><button class="bf" type="button" data-bank="f">熟悉<small>從測驗移除</small></button><button class="bu" type="button" data-bank="u">不熟<small>留在不熟悉庫</small></button></div>'; }
+  function bindBank(box, x, next){
+    document.querySelectorAll('#'+box+' [data-bank]').forEach(function(b){ b.addEventListener('click',function(){ setBank(x, b.getAttribute('data-bank')); next(); }); });
   }
   function pick(a){ return a[Math.floor(Math.random()*a.length)]; }
   function nextQuiz(){
-    var P=pool(); if(!P.length){ $('quizBox').innerHTML=''; return; }
+    var P=pool(); if(!P.length){ emptyMsg('quizBox'); return; }
     var x=pick(P), same=(byLv[x.lv]||W).filter(function(y){ return y.id!==x.id && y.m!==x.m; });
     var posMatch=same.filter(function(y){ return y.p.split('/')[0]===x.p.split('/')[0]; });
     var src=posMatch.length>=10?posMatch:same, opts=[x];
@@ -609,11 +667,12 @@ var LEVEL_COUNTS = {"1": 1002, "2": 999, "3": 1002};
         qs.n++; if(ok) qs.ok++;
         b.classList.add(ok?'right':'wrong');
         if(!ok){ document.querySelectorAll('#quizBox [data-i]').forEach(function(c){ if(opts[+c.getAttribute('data-i')].id===x.id) c.classList.add('right'); }); }
-        if(rec(x)){ grade(x, ok?2:0); } else if(!ok){ /* unseen word missed: leave unlearned */ }
+        if(rec(x) && rec(x).b){ grade(x, ok?2:0); } else if(!ok){ setBank(x,'u'); }
         if(!e2c) say(x.w);
         $('quizScore').textContent='本輪 '+qs.ok+' / '+qs.n;
-        $('qNext').innerHTML='<div class="vz-hint">'+esc(x.w)+'　'+esc(x.p)+'　'+esc(x.m)+'</div><button class="toggle" type="button" id="qGo" style="margin-top:0.5rem">下一題 →</button>';
-        $('qGo').addEventListener('click',nextQuiz); $('qGo').focus(); stats();
+        $('qNext').innerHTML='<div class="vz-hint" style="margin-bottom:0.5rem">'+esc(x.w)+'　'+esc(x.p)+'　'+esc(x.m)+(ok?'':'　→ 已放進不熟悉單字庫')+'</div>'+bankButtons()+'<button class="vz-chip" type="button" id="qGo" style="margin-top:0.5rem">先不分類，下一題 →</button>';
+        bindBank('qNext', x, nextQuiz);
+        $('qGo').addEventListener('click',nextQuiz); stats();
       });
     });
   }
@@ -630,7 +689,7 @@ var LEVEL_COUNTS = {"1": 1002, "2": 999, "3": 1002};
     return out.map(function(s){ return s.replace(/\s*\(.*$/,'').toLowerCase(); }).filter(Boolean);
   }
   function nextSpell(){
-    var P=pool().filter(function(x){ return !/\s\(/.test(x.w); }); if(!P.length){ $('spellBox').innerHTML=''; return; }
+    var P=pool().filter(function(x){ return !/\s\(/.test(x.w); }); if(!P.length){ emptyMsg('spellBox'); return; }
     var x=pick(P), main=variants(x.w)[0];
     $('spellBox').innerHTML='<div class="vz-card" style="cursor:default"><span class="vz-meta">第'+x.lv+'級</span>'+
       '<div class="vz-mean" style="font-size:1.6rem">'+esc(x.m)+'</div><div class="vz-pos">'+esc(x.p)+'</div>'+
@@ -647,13 +706,14 @@ var LEVEL_COUNTS = {"1": 1002, "2": 999, "3": 1002};
         var a=v[i]||'', t=target[i]||'';
         letters += a ? '<span class="'+(a===t?'ok':'no')+'">'+esc(a)+'</span>' : '<span class="no">_</span>';
       }
-      if(rec(x)) grade(x, ok?2:0);
+      if(rec(x) && rec(x).b) grade(x, ok?2:0); else if(!ok) setBank(x,'u');
       say(x.w);
       $('spRes').innerHTML=(ok?'<span class="vd good">✓ 拼對了</span>':'<span class="vd bad">'+(give?'答案':'✗ 再看一次')+'</span>'+(v&&!give?'<div class="vz-letters">'+letters+'</div>':''))+
-        '<div class="vz-word" style="font-size:1.6rem">'+esc(x.w)+'</div><button class="toggle" type="button" id="spGo">下一個 →</button>';
+        '<div class="vz-word" style="font-size:1.6rem">'+esc(x.w)+'</div>'+bankButtons()+'<button class="vz-chip" type="button" id="spGo">先不分類，下一個 →</button>';
+      bindBank('spRes', x, nextSpell);
       $('spellScore').textContent='本輪 '+ss.ok+' / '+ss.n;
       $('spChk').disabled=true; $('spSkip').disabled=true; inp.disabled=true;
-      $('spGo').addEventListener('click',nextSpell); $('spGo').focus(); stats();
+      $('spGo').addEventListener('click',nextSpell); stats();
     }
     $('spChk').addEventListener('click',function(){ check(false); });
     $('spSkip').addEventListener('click',function(){ check(true); });
@@ -676,21 +736,30 @@ var LEVEL_COUNTS = {"1": 1002, "2": 999, "3": 1002};
     if(reset) shown=60;
     renderBars();
     var q=$('q').value.trim().toLowerCase();
-    var a=(q?W:(byLv[S.lv]||[])).filter(function(x){
+    var bankView=(filt==='fam'||filt==='unf');
+    var a=((q||bankView)?W:(byLv[S.lv]||[])).filter(function(x){
       if(q && x.w.toLowerCase().indexOf(q)<0 && x.m.indexOf(q)<0) return false;
       var s=status(x), r=rec(x);
+      if(filt==='fam') return s==='fam'; if(filt==='unf') return bank(x)==='u';
       if(filt==='new') return s==='new'; if(filt==='learning') return s==='learning'; if(filt==='known') return s==='known';
       if(filt==='star') return r&&r.s; return true;
     });
-    $('listInfo').textContent=(q?'全部級別中搜尋到 ':'第'+S.lv+'級・')+a.length+' 個字';
-    var lab={new:'未學',learning:'學習中',known:'已熟記'}, cls={new:'s0',learning:'s1',known:'s2'};
+    $('listTitle').textContent = filt==='fam' ? '熟悉單字庫' : filt==='unf' ? '不熟悉單字庫' : '單字表';
+    $('bankHint').textContent = filt==='fam' ? '已移出測驗與複習。按「不熟」可以移回來。' : filt==='unf' ? '四選一和拼字選「不熟悉單字庫」就會只考這些字。' : '';
+    $('listInfo').textContent=((q||bankView)?'全部級別・':'第'+S.lv+'級・')+a.length+' 個字';
+    var lab={new:'未學',learning:'學習中',known:'已熟記',fam:'熟悉'}, cls={new:'s0',learning:'s1',known:'s2',fam:'sf'};
     $('list').innerHTML=a.slice(0,shown).map(function(x){
       var s=status(x), r=rec(x);
       return '<div class="vz-li"><div><span class="w">'+esc(x.w)+'</span><span class="p">'+esc(x.p)+'</span><div class="m">'+esc(x.m)+'</div></div>'+
-        '<div class="acts"><span class="st '+cls[s]+'">'+lab[s]+(q?'・'+x.lv+'級':'')+'</span>'+(canSpeak?'<button type="button" data-say="'+esc(x.w)+'" aria-label="發音">🔊</button>':'')+
+        '<div class="acts"><span class="st '+(bank(x)==='u'?'su':cls[s])+'">'+(bank(x)==='u'?'不熟':lab[s])+((q||bankView)?'・'+x.lv+'級':'')+'</span>'+(canSpeak?'<button type="button" data-say="'+esc(x.w)+'" aria-label="發音">🔊</button>':'')+
+        '<button type="button" data-bk="f" data-id="'+x.id+'" class="'+(bank(x)==='f'?'on-f':'')+'">熟</button><button type="button" data-bk="u" data-id="'+x.id+'" class="'+(bank(x)==='u'?'on-u':'')+'">不熟</button>'+
         '<button type="button" data-star="'+x.id+'" aria-pressed="'+(r&&r.s?'true':'false')+'" aria-label="標記難字">★</button></div></div>';
     }).join('') || '<div class="vz-li"><span class="vz-hint">沒有符合的字。</span></div>';
     $('more').hidden = a.length<=shown;
+    document.querySelectorAll('#list [data-bk]').forEach(function(b){ b.addEventListener('click',function(){
+      var x=W[+b.getAttribute('data-id')], k=b.getAttribute('data-bk');
+      setBank(x, bank(x)===k ? '' : k); renderList(false);
+    }); });
     document.querySelectorAll('#list [data-star]').forEach(function(b){ b.addEventListener('click',function(){
       var x=W[+b.getAttribute('data-star')], r=rec(x)||{b:1,d:T,n:0,x:0,s:false};
       r.s=!r.s; setRec(x,r); save(); b.setAttribute('aria-pressed', r.s?'true':'false'); stats(); renderBars();
@@ -698,12 +767,20 @@ var LEVEL_COUNTS = {"1": 1002, "2": 999, "3": 1002};
   }
   $('q').addEventListener('input',function(){ renderList(true); });
   $('more').addEventListener('click',function(){ shown+=100; renderList(false); });
-  document.querySelectorAll('[data-f]').forEach(function(b){ b.addEventListener('click',function(){ filt=b.getAttribute('data-f'); document.querySelectorAll('[data-f]').forEach(function(c){ c.setAttribute('aria-pressed', c===b?'true':'false'); }); renderList(true); }); });
+  function setFilt(f){ filt=f; document.querySelectorAll('[data-f]').forEach(function(c){ c.setAttribute('aria-pressed', c.getAttribute('data-f')===f?'true':'false'); }); }
+  document.querySelectorAll('[data-f]').forEach(function(b){ b.addEventListener('click',function(){ setFilt(b.getAttribute('data-f')); renderList(true); }); });
+  function route(){
+    var h=location.hash||'';
+    if(h==='#familiar'||h==='#unfamiliar'){ setFilt(h==='#familiar'?'fam':'unf'); $('q').value=''; openTab('list'); var el=$('pList'); if(el && el.scrollIntoView) el.scrollIntoView({behavior:'smooth',block:'start'}); return true; }
+    return false;
+  }
+  window.addEventListener('hashchange', route);
+  document.querySelectorAll('a.vz-link').forEach(function(a){ a.addEventListener('click',function(e){ if(location.hash===a.getAttribute('href')){ e.preventDefault(); route(); } }); });
 
   function resetAll(){ buildQueue(); renderStudy(); if(cur==='quiz') nextQuiz(); if(cur==='spell') nextSpell(); if(cur==='list') renderList(true); }
   var hm=(location.hash||'').match(/^#L([1-6])$/); if(hm && avail(+hm[1])){ S.lv=+hm[1]; save(); }
   if(!avail(S.lv)) S.lv=1;
-  paintChips(); resetAll();
+  paintChips(); paintSrc(); resetAll(); route();
 })();
 </script>
 
