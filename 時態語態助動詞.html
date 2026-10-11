@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>文法 1-1 時態・語態・助動詞｜筱葳學測英文</title>
+</head>
+<body>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@500;600;700&family=Noto+Sans+TC:wght@400;500;700&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&family=JetBrains+Mono:wght@400;500;700&display=swap">
+<style>
+  /* Layout: single reading column, PART sections in sequence, English passages set apart as "answer sheet" panels */
+  :root{
+    --bg:#F2F6F3;
+    --surface:#FFFFFF;
+    --surface-2:#E6EEE9;
+    --ink:#1C2A24;
+    --ink-muted:#58695F;
+    --line:#CADBD1;
+    --accent:#2E7D5B;
+    --accent-ink:#FFFFFF;
+    --accent-soft:#DDEFE5;
+    --amber:#E0973C;  --amber-ink:#3A2306;
+    --teal:#4E9C8C;   --teal-ink:#0B241F;
+    --bad:#B5483B;    --bad-soft:#F6E1DD;
+    --hl-ts:#CFE8DA;  --hl-sup:#DCE8F5;  --hl-ex:#F7E3C6;  --hl-cs:#E9DDF2;
+    --grid-line:rgba(46,125,91,0.07);
+    --shadow:0 1px 2px rgba(28,42,36,0.06), 0 8px 24px rgba(28,42,36,0.05);
+    --f-display:'Noto Serif TC','Songti TC','PMingLiU',serif;
+    --f-body:'Noto Sans TC','PingFang TC','Microsoft JhengHei',sans-serif;
+    --f-en:'Source Serif 4','Georgia','Times New Roman',serif;
+    --f-mono:'JetBrains Mono','Cascadia Code',ui-monospace,monospace;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --bg:#0F1914; --surface:#16231C; --surface-2:#1B2B23; --ink:#E6EEE9; --ink-muted:#93A89C;
+      --line:#2A3D33; --accent:#7CC9A2; --accent-ink:#0B1A12; --accent-soft:#1E3A2E;
+      --amber:#C97E2E; --amber-ink:#2A1A05; --teal:#3E8776; --teal-ink:#E7F5F1;
+      --bad:#E48A7D; --bad-soft:#3A201C;
+      --hl-ts:#24452F; --hl-sup:#22334A; --hl-ex:#4A3519; --hl-cs:#3A2A48;
+      --grid-line:rgba(124,201,162,0.07);
+      --shadow:0 1px 2px rgba(0,0,0,0.3), 0 8px 24px rgba(0,0,0,0.35);
+      color-scheme:dark;
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#0F1914; --surface:#16231C; --surface-2:#1B2B23; --ink:#E6EEE9; --ink-muted:#93A89C;
+    --line:#2A3D33; --accent:#7CC9A2; --accent-ink:#0B1A12; --accent-soft:#1E3A2E;
+    --amber:#C97E2E; --amber-ink:#2A1A05; --teal:#3E8776; --teal-ink:#E7F5F1;
+    --bad:#E48A7D; --bad-soft:#3A201C;
+    --hl-ts:#24452F; --hl-sup:#22334A; --hl-ex:#4A3519; --hl-cs:#3A2A48;
+    --grid-line:rgba(124,201,162,0.07);
+    --shadow:0 1px 2px rgba(0,0,0,0.3), 0 8px 24px rgba(0,0,0,0.35);
+    color-scheme:dark;
+  }
+
+  *{ box-sizing:border-box; }
+  html{ -webkit-text-size-adjust:100%; scroll-behavior:smooth; }
+  body{
+    margin:0;
+    background:
+      repeating-linear-gradient(0deg, var(--grid-line) 0 1px, transparent 1px 32px),
+      repeating-linear-gradient(90deg, var(--grid-line) 0 1px, transparent 1px 32px),
+      var(--bg);
+    color:var(--ink);
+    font-family:var(--f-body);
+    font-size:17px;
+    line-height:1.8;
+    -webkit-font-smoothing:antialiased;
+  }
+  @media (prefers-reduced-motion: reduce){ *{ scroll-behavior:auto !important; transition:none !important; } }
+  h1,h2,h3{ font-family:var(--f-display); font-weight:600; text-wrap:balance; margin:0; color:var(--ink); }
+  a{ color:var(--accent); }
+  p{ margin:0; }
+  :focus-visible{ outline:2px solid var(--accent); outline-offset:2px; }
+  .mono{ font-family:var(--f-mono); font-variant-numeric:tabular-nums; }
+
+  .page{ max-width:780px; margin:0 auto; padding-inline:1.25rem; padding-block:0 5rem; }
+
+  .back{ display:inline-block; margin-top:1.6rem; font-size:0.85rem; color:var(--ink-muted); text-decoration:none; }
+  .back:hover{ color:var(--accent); }
+
+  .hero{ padding-block:2rem 1.6rem; display:grid; gap:0.9rem; }
+  .eyebrow{
+    justify-self:start;
+    font-family:var(--f-mono); font-size:0.78rem; letter-spacing:0.06em;
+    color:var(--accent); background:var(--accent-soft); border:1px solid var(--line);
+    padding:0.3rem 0.7rem; border-radius:4px;
+  }
+  .hero h1{ font-size:clamp(1.9rem,5vw,2.5rem); line-height:1.25; }
+  .hero .sub{ color:var(--ink-muted); font-size:1.03rem; max-width:640px; }
+
+  .lede{
+    background:var(--surface); border:1px solid var(--line); border-radius:10px;
+    padding:1.1rem 1.3rem; box-shadow:var(--shadow); display:grid; gap:0.9rem;
+  }
+  .toc{ display:flex; flex-wrap:wrap; gap:0.5rem; padding:0; margin:0; list-style:none; }
+  .toc a{
+    display:inline-flex; gap:0.45rem; align-items:center; text-decoration:none;
+    font-size:0.88rem; color:var(--ink); background:var(--surface-2); border:1px solid var(--line);
+    padding:0.25rem 0.75rem; border-radius:999px;
+  }
+  .toc a:hover{ border-color:var(--accent); color:var(--accent); }
+  .toc b{ font-family:var(--f-mono); color:var(--accent); font-weight:700; }
+
+  section.part{ margin-top:3.2rem; display:grid; gap:1.1rem; }
+  .part-kicker{ font-family:var(--f-mono); font-size:0.78rem; letter-spacing:0.08em; color:var(--accent); }
+  .part h2{ font-size:1.55rem; line-height:1.35; }
+  .part h3{ font-size:1.08rem; margin-top:0.4rem; }
+
+  .step{ display:grid; gap:0.5rem; }
+  .step-tag{
+    justify-self:start; font-family:var(--f-mono); font-size:0.72rem; font-weight:700;
+    padding:0.1rem 0.55rem; border-radius:4px; background:var(--surface-2); color:var(--ink-muted); border:1px solid var(--line);
+  }
+  .step-tag.rule{ background:var(--accent); color:var(--accent-ink); border-color:var(--accent); }
+
+  .prompt{
+    background:var(--surface); border:1px solid var(--line); border-left:4px solid var(--amber);
+    border-radius:6px; padding:0.9rem 1.1rem; font-size:0.95rem;
+  }
+  .prompt .label{ font-family:var(--f-mono); font-size:0.72rem; color:var(--amber); font-weight:700; letter-spacing:0.05em; display:block; margin-bottom:0.2rem; }
+
+  .sheet{
+    background:var(--surface); border:1px solid var(--line); border-radius:8px;
+    padding:1rem 1.2rem; box-shadow:var(--shadow);
+    font-family:var(--f-en); font-size:1.06rem; line-height:1.85;
+  }
+  .sheet p + p{ margin-top:0.8rem; }
+  .sheet-head{
+    display:flex; justify-content:space-between; align-items:baseline; flex-wrap:wrap; gap:0.3rem 1rem;
+    font-family:var(--f-mono); font-size:0.75rem; color:var(--ink-muted); margin-bottom:0.5rem;
+  }
+  .sheet.weak{ border-color:var(--bad); }
+  .sheet .err{ text-decoration:underline wavy var(--bad); text-underline-offset:4px; }
+
+  .compare{ display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:0.9rem; }
+  .compare > *{ min-width:0; }
+
+  .note{
+    background:var(--accent-soft); border:1px solid var(--line); border-radius:8px;
+    padding:0.8rem 1rem; font-size:0.93rem;
+  }
+
+  .table-wrap{ overflow-x:auto; border:1px solid var(--line); border-radius:8px; background:var(--surface); }
+  table{ border-collapse:collapse; width:100%; font-size:0.92rem; min-width:520px; }
+  th,td{ text-align:left; padding:0.6rem 0.85rem; border-bottom:1px solid var(--line); vertical-align:top; }
+  th{ background:var(--surface-2); font-weight:700; font-size:0.85rem; }
+  tr:last-child td{ border-bottom:none; }
+  td.en{ font-family:var(--f-en); font-size:1rem; }
+
+  /* score band bar, drawn to scale 0–20 */
+  .bands{ display:grid; gap:0.4rem; }
+  .band-bar{ display:flex; gap:2px; border-radius:6px; overflow:hidden; height:40px; }
+  .band-bar div{ display:flex; flex-direction:column; align-items:center; justify-content:center; line-height:1.15; font-size:0.78rem; font-weight:700; }
+  .band-bar small{ font-family:var(--f-mono); font-weight:400; font-size:0.68rem; }
+  .b0{ background:var(--bad-soft); color:var(--bad); }
+  .b1{ background:var(--surface-2); color:var(--ink-muted); }
+  .b2{ background:var(--hl-sup); color:var(--ink); }
+  .b3{ background:var(--hl-ts); color:var(--ink); }
+  .b4{ background:var(--accent); color:var(--accent-ink); }
+  .band-scale{ display:flex; justify-content:space-between; font-family:var(--f-mono); font-size:0.7rem; color:var(--ink-muted); }
+
+  /* paragraph anatomy */
+  .anatomy-ctrl{ display:flex; flex-wrap:wrap; gap:0.5rem 1rem; align-items:center; }
+  button.toggle{
+    font:inherit; font-size:0.88rem; cursor:pointer;
+    background:var(--accent); color:var(--accent-ink); border:none; border-radius:6px; padding:0.4rem 0.9rem;
+  }
+  button.toggle[aria-pressed="false"]{ background:var(--surface); color:var(--accent); border:1px solid var(--accent); }
+  .key{ display:flex; flex-wrap:wrap; gap:0.3rem 0.9rem; font-size:0.82rem; color:var(--ink-muted); }
+  .key span{ display:inline-flex; align-items:center; gap:0.35rem; }
+  .key i{ width:12px; height:12px; border-radius:3px; display:inline-block; }
+  .anatomy.on .ts{ background:var(--hl-ts); }
+  .anatomy.on .sup{ background:var(--hl-sup); }
+  .anatomy.on .ex{ background:var(--hl-ex); }
+  .anatomy.on .cs{ background:var(--hl-cs); }
+  .anatomy .ts,.anatomy .sup,.anatomy .ex,.anatomy .cs{ border-radius:3px; padding:0 2px; transition:background .2s ease; box-decoration-break:clone; -webkit-box-decoration-break:clone; }
+  .anatomy .tr{ font-weight:600; }
+  .anatomy.on .tr{ color:var(--accent); }
+
+  .skeleton{ display:grid; gap:0.4rem; counter-reset:sk; }
+  .skeleton div{
+    display:grid; grid-template-columns:7.5rem 1fr; gap:0.8rem; align-items:baseline;
+    padding:0.55rem 0.9rem; border-radius:6px; font-size:0.92rem;
+  }
+  .skeleton div > *{ min-width:0; }
+  .skeleton b{ font-size:0.86rem; }
+  @media (max-width:480px){ .skeleton div{ grid-template-columns:1fr; gap:0.1rem; } }
+
+  ul.clean{ margin:0; padding-left:1.2rem; display:grid; gap:0.3rem; }
+
+  .timeline{ display:flex; gap:2px; border-radius:6px; overflow:hidden; height:46px; }
+  .timeline div{ display:flex; flex-direction:column; justify-content:center; align-items:center; font-size:0.78rem; font-weight:700; line-height:1.15; text-align:center; padding:0 0.2rem; }
+  .timeline small{ font-family:var(--f-mono); font-weight:400; font-size:0.68rem; }
+
+  .checklist{ display:grid; gap:0.35rem; }
+  .checklist label{ display:flex; gap:0.6rem; align-items:flex-start; font-size:0.93rem; cursor:pointer; }
+  .checklist input{ margin-top:0.45rem; accent-color:var(--accent); }
+
+  /* practice */
+  .practice{ margin-top:3.2rem; display:grid; gap:1rem; }
+  .qcard{ background:var(--surface); border:1px solid var(--line); border-radius:8px; padding:1rem 1.2rem; display:grid; gap:0.6rem; }
+  .qhead{ display:flex; gap:0.6rem; align-items:baseline; }
+  .qnum{ font-family:var(--f-mono); font-weight:700; color:var(--accent); flex:none; }
+  .qcard .en{ font-family:var(--f-en); font-size:1.02rem; }
+  .opts{ margin:0; padding-left:1.4rem; font-family:var(--f-en); font-size:1rem; display:grid; gap:0.15rem; }
+  details{ border-top:1px dashed var(--line); padding-top:0.5rem; }
+  summary{ cursor:pointer; color:var(--accent); font-size:0.88rem; font-weight:500; }
+  details .ans{ margin-top:0.5rem; font-size:0.93rem; }
+
+  /* draft box */
+  .draft{ display:grid; gap:0.6rem; }
+  textarea{
+    width:100%; min-height:260px; resize:vertical;
+    font-family:var(--f-en); font-size:1.02rem; line-height:1.75;
+    background:var(--surface); color:var(--ink); border:1px solid var(--line); border-radius:8px; padding:0.9rem 1rem;
+  }
+  textarea:focus{ outline:2px solid var(--accent); outline-offset:1px; }
+  .meters{ display:flex; flex-wrap:wrap; gap:0.5rem; }
+  .meter{ font-family:var(--f-mono); font-size:0.8rem; padding:0.25rem 0.7rem; border-radius:999px; border:1px solid var(--line); background:var(--surface-2); color:var(--ink-muted); }
+  .meter.ok{ background:var(--accent); color:var(--accent-ink); border-color:var(--accent); }
+  .meter.warn{ background:var(--amber); color:var(--amber-ink); border-color:var(--amber); }
+
+  footer{ margin-top:3rem; padding-top:1.5rem; border-top:1px solid var(--line); color:var(--ink-muted); font-size:0.85rem; display:grid; gap:0.4rem; }
+  footer .id{ font-family:var(--f-mono); font-size:0.8rem; display:flex; justify-content:space-between; flex-wrap:wrap; gap:0.5rem; margin-top:0.6rem; }
+</style>
+<style>
+  .wt td.zh{ transition:filter .2s ease, opacity .2s ease; }
+  .masked td.zh{ filter:blur(6px); opacity:.55; user-select:none; }
+  .masked td.zh:hover,.masked td.zh:focus{ filter:none; opacity:1; }
+  .tools{ display:flex; flex-wrap:wrap; gap:0.5rem; align-items:center; font-size:0.85rem; color:var(--ink-muted); }
+  .pair{ display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:0.8rem; }
+  .pair > *{ min-width:0; }
+  .ex-line{ font-family:var(--f-en); font-size:1.02rem; }
+  .ex-line + .ex-line{ margin-top:0.3rem; }
+  .ok{ color:var(--accent); font-weight:600; }
+  .no{ color:var(--bad); text-decoration:line-through; text-decoration-thickness:1px; }
+  .hl{ background:var(--hl-ex); border-radius:3px; padding:0 2px; }
+  .hl2{ background:var(--hl-ts); border-radius:3px; padding:0 2px; }
+  .hl3{ background:var(--hl-sup); border-radius:3px; padding:0 2px; }
+  .formula{ background:var(--surface); border:1px solid var(--line); border-radius:8px; padding:0.8rem 1.1rem; font-family:var(--f-mono); font-size:0.9rem; line-height:1.9; overflow-x:auto; }
+</style>
+<div class="page">
+<a class="back" href="index.html">← 回到英文學習地圖</a>
+<header class="hero">
+  <span class="eyebrow">文法與句構・1-1</span>
+  <h1>時態・語態・助動詞</h1>
+  <p class="sub">動詞是英文句子的心臟。這一節把學測最常考的四件事整理清楚：現在完成式和過去式怎麼分、兩個過去動作誰先誰後、什麼時候用被動，以及「助動詞＋have p.p.」表達的推測與後悔。</p>
+</header>
+
+<div class="lede">
+  <p>這一節回答同一個問題的四個面向：「這個動作發生在什麼時候？是誰做的？說話的人有多確定？」</p>
+  <ul class="toc">
+    <li><a href="#p1"><b>1</b>完成式與過去式</a></li>
+    <li><a href="#p2"><b>2</b>過去完成式</a></li>
+    <li><a href="#p3"><b>3</b>被動語態</a></li>
+    <li><a href="#p4"><b>4</b>助動詞＋have p.p.</a></li>
+    <li><a href="#practice"><b>✎</b>練習</a></li>
+  </ul>
+</div>
+
+<section class="part" id="p1">
+  <span class="part-kicker">PART 1 ・ 完成式與過去式</span>
+  <h2>「我學鋼琴學了五年」要用哪一個時態</h2>
+  <div class="step"><span class="step-tag">情境</span><p>比較這兩句：</p>
+    <p class="ex-line">(1) I <b>learned</b> piano for five years.</p>
+    <p class="ex-line">(2) I <b>have learned</b> piano for five years.</p></div>
+  <div class="step"><span class="step-tag">觀察</span><p>(1) 是過去式：那五年已經結束，現在沒在學了。(2) 是現在完成式：從五年前開始，<b>一直到現在</b>還在學。中文兩句都說「學了五年」，英文卻用時態區分「跟現在有沒有關係」。</p></div>
+  <div class="step"><span class="step-tag rule">規律 → 看時間詞選時態</span></div>
+  <div class="table-wrap"><table>
+    <thead><tr><th>時態</th><th>重點</th><th>常見時間詞</th><th>例句</th></tr></thead>
+    <tbody>
+      <tr><td>過去式</td><td>過去某個時間點，已結束</td><td class="en">yesterday, last year, in 2020, … ago, when I was young</td><td class="en">I visited Japan two years ago.</td></tr>
+      <tr><td>現在完成式<br><span class="mono">have/has + p.p.</span></td><td>從過去延續到現在，或過去經驗影響現在</td><td class="en">since, for, already, yet, ever, never, so far, recently</td><td class="en">I have lived here since 2015.</td></tr>
+      <tr><td>現在完成進行式<br><span class="mono">have been V-ing</span></td><td>從過去到現在一直在做，強調持續</td><td class="en">for, since, all day</td><td class="en">It has been raining all day.</td></tr>
+    </tbody>
+  </table></div>
+  <div class="note"><b>最常見的錯誤。</b>明確的過去時間（ago、last、yesterday、in + 過去年份）不能配現在完成式：<span class="no">I have visited Japan two years ago.</span></div>
+  <div class="step"><span class="step-tag">延伸：since 和 for</span><p><span class="mono">since</span> 後面接「起點」：since 2015、since I was ten。<span class="mono">for</span> 後面接「一段時間」：for ten years、for a long time。主要子句用完成式，since 子句通常用過去式：I have known her <b>since</b> we <b>were</b> kids.</p></div>
+</section>
+
+<section class="part" id="p2">
+  <span class="part-kicker">PART 2 ・ 過去完成式</span>
+  <h2>兩件過去的事，誰先發生</h2>
+  <div class="step"><span class="step-tag">情境</span><p>「我到車站的時候，火車已經開走了。」兩個動作都在過去，但「火車開走」比「我到」更早。</p>
+    <p class="ex-line">When I <b>got</b> to the station, the train <b>had</b> already <b>left</b>.</p></div>
+  <div class="step"><span class="step-tag">觀察</span><p>較晚的動作用過去式，較早的動作用 <span class="mono">had + p.p.</span>。如果兩個都寫過去式 <span class="mono">the train left</span>，意思會變成「我一到，火車才開走」，順序就反了。</p></div>
+  <div class="step"><span class="step-tag rule">規律 → 過去的過去</span></div>
+  <div class="formula">較早的過去動作 → had + p.p.<br>較晚的過去動作 → 過去式<br><br>常見訊號：by the time（到…的時候）、before、after、when、already</div>
+  <div class="step"><p class="ex-line">By the time the firefighters arrived, the fire had spread to the second floor.</p>
+    <p class="ex-line">She had never seen snow before she moved to Canada.</p></div>
+</section>
+
+<section class="part" id="p3">
+  <span class="part-kicker">PART 3 ・ 被動語態</span>
+  <h2>重點不是誰做的，而是發生了什麼</h2>
+  <div class="step"><span class="step-tag">情境</span><p>新聞說「這座橋建於 1950 年」，沒人在乎是哪些工人蓋的，重點是橋。</p>
+    <p class="ex-line">The bridge <b>was built</b> in 1950.</p></div>
+  <div class="step"><span class="step-tag">觀察</span><p>主詞是「被做」的那一方時，用 <span class="mono">be + p.p.</span>。時態由 be 動詞負責變化，p.p. 不動。</p></div>
+  <div class="step"><span class="step-tag rule">規律 → 各時態的被動</span></div>
+  <div class="table-wrap"><table>
+    <thead><tr><th>時態</th><th>形式</th><th>例句</th></tr></thead>
+    <tbody>
+      <tr><td>現在簡單</td><td class="mono">am/is/are + p.p.</td><td class="en">English is spoken in many countries.</td></tr>
+      <tr><td>過去簡單</td><td class="mono">was/were + p.p.</td><td class="en">The game was canceled because of rain.</td></tr>
+      <tr><td>現在完成</td><td class="mono">have/has been + p.p.</td><td class="en">The bridge has been repaired.</td></tr>
+      <tr><td>進行式</td><td class="mono">is/was being + p.p.</td><td class="en">The road is being repaired now.</td></tr>
+      <tr><td>助動詞</td><td class="mono">will/can/should be + p.p.</td><td class="en">The concert will be held next Friday.</td></tr>
+    </tbody>
+  </table></div>
+  <div class="note"><b>不能用被動的動詞。</b>不及物動詞沒有受詞，所以沒有被動：happen、occur、take place、appear、disappear、die、arrive。<span class="no">The accident was happened last night.</span> → <span class="ok">The accident happened last night.</span></div>
+</section>
+
+<section class="part" id="p4">
+  <span class="part-kicker">PART 4 ・ 助動詞＋have p.p.</span>
+  <h2>對過去的推測和後悔</h2>
+  <div class="step"><span class="step-tag">情境</span><p>考完試才發現讀錯範圍：「我早該先問老師的。」這句話說的是過去<b>應該做卻沒做</b>的事。</p>
+    <p class="ex-line">I <b>should have asked</b> the teacher first.</p></div>
+  <div class="step"><span class="step-tag rule">規律 → 五種常考組合</span></div>
+  <div class="table-wrap"><table>
+    <thead><tr><th>形式</th><th>意思</th><th>例句</th></tr></thead>
+    <tbody>
+      <tr><td class="en">should have p.p.</td><td>本來應該（但沒有）</td><td class="en">You should have brought an umbrella.</td></tr>
+      <tr><td class="en">must have p.p.</td><td>一定已經（很有把握的推測）</td><td class="en">The ground is wet. It must have rained.</td></tr>
+      <tr><td class="en">may / might have p.p.</td><td>可能已經（不太確定）</td><td class="en">She might have missed the bus.</td></tr>
+      <tr><td class="en">could have p.p.</td><td>本來可以（但沒有）</td><td class="en">We could have won if we had practiced more.</td></tr>
+      <tr><td class="en">can't / couldn't have p.p.</td><td>不可能已經</td><td class="en">He can't have finished already; he just started.</td></tr>
+    </tbody>
+  </table></div>
+  <div class="step"><span class="step-tag">延伸</span><p>這組句型在閱讀測驗的「推論題」和作文的「描述經驗、反省」段落都很好用。例如作文寫「回想起來，我應該更早開始準備」：<span class="ex-line">Looking back, I should have started preparing earlier.</span></p></div>
+</section>
+
+<section class="practice" id="practice">
+  <span class="part-kicker">練習</span>
+  <h2>動手試試看</h2>
+  <div class="qcard"><div class="qhead"><span class="qnum">Q1</span><span>選出正確的動詞形式：</span></div>
+    <p class="en">My family ______ in Taichung since my father changed jobs.</p>
+    <ol class="opts" type="A"><li>lives</li><li>lived</li><li>has lived</li><li>had lived</li></ol>
+    <details><summary>看解答</summary><div class="ans"><b>C。</b>since 加過去的起點，表示從那時一直到現在，用現在完成式。</div></details></div>
+  <div class="qcard"><div class="qhead"><span class="qnum">Q2</span><span>選出正確的動詞形式：</span></div>
+    <p class="en">By the time we arrived at the theater, the movie ______.</p>
+    <ol class="opts" type="A"><li>already started</li><li>has already started</li><li>had already started</li><li>was already starting</li></ol>
+    <details><summary>看解答</summary><div class="ans"><b>C。</b>電影開始比我們到達更早，是「過去的過去」，用 had + p.p.。</div></details></div>
+  <div class="qcard"><div class="qhead"><span class="qnum">Q3</span><span>改正這句：</span></div>
+    <p class="en">A strange thing was happened in our class yesterday.</p>
+    <details><summary>看解答</summary><div class="ans"><span class="ex-line">A strange thing happened in our class yesterday.</span> happen 是不及物動詞，沒有被動。</div></details></div>
+  <div class="qcard"><div class="qhead"><span class="qnum">Q4</span><span>選出最適合的答案：</span></div>
+    <p class="en">Jack didn't answer the phone. He ______ asleep already.</p>
+    <ol class="opts" type="A"><li>should have fallen</li><li>might have fallen</li><li>could have fallen</li><li>must fall</li></ol>
+    <details><summary>看解答</summary><div class="ans"><b>B。</b>對過去狀況的不確定推測：「他可能已經睡著了」。should have 是「本來應該」，不合語意。</div></details></div>
+  <div class="qcard"><div class="qhead"><span class="qnum">Q5</span><span>中譯英：這座寺廟兩百年前就建好了，到現在已經修復過三次。</span></div>
+    <details><summary>看解答</summary><div class="ans"><p class="ex-line">The temple was built two hundred years ago, and it has been repaired three times so far.</p><p style="margin-top:0.3rem">前半有 ago，用過去被動；後半到現在的次數，用現在完成被動。</p></div></details></div>
+</section>
+
+<section class="part">
+  <span class="part-kicker">本節重點</span>
+  <ul class="clean">
+    <li>跟現在有關用現在完成式；明確的過去時間點用過去式。</li>
+    <li>兩個過去動作，較早的用 had + p.p.。</li>
+    <li>被動＝be + p.p.，時態由 be 動詞負責；happen、occur、take place 沒有被動。</li>
+    <li>should have p.p. 是後悔，must / might have p.p. 是推測。</li>
+  </ul>
+</section>
+
+<footer>
+  <p>例句皆為自編教學用。</p>
+  <div class="id"><span>筱葳學測英文</span><span>文法 1-1</span></div>
+</footer>
+
+</div>
+
+<script>
+(function(){
+  document.querySelectorAll('button[data-mask]').forEach(function(b){
+    var t = document.getElementById(b.getAttribute('data-mask'));
+    if(!t) return;
+    b.addEventListener('click', function(){
+      var on = t.classList.toggle('masked');
+      b.setAttribute('aria-pressed', on ? 'true' : 'false');
+      b.textContent = on ? '顯示中文' : '遮住中文自我測驗';
+    });
+  });
+})();
+</script>
+
+</body>
+</html>

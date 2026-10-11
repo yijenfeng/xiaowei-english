@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>字彙 1-3 Level 5–6 鑑別字｜筱葳學測英文</title>
+</head>
+<body>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@500;600;700&family=Noto+Sans+TC:wght@400;500;700&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&family=JetBrains+Mono:wght@400;500;700&display=swap">
+<style>
+  /* Layout: single reading column, PART sections in sequence, English passages set apart as "answer sheet" panels */
+  :root{
+    --bg:#F2F6F3;
+    --surface:#FFFFFF;
+    --surface-2:#E6EEE9;
+    --ink:#1C2A24;
+    --ink-muted:#58695F;
+    --line:#CADBD1;
+    --accent:#2E7D5B;
+    --accent-ink:#FFFFFF;
+    --accent-soft:#DDEFE5;
+    --amber:#E0973C;  --amber-ink:#3A2306;
+    --teal:#4E9C8C;   --teal-ink:#0B241F;
+    --bad:#B5483B;    --bad-soft:#F6E1DD;
+    --hl-ts:#CFE8DA;  --hl-sup:#DCE8F5;  --hl-ex:#F7E3C6;  --hl-cs:#E9DDF2;
+    --grid-line:rgba(46,125,91,0.07);
+    --shadow:0 1px 2px rgba(28,42,36,0.06), 0 8px 24px rgba(28,42,36,0.05);
+    --f-display:'Noto Serif TC','Songti TC','PMingLiU',serif;
+    --f-body:'Noto Sans TC','PingFang TC','Microsoft JhengHei',sans-serif;
+    --f-en:'Source Serif 4','Georgia','Times New Roman',serif;
+    --f-mono:'JetBrains Mono','Cascadia Code',ui-monospace,monospace;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --bg:#0F1914; --surface:#16231C; --surface-2:#1B2B23; --ink:#E6EEE9; --ink-muted:#93A89C;
+      --line:#2A3D33; --accent:#7CC9A2; --accent-ink:#0B1A12; --accent-soft:#1E3A2E;
+      --amber:#C97E2E; --amber-ink:#2A1A05; --teal:#3E8776; --teal-ink:#E7F5F1;
+      --bad:#E48A7D; --bad-soft:#3A201C;
+      --hl-ts:#24452F; --hl-sup:#22334A; --hl-ex:#4A3519; --hl-cs:#3A2A48;
+      --grid-line:rgba(124,201,162,0.07);
+      --shadow:0 1px 2px rgba(0,0,0,0.3), 0 8px 24px rgba(0,0,0,0.35);
+      color-scheme:dark;
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#0F1914; --surface:#16231C; --surface-2:#1B2B23; --ink:#E6EEE9; --ink-muted:#93A89C;
+    --line:#2A3D33; --accent:#7CC9A2; --accent-ink:#0B1A12; --accent-soft:#1E3A2E;
+    --amber:#C97E2E; --amber-ink:#2A1A05; --teal:#3E8776; --teal-ink:#E7F5F1;
+    --bad:#E48A7D; --bad-soft:#3A201C;
+    --hl-ts:#24452F; --hl-sup:#22334A; --hl-ex:#4A3519; --hl-cs:#3A2A48;
+    --grid-line:rgba(124,201,162,0.07);
+    --shadow:0 1px 2px rgba(0,0,0,0.3), 0 8px 24px rgba(0,0,0,0.35);
+    color-scheme:dark;
+  }
+
+  *{ box-sizing:border-box; }
+  html{ -webkit-text-size-adjust:100%; scroll-behavior:smooth; }
+  body{
+    margin:0;
+    background:
+      repeating-linear-gradient(0deg, var(--grid-line) 0 1px, transparent 1px 32px),
+      repeating-linear-gradient(90deg, var(--grid-line) 0 1px, transparent 1px 32px),
+      var(--bg);
+    color:var(--ink);
+    font-family:var(--f-body);
+    font-size:17px;
+    line-height:1.8;
+    -webkit-font-smoothing:antialiased;
+  }
+  @media (prefers-reduced-motion: reduce){ *{ scroll-behavior:auto !important; transition:none !important; } }
+  h1,h2,h3{ font-family:var(--f-display); font-weight:600; text-wrap:balance; margin:0; color:var(--ink); }
+  a{ color:var(--accent); }
+  p{ margin:0; }
+  :focus-visible{ outline:2px solid var(--accent); outline-offset:2px; }
+  .mono{ font-family:var(--f-mono); font-variant-numeric:tabular-nums; }
+
+  .page{ max-width:780px; margin:0 auto; padding-inline:1.25rem; padding-block:0 5rem; }
+
+  .back{ display:inline-block; margin-top:1.6rem; font-size:0.85rem; color:var(--ink-muted); text-decoration:none; }
+  .back:hover{ color:var(--accent); }
+
+  .hero{ padding-block:2rem 1.6rem; display:grid; gap:0.9rem; }
+  .eyebrow{
+    justify-self:start;
+    font-family:var(--f-mono); font-size:0.78rem; letter-spacing:0.06em;
+    color:var(--accent); background:var(--accent-soft); border:1px solid var(--line);
+    padding:0.3rem 0.7rem; border-radius:4px;
+  }
+  .hero h1{ font-size:clamp(1.9rem,5vw,2.5rem); line-height:1.25; }
+  .hero .sub{ color:var(--ink-muted); font-size:1.03rem; max-width:640px; }
+
+  .lede{
+    background:var(--surface); border:1px solid var(--line); border-radius:10px;
+    padding:1.1rem 1.3rem; box-shadow:var(--shadow); display:grid; gap:0.9rem;
+  }
+  .toc{ display:flex; flex-wrap:wrap; gap:0.5rem; padding:0; margin:0; list-style:none; }
+  .toc a{
+    display:inline-flex; gap:0.45rem; align-items:center; text-decoration:none;
+    font-size:0.88rem; color:var(--ink); background:var(--surface-2); border:1px solid var(--line);
+    padding:0.25rem 0.75rem; border-radius:999px;
+  }
+  .toc a:hover{ border-color:var(--accent); color:var(--accent); }
+  .toc b{ font-family:var(--f-mono); color:var(--accent); font-weight:700; }
+
+  section.part{ margin-top:3.2rem; display:grid; gap:1.1rem; }
+  .part-kicker{ font-family:var(--f-mono); font-size:0.78rem; letter-spacing:0.08em; color:var(--accent); }
+  .part h2{ font-size:1.55rem; line-height:1.35; }
+  .part h3{ font-size:1.08rem; margin-top:0.4rem; }
+
+  .step{ display:grid; gap:0.5rem; }
+  .step-tag{
+    justify-self:start; font-family:var(--f-mono); font-size:0.72rem; font-weight:700;
+    padding:0.1rem 0.55rem; border-radius:4px; background:var(--surface-2); color:var(--ink-muted); border:1px solid var(--line);
+  }
+  .step-tag.rule{ background:var(--accent); color:var(--accent-ink); border-color:var(--accent); }
+
+  .prompt{
+    background:var(--surface); border:1px solid var(--line); border-left:4px solid var(--amber);
+    border-radius:6px; padding:0.9rem 1.1rem; font-size:0.95rem;
+  }
+  .prompt .label{ font-family:var(--f-mono); font-size:0.72rem; color:var(--amber); font-weight:700; letter-spacing:0.05em; display:block; margin-bottom:0.2rem; }
+
+  .sheet{
+    background:var(--surface); border:1px solid var(--line); border-radius:8px;
+    padding:1rem 1.2rem; box-shadow:var(--shadow);
+    font-family:var(--f-en); font-size:1.06rem; line-height:1.85;
+  }
+  .sheet p + p{ margin-top:0.8rem; }
+  .sheet-head{
+    display:flex; justify-content:space-between; align-items:baseline; flex-wrap:wrap; gap:0.3rem 1rem;
+    font-family:var(--f-mono); font-size:0.75rem; color:var(--ink-muted); margin-bottom:0.5rem;
+  }
+  .sheet.weak{ border-color:var(--bad); }
+  .sheet .err{ text-decoration:underline wavy var(--bad); text-underline-offset:4px; }
+
+  .compare{ display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:0.9rem; }
+  .compare > *{ min-width:0; }
+
+  .note{
+    background:var(--accent-soft); border:1px solid var(--line); border-radius:8px;
+    padding:0.8rem 1rem; font-size:0.93rem;
+  }
+
+  .table-wrap{ overflow-x:auto; border:1px solid var(--line); border-radius:8px; background:var(--surface); }
+  table{ border-collapse:collapse; width:100%; font-size:0.92rem; min-width:520px; }
+  th,td{ text-align:left; padding:0.6rem 0.85rem; border-bottom:1px solid var(--line); vertical-align:top; }
+  th{ background:var(--surface-2); font-weight:700; font-size:0.85rem; }
+  tr:last-child td{ border-bottom:none; }
+  td.en{ font-family:var(--f-en); font-size:1rem; }
+
+  /* score band bar, drawn to scale 0–20 */
+  .bands{ display:grid; gap:0.4rem; }
+  .band-bar{ display:flex; gap:2px; border-radius:6px; overflow:hidden; height:40px; }
+  .band-bar div{ display:flex; flex-direction:column; align-items:center; justify-content:center; line-height:1.15; font-size:0.78rem; font-weight:700; }
+  .band-bar small{ font-family:var(--f-mono); font-weight:400; font-size:0.68rem; }
+  .b0{ background:var(--bad-soft); color:var(--bad); }
+  .b1{ background:var(--surface-2); color:var(--ink-muted); }
+  .b2{ background:var(--hl-sup); color:var(--ink); }
+  .b3{ background:var(--hl-ts); color:var(--ink); }
+  .b4{ background:var(--accent); color:var(--accent-ink); }
+  .band-scale{ display:flex; justify-content:space-between; font-family:var(--f-mono); font-size:0.7rem; color:var(--ink-muted); }
+
+  /* paragraph anatomy */
+  .anatomy-ctrl{ display:flex; flex-wrap:wrap; gap:0.5rem 1rem; align-items:center; }
+  button.toggle{
+    font:inherit; font-size:0.88rem; cursor:pointer;
+    background:var(--accent); color:var(--accent-ink); border:none; border-radius:6px; padding:0.4rem 0.9rem;
+  }
+  button.toggle[aria-pressed="false"]{ background:var(--surface); color:var(--accent); border:1px solid var(--accent); }
+  .key{ display:flex; flex-wrap:wrap; gap:0.3rem 0.9rem; font-size:0.82rem; color:var(--ink-muted); }
+  .key span{ display:inline-flex; align-items:center; gap:0.35rem; }
+  .key i{ width:12px; height:12px; border-radius:3px; display:inline-block; }
+  .anatomy.on .ts{ background:var(--hl-ts); }
+  .anatomy.on .sup{ background:var(--hl-sup); }
+  .anatomy.on .ex{ background:var(--hl-ex); }
+  .anatomy.on .cs{ background:var(--hl-cs); }
+  .anatomy .ts,.anatomy .sup,.anatomy .ex,.anatomy .cs{ border-radius:3px; padding:0 2px; transition:background .2s ease; box-decoration-break:clone; -webkit-box-decoration-break:clone; }
+  .anatomy .tr{ font-weight:600; }
+  .anatomy.on .tr{ color:var(--accent); }
+
+  .skeleton{ display:grid; gap:0.4rem; counter-reset:sk; }
+  .skeleton div{
+    display:grid; grid-template-columns:7.5rem 1fr; gap:0.8rem; align-items:baseline;
+    padding:0.55rem 0.9rem; border-radius:6px; font-size:0.92rem;
+  }
+  .skeleton div > *{ min-width:0; }
+  .skeleton b{ font-size:0.86rem; }
+  @media (max-width:480px){ .skeleton div{ grid-template-columns:1fr; gap:0.1rem; } }
+
+  ul.clean{ margin:0; padding-left:1.2rem; display:grid; gap:0.3rem; }
+
+  .timeline{ display:flex; gap:2px; border-radius:6px; overflow:hidden; height:46px; }
+  .timeline div{ display:flex; flex-direction:column; justify-content:center; align-items:center; font-size:0.78rem; font-weight:700; line-height:1.15; text-align:center; padding:0 0.2rem; }
+  .timeline small{ font-family:var(--f-mono); font-weight:400; font-size:0.68rem; }
+
+  .checklist{ display:grid; gap:0.35rem; }
+  .checklist label{ display:flex; gap:0.6rem; align-items:flex-start; font-size:0.93rem; cursor:pointer; }
+  .checklist input{ margin-top:0.45rem; accent-color:var(--accent); }
+
+  /* practice */
+  .practice{ margin-top:3.2rem; display:grid; gap:1rem; }
+  .qcard{ background:var(--surface); border:1px solid var(--line); border-radius:8px; padding:1rem 1.2rem; display:grid; gap:0.6rem; }
+  .qhead{ display:flex; gap:0.6rem; align-items:baseline; }
+  .qnum{ font-family:var(--f-mono); font-weight:700; color:var(--accent); flex:none; }
+  .qcard .en{ font-family:var(--f-en); font-size:1.02rem; }
+  .opts{ margin:0; padding-left:1.4rem; font-family:var(--f-en); font-size:1rem; display:grid; gap:0.15rem; }
+  details{ border-top:1px dashed var(--line); padding-top:0.5rem; }
+  summary{ cursor:pointer; color:var(--accent); font-size:0.88rem; font-weight:500; }
+  details .ans{ margin-top:0.5rem; font-size:0.93rem; }
+
+  /* draft box */
+  .draft{ display:grid; gap:0.6rem; }
+  textarea{
+    width:100%; min-height:260px; resize:vertical;
+    font-family:var(--f-en); font-size:1.02rem; line-height:1.75;
+    background:var(--surface); color:var(--ink); border:1px solid var(--line); border-radius:8px; padding:0.9rem 1rem;
+  }
+  textarea:focus{ outline:2px solid var(--accent); outline-offset:1px; }
+  .meters{ display:flex; flex-wrap:wrap; gap:0.5rem; }
+  .meter{ font-family:var(--f-mono); font-size:0.8rem; padding:0.25rem 0.7rem; border-radius:999px; border:1px solid var(--line); background:var(--surface-2); color:var(--ink-muted); }
+  .meter.ok{ background:var(--accent); color:var(--accent-ink); border-color:var(--accent); }
+  .meter.warn{ background:var(--amber); color:var(--amber-ink); border-color:var(--amber); }
+
+  footer{ margin-top:3rem; padding-top:1.5rem; border-top:1px solid var(--line); color:var(--ink-muted); font-size:0.85rem; display:grid; gap:0.4rem; }
+  footer .id{ font-family:var(--f-mono); font-size:0.8rem; display:flex; justify-content:space-between; flex-wrap:wrap; gap:0.5rem; margin-top:0.6rem; }
+</style>
+<style>
+  .wt td.zh{ transition:filter .2s ease, opacity .2s ease; }
+  .masked td.zh{ filter:blur(6px); opacity:.55; user-select:none; }
+  .masked td.zh:hover,.masked td.zh:focus{ filter:none; opacity:1; }
+  .tools{ display:flex; flex-wrap:wrap; gap:0.5rem; align-items:center; font-size:0.85rem; color:var(--ink-muted); }
+  .pair{ display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:0.8rem; }
+  .pair > *{ min-width:0; }
+  .ex-line{ font-family:var(--f-en); font-size:1.02rem; }
+  .ex-line + .ex-line{ margin-top:0.3rem; }
+  .ok{ color:var(--accent); font-weight:600; }
+  .no{ color:var(--bad); text-decoration:line-through; text-decoration-thickness:1px; }
+  .hl{ background:var(--hl-ex); border-radius:3px; padding:0 2px; }
+  .hl2{ background:var(--hl-ts); border-radius:3px; padding:0 2px; }
+  .hl3{ background:var(--hl-sup); border-radius:3px; padding:0 2px; }
+  .formula{ background:var(--surface); border:1px solid var(--line); border-radius:8px; padding:0.8rem 1.1rem; font-family:var(--f-mono); font-size:0.9rem; line-height:1.9; overflow-x:auto; }
+</style>
+<div class="page">
+<a class="back" href="index.html">← 回到英文學習地圖</a>
+<header class="hero">
+  <span class="eyebrow">字彙與片語・1-3</span>
+  <h1>Level 5–6 鑑別字</h1>
+  <p class="sub">詞彙題的十題裡，總有幾題選項全是沒把握的字。這一節不靠硬背救急，而是練「從句子裡找線索」和「刪去法」，再把高階字分成「認得就好」和「作文要會用」兩類，分配背誦力氣。</p>
+</header>
+
+<div class="lede">
+  <p>這一節回答同一個問題的四個面向：「遇到不熟的字，還能怎麼選對？」</p>
+  <ul class="toc">
+    <li><a href="#p1"><b>1</b>句子裡的線索</a></li>
+    <li><a href="#p2"><b>2</b>四種線索練習</a></li>
+    <li><a href="#p3"><b>3</b>刪去法</a></li>
+    <li><a href="#p4"><b>4</b>認得與會用</a></li>
+    <li><a href="#practice"><b>✎</b>練習</a></li>
+  </ul>
+</div>
+
+<section class="part" id="p1">
+  <span class="part-kicker">PART 1 ・ 句子裡的線索</span>
+  <h2>答案通常已經寫在句子裡</h2>
+  <div class="step"><span class="step-tag">情境</span><p>一道仿學測的詞彙題（自編）：</p></div>
+  <div class="sheet"><p>Although the task seemed simple at first, it turned out to be extremely ______, and the team needed weeks to finish it.</p>
+    <p style="font-size:0.98rem">(A) complicated　(B) temporary　(C) generous　(D) visible</p></div>
+  <div class="step"><span class="step-tag">觀察</span><p><span class="mono">Although</span> 告訴我們前後相反：前面是 <span class="mono">simple</span>，空格就該是「不簡單」。後半句「需要好幾週」又再確認一次。答案是 <b>(A) complicated</b>。就算不太確定 complicated 的意思，只要知道其他三個是「暫時的、慷慨的、看得見的」，也能選對。</p></div>
+  <div class="step"><span class="step-tag rule">規律 → 詞彙題的四種線索</span></div>
+  <div class="skeleton">
+    <div style="background:var(--hl-ts)"><b>對比</b><span>although, but, however, while, unlike, instead of → 空格與另一半意思相反</span></div>
+    <div style="background:var(--hl-sup)"><b>因果</b><span>because, so, therefore, as a result, since → 空格是原因或結果</span></div>
+    <div style="background:var(--hl-ex)"><b>解釋與同義</b><span>that is, in other words, or, 破折號、逗號後的說明 → 空格的意思就寫在旁邊</span></div>
+    <div style="background:var(--hl-cs)"><b>搭配</b><span>空格前後的固定組合，例如 ______ attention 要填 pay、draw 這類動詞</span></div>
+  </div>
+</section>
+
+<section class="part" id="p2">
+  <span class="part-kicker">PART 2 ・ 四種線索練習</span>
+  <h2>先圈線索，再看選項</h2>
+  <div class="step"><span class="step-tag">情境</span><p>下面四句各示範一種線索。先別看選項，只看句子，猜猜空格大概是什麼意思：</p></div>
+  <div class="table-wrap"><table>
+    <thead><tr><th>線索</th><th>句子</th><th>答案</th></tr></thead>
+    <tbody>
+      <tr><td>對比</td><td class="en">Unlike his <span class="hl">shy</span> sister, Ken is very ______ and makes friends easily.</td><td class="en">outgoing（外向的）</td></tr>
+      <tr><td>因果</td><td class="en">The road was <span class="hl">closed</span> for a week <span class="hl">because</span> heavy rain had ______ part of the bridge.</td><td class="en">damaged（損壞）</td></tr>
+      <tr><td>解釋</td><td class="en">The tour guide was very ______; <span class="hl">that is, she was never late and always kept her promises.</span></td><td class="en">reliable（可靠的）</td></tr>
+      <tr><td>搭配</td><td class="en">The singer's strange outfit ______ <span class="hl">the attention of</span> everyone at the party.</td><td class="en">attracted / drew（吸引）</td></tr>
+    </tbody>
+  </table></div>
+  <div class="step"><span class="step-tag">觀察</span><p>四題在看選項之前，都已經能猜出空格「大概的意思」。帶著這個猜測去看選項，比一個一個代入快得多，也不容易被長得像的字騙。</p></div>
+  <div class="note"><b>作答順序。</b>讀完句子 → 圈出線索字 → 用中文猜空格意思 → 才看選項。</div>
+</section>
+
+<section class="part" id="p3">
+  <span class="part-kicker">PART 3 ・ 刪去法</span>
+  <h2>四個選項都沒把握的時候</h2>
+  <div class="step"><span class="step-tag">情境</span><p>有時候線索找到了，選項卻全是半生不熟的字。這時候改問：哪些選項「一定不對」？</p></div>
+  <div class="sheet"><p>The old factory was finally ______ after it had stood empty for twenty years.</p>
+    <p style="font-size:0.98rem">(A) demolished　(B) delighted　(C) devoted　(D) declined</p></div>
+  <div class="step"><span class="step-tag">觀察</span><p>空格前是 <span class="mono">was</span>，主詞是「工廠」，所以是「工廠被怎麼了」。<span class="mono">delighted</span>（高興的）是人的情緒；<span class="mono">devoted</span>（投入的）也是形容人；<span class="mono">decline</span>（下降、婉拒）通常不用被動 <span class="mono">was declined</span> 來描述建築。剩下 <b>(A) demolished（拆除）</b>，和「空了二十年」的情境也吻合。</p></div>
+  <div class="step"><span class="step-tag rule">規律 → 三道篩子</span></div>
+  <div class="skeleton">
+    <div style="background:var(--hl-ts)"><b>① 詞性</b><span>空格要名詞還是動詞？形式不合的先刪。</span></div>
+    <div style="background:var(--hl-sup)"><b>② 主詞與搭配</b><span>這個動作能發生在這個主詞身上嗎？人的情緒字不能用在物品上。</span></div>
+    <div style="background:var(--hl-ex)"><b>③ 正負語氣</b><span>句子整體是好事還是壞事？語氣相反的選項先刪。</span></div>
+  </div>
+</section>
+
+<section class="part" id="p4">
+  <span class="part-kicker">PART 4 ・ 認得與會用</span>
+  <h2>高階字分兩堆，力氣用在對的地方</h2>
+  <div class="step"><span class="step-tag">情境</span><p>離學測只剩三個月，不可能把每個高階字都練到會寫。但閱讀需要「認得」的字很多，作文需要「會用」的字其實不多。</p></div>
+  <div class="step"><span class="step-tag rule">規律 → 第一堆：認得就好（看到知道意思）</span></div>
+  <div class="tools"><button class="toggle" type="button" data-mask="rec" aria-pressed="false">遮住中文自我測驗</button></div>
+  <div class="table-wrap wt" id="rec"><table>
+    <thead><tr><th>字</th><th>例句</th><th>中文</th></tr></thead>
+    <tbody>
+      <tr><td class="en">reluctant</td><td class="en">He was reluctant to admit his mistake.</td><td class="zh" tabindex="0">不情願的</td></tr>
+      <tr><td class="en">inevitable</td><td class="en">Some changes are inevitable as cities grow.</td><td class="zh" tabindex="0">無法避免的</td></tr>
+      <tr><td class="en">compensate</td><td class="en">The company compensated passengers for the delay.</td><td class="zh" tabindex="0">補償</td></tr>
+      <tr><td class="en">ambiguous</td><td class="en">The instructions were ambiguous, so we got confused.</td><td class="zh" tabindex="0">含糊不清的</td></tr>
+      <tr><td class="en">deteriorate</td><td class="en">His health deteriorated during the winter.</td><td class="zh" tabindex="0">惡化</td></tr>
+      <tr><td class="en">prosperous</td><td class="en">The town became prosperous after the port opened.</td><td class="zh" tabindex="0">繁榮的</td></tr>
+      <tr><td class="en">vulnerable</td><td class="en">Young children are vulnerable to the flu.</td><td class="zh" tabindex="0">容易受傷害的</td></tr>
+      <tr><td class="en">abundant</td><td class="en">The island has abundant fresh water.</td><td class="zh" tabindex="0">豐富的</td></tr>
+    </tbody>
+  </table></div>
+  <div class="step"><span class="step-tag rule">規律 → 第二堆：作文要會用（拼得出、用得對）</span></div>
+  <div class="table-wrap"><table>
+    <thead><tr><th>取代</th><th>升級寫法</th><th>例句</th></tr></thead>
+    <tbody>
+      <tr><td class="en">good for</td><td class="en">beneficial to</td><td class="en">Regular exercise is beneficial to our health.</td></tr>
+      <tr><td class="en">very important</td><td class="en">essential / crucial</td><td class="en">Sleep is essential for memory.</td></tr>
+      <tr><td class="en">big</td><td class="en">significant</td><td class="en">Social media has a significant influence on teens.</td></tr>
+      <tr><td class="en">make better</td><td class="en">improve</td><td class="en">Reading every day can improve your vocabulary.</td></tr>
+      <tr><td class="en">help make happen</td><td class="en">contribute to</td><td class="en">Many factors contribute to this problem.</td></tr>
+      <tr><td class="en">bad for</td><td class="en">harmful to</td><td class="en">Too much sugar is harmful to teeth.</td></tr>
+    </tbody>
+  </table></div>
+  <div class="note"><b>作文的原則。</b>沒把握拼寫或用法的高階字，寫進作文反而容易扣「字彙拼字」和「文法」的分數。寧可用正確的簡單字，再搭配幾個確定會用的升級字。</div>
+</section>
+
+<section class="practice" id="practice">
+  <span class="part-kicker">練習</span>
+  <h2>動手試試看（題目皆為自編）</h2>
+  <div class="qcard"><div class="qhead"><span class="qnum">Q1</span><span>圈出線索並作答：</span></div>
+    <p class="en">The medicine is very ______; most patients feel better within a day.</p>
+    <ol class="opts" type="A"><li>effective</li><li>expensive</li><li>ordinary</li><li>harmful</li></ol>
+    <details><summary>看解答</summary><div class="ans"><b>A。</b>分號後面是解釋：大多數病人一天內就好轉，說明藥「有效」。</div></details></div>
+  <div class="qcard"><div class="qhead"><span class="qnum">Q2</span><span>圈出線索並作答：</span></div>
+    <p class="en">Instead of giving up after failing the test, Mia became even more ______ to succeed.</p>
+    <ol class="opts" type="A"><li>reluctant</li><li>determined</li><li>ashamed</li><li>confused</li></ol>
+    <details><summary>看解答</summary><div class="ans"><b>B。</b>Instead of giving up 是對比線索：不放棄，反而更「下定決心」。reluctant（不情願）方向相反。</div></details></div>
+  <div class="qcard"><div class="qhead"><span class="qnum">Q3</span><span>用刪去法作答：</span></div>
+    <p class="en">The museum ______ thousands of visitors every summer.</p>
+    <ol class="opts" type="A"><li>attracts</li><li>admires</li><li>apologizes</li><li>attends</li></ol>
+    <details><summary>看解答</summary><div class="ans"><b>A。</b>主詞是博物館。admire（欣賞）、apologize（道歉）、attend（參加）都是人做的動作，而且 apologize 後面要接 to。</div></details></div>
+  <div class="qcard"><div class="qhead"><span class="qnum">Q4</span><span>選出意思最接近 <span class="mono">inevitable</span> 的寫法：</span></div>
+    <ol class="opts" type="A"><li>impossible to avoid</li><li>easy to forget</li><li>difficult to see</li><li>unlikely to happen</li></ol>
+    <details><summary>看解答</summary><div class="ans"><b>A。</b>in-（不）+ evit（避免）+ -able（可以的）＝無法避免的。</div></details></div>
+  <div class="qcard"><div class="qhead"><span class="qnum">Q5</span><span>把這句改得更有程度，但不換掉意思：</span></div>
+    <p class="en">Reading is very good for students and very important.</p>
+    <details><summary>看解答</summary><div class="ans"><p class="ex-line">Reading is beneficial to students and essential for their growth.</p><p style="margin-top:0.3rem">用兩個確定會用的升級字，句子也從「very + 形容詞」的重複中跳出來。</p></div></details></div>
+</section>
+
+<section class="part">
+  <span class="part-kicker">本節重點</span>
+  <ul class="clean">
+    <li>先圈線索再看選項：對比、因果、解釋、搭配。</li>
+    <li>沒把握時用三道篩子：詞性、主詞與搭配、正負語氣。</li>
+    <li>高階字分兩堆：閱讀「認得就好」，作文只用確定「會用」的字。</li>
+  </ul>
+</section>
+
+<footer>
+  <p>例句與練習題皆為自編教學用，字詞為高階字示範，並非依官方詞彙表逐字標註級數。</p>
+  <div class="id"><span>筱葳學測英文</span><span>字彙 1-3</span></div>
+</footer>
+
+</div>
+
+<script>
+(function(){
+  document.querySelectorAll('button[data-mask]').forEach(function(b){
+    var t = document.getElementById(b.getAttribute('data-mask'));
+    if(!t) return;
+    b.addEventListener('click', function(){
+      var on = t.classList.toggle('masked');
+      b.setAttribute('aria-pressed', on ? 'true' : 'false');
+      b.textContent = on ? '顯示中文' : '遮住中文自我測驗';
+    });
+  });
+})();
+</script>
+
+</body>
+</html>
