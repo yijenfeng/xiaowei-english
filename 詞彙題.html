@@ -266,6 +266,22 @@
   .log-form label{ display:grid; gap:0.2rem; font-size:0.82rem; color:var(--ink-muted); }
   select.fill{ appearance:auto; }
 </style>
+<style>
+  .chk-row{ display:flex; flex-wrap:wrap; gap:0.5rem; align-items:center; }
+  textarea.ans-in{ min-height:0; resize:vertical; font-size:1rem; line-height:1.6; padding:0.5rem 0.7rem; }
+  .verdict{ font-size:0.9rem; display:grid; gap:0.35rem; }
+  .verdict:empty{ display:none; }
+  .vd{ display:inline-block; font-weight:700; font-size:0.85rem; padding:0.1rem 0.6rem; border-radius:999px; }
+  .vd.good{ background:var(--accent); color:var(--accent-ink); }
+  .vd.bad{ background:var(--bad-soft); color:var(--bad); }
+  .vd.warn{ background:var(--surface-2); color:var(--ink-muted); }
+  .dx{ display:grid; gap:0.25rem; font-family:var(--f-en); font-size:1rem; background:var(--surface-2); border-radius:6px; padding:0.5rem 0.75rem; }
+  .dx b{ font-family:var(--f-body); font-size:0.75rem; color:var(--ink-muted); display:inline-block; min-width:4.5rem; }
+  .dx-bad{ color:var(--bad); text-decoration:underline wavy var(--bad); text-underline-offset:3px; }
+  .dx-good{ color:var(--accent); font-weight:600; text-decoration:underline; text-underline-offset:3px; }
+  .dx-note{ font-size:0.8rem; color:var(--ink-muted); }
+  td .verdict{ margin-top:0.3rem; }
+</style>
 
 <div class="page">
 <a class="back" href="index.html">← 回到英文學習地圖</a>
@@ -326,7 +342,7 @@
 <section class="practice" id="practice">
   <span class="part-kicker">十題小測驗</span>
   <h2>計時 6 分鐘，點選答案就會對答案</h2>
-  <div class="scorebar"><span>題目皆為自編，難度仿學測。</span><span class="meter" id="score"></span></div>
+  <div class="scorebar"><span>題目皆為自編，難度仿學測。</span><span class="meter" id="score"></span><button class="toggle" type="button" id="resetPractice" aria-pressed="false">清除作答</button></div>
 
   <div class="qcard mcq" data-ans="C"><div class="qhead"><span class="qnum">1</span><span class="en">The little boy was too ______ to say hello to the guests, so he hid behind his mother.</span></div>
     <div class="opt-list"><button class="opt-btn" type="button" data-k="A">(A) generous</button><button class="opt-btn" type="button" data-k="B">(B) curious</button><button class="opt-btn" type="button" data-k="C">(C) timid</button><button class="opt-btn" type="button" data-k="D">(D) eager</button></div>
@@ -398,26 +414,6 @@
     });
   });
 
-  // interactive multiple choice
-  var total=0, correct=0, done=0;
-  var mcqs=document.querySelectorAll('.mcq[data-ans]');
-  var sb=document.getElementById('score');
-  function upd(){ if(sb) sb.textContent='答對 '+correct+' / '+mcqs.length+(done===mcqs.length?'・全部完成':''); }
-  mcqs.forEach(function(q){
-    var ans=q.getAttribute('data-ans'); var answered=false;
-    q.querySelectorAll('.opt-btn').forEach(function(b){
-      b.addEventListener('click', function(){
-        if(answered) return; answered=true; done++;
-        var k=b.getAttribute('data-k');
-        if(k===ans){ b.classList.add('right'); correct++; }
-        else{ b.classList.add('wrong'); var r=q.querySelector('.opt-btn[data-k="'+ans+'"]'); if(r) r.classList.add('right'); }
-        q.querySelectorAll('.opt-btn').forEach(function(x){ x.disabled=true; });
-        var d=q.querySelector('details'); if(d) d.open=true;
-        upd();
-      });
-    });
-  });
-  upd();
   // essay draft counters
   document.querySelectorAll('textarea[data-draft]').forEach(function(ta){
     var key='draft-'+ta.getAttribute('data-draft');
@@ -436,6 +432,144 @@
     u();
   });
 })();
+</script>
+<script>
+(function(){
+  var PAGE = (document.querySelector('.eyebrow') || {}).textContent || location.pathname;
+  var SKEY = 'practice-v1:' + PAGE;
+  var saved = {};
+  try { saved = JSON.parse(localStorage.getItem(SKEY) || '{}') || {}; } catch (e) { saved = {}; }
+  function persist(){ try { localStorage.setItem(SKEY, JSON.stringify(saved)); } catch (e) {} }
+
+  var cards = [].slice.call(document.querySelectorAll('.qcard.mcq[data-ans], .qcard.txt'));
+  var state = {};
+  var sb = document.getElementById('score');
+  function updScore(){
+    if (!sb) return;
+    var ok = 0, done = 0;
+    cards.forEach(function(c, i){ if (state[i] !== undefined) { done++; if (state[i]) ok++; } });
+    sb.textContent = '答對 ' + ok + ' / ' + cards.length + (done === cards.length && cards.length ? '・全部完成' : '');
+    sb.className = 'meter ' + (done === cards.length && cards.length ? (ok / cards.length >= 0.8 ? 'ok' : 'warn') : '');
+  }
+
+  /* ---------- multiple choice ---------- */
+  function lockMcq(q, k, idx){
+    var ans = q.getAttribute('data-ans');
+    var btn = q.querySelector('.opt-btn[data-k="' + k + '"]');
+    if (!btn) return;
+    if (k === ans) btn.classList.add('right');
+    else { btn.classList.add('wrong'); var r = q.querySelector('.opt-btn[data-k="' + ans + '"]'); if (r) r.classList.add('right'); }
+    q.querySelectorAll('.opt-btn').forEach(function(x){ x.disabled = true; });
+    var d = q.querySelector('details'); if (d) d.open = true;
+    state[idx] = (k === ans);
+  }
+
+  /* ---------- text answers ---------- */
+  function expand(s){
+    return s.replace(/[’‘`]/g, "'")
+      .replace(/\b(won)'t\b/g, 'will not').replace(/\bcan't\b/g, 'can not').replace(/\bcannot\b/g, 'can not')
+      .replace(/n't\b/g, ' not')
+      .replace(/\b(it|that|there|what|he|she|who)'s\b/g, '$1 is')
+      .replace(/'re\b/g, ' are').replace(/'ve\b/g, ' have').replace(/'ll\b/g, ' will').replace(/\bi'm\b/g, 'i am');
+  }
+  function norm(s){
+    s = expand(String(s).toLowerCase());
+    s = s.replace(/[（）()「」『』“”"]/g, ' ')
+         .replace(/[，。、！？；：,.!?;:／\/|]/g, ' ')
+         .replace(/(\w)-(\w)/g, '$1$2')
+         .replace(/\s+/g, ' ').trim();
+    return s;
+  }
+  function toks(s){ return norm(s) ? norm(s).split(' ') : []; }
+  function lcs(a, b){
+    var m = a.length, n = b.length, dp = [], i, j;
+    for (i = 0; i <= m; i++) { dp.push(new Array(n + 1).fill(0)); }
+    for (i = m - 1; i >= 0; i--) for (j = n - 1; j >= 0; j--)
+      dp[i][j] = a[i] === b[j] ? dp[i + 1][j + 1] + 1 : Math.max(dp[i + 1][j], dp[i][j + 1]);
+    var ka = {}, kb = {}; i = 0; j = 0;
+    while (i < m && j < n) {
+      if (a[i] === b[j]) { ka[i] = 1; kb[j] = 1; i++; j++; }
+      else if (dp[i + 1][j] >= dp[i][j + 1]) i++; else j++;
+    }
+    return { len: dp[0][0], ka: ka, kb: kb };
+  }
+  function esc(s){ return String(s).replace(/[&<>"]/g, function(c){ return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
+  function judge(inp){
+    var val = inp.value;
+    if (!norm(val)) return { empty: true };
+    var kw = inp.getAttribute('data-kw');
+    if (kw) {
+      var groups = JSON.parse(kw), low = val.toLowerCase();
+      var ok = groups.every(function(g){ return g.some(function(w){ return low.indexOf(String(w).toLowerCase()) !== -1; }); });
+      return { kw: true, ok: ok };
+    }
+    var accepts = (inp.getAttribute('data-accept') || '').split('||').filter(Boolean);
+    var you = toks(val), best = null;
+    for (var i = 0; i < accepts.length; i++) {
+      var ref = toks(accepts[i]);
+      if (ref.join(' ') === you.join(' ')) return { ok: true, exact: true };
+      var r = lcs(you, ref), sim = (2 * r.len) / (you.length + ref.length || 1);
+      if (!best || sim > best.sim) best = { sim: sim, r: r, ref: ref, raw: accepts[i] };
+    }
+    return { ok: false, best: best, you: you };
+  }
+  function render(inp, res){
+    var v = inp.parentNode.querySelector('.verdict[data-for="' + inp.id + '"]');
+    if (!v) return;
+    if (res.empty) { v.innerHTML = '<span class="vd warn">還沒有作答</span>'; return; }
+    if (res.ok && res.kw) { v.innerHTML = '<span class="vd good">✓ 關鍵答案正確</span>　請再看下方解析確認說法。'; return; }
+    if (res.ok) { v.innerHTML = '<span class="vd good">✓ 和標準答案相同</span>'; return; }
+    if (res.kw) { v.innerHTML = '<span class="vd bad">✗ 還沒寫到關鍵答案</span>　看看下方解析。'; return; }
+    var b = res.best, you = res.you;
+    var yl = you.map(function(t, i){ return b.r.ka[i] ? esc(t) : '<span class="dx-bad">' + esc(t) + '</span>'; }).join(' ');
+    var rl = b.ref.map(function(t, i){ return b.r.kb[i] ? esc(t) : '<span class="dx-good">' + esc(t) + '</span>'; }).join(' ');
+    v.innerHTML = '<span class="vd bad">✗ 和標準答案不同（相似度 ' + Math.round(b.sim * 100) + '%）</span>' +
+      '<div class="dx"><div><b>你的答案</b>' + yl + '</div><div><b>標準答案</b>' + rl + '</div></div>' +
+      '<p class="dx-note">紅色是和標準答案不同的字，綠色是標準答案有、你沒寫到的字。大小寫與標點不影響比對；翻譯和改寫可能有其他正確寫法，請對照解析判斷。</p>';
+  }
+  function checkCard(c, idx){
+    var ins = [].slice.call(c.querySelectorAll('.ans-in'));
+    var all = true, any = false;
+    ins.forEach(function(inp){ var r = judge(inp); render(inp, r); if (!r.empty) any = true; if (!r.ok) all = false; });
+    if (any) state[idx] = all;
+    var d = c.querySelector('details'); if (d && any) d.open = true;
+    updScore();
+  }
+
+  cards.forEach(function(c, idx){
+    if (c.classList.contains('mcq')) {
+      var answered = false;
+      c.querySelectorAll('.opt-btn').forEach(function(b){
+        b.addEventListener('click', function(){
+          if (answered) return; answered = true;
+          lockMcq(c, b.getAttribute('data-k'), idx);
+          saved['m' + idx] = b.getAttribute('data-k'); persist(); updScore();
+        });
+      });
+      if (saved['m' + idx]) { answered = true; lockMcq(c, saved['m' + idx], idx); }
+    } else {
+      var ins = [].slice.call(c.querySelectorAll('.ans-in'));
+      ins.forEach(function(inp, k){
+        if (!inp.id) inp.id = 'q' + idx + '_' + k;
+        var key = 't' + idx + '_' + k;
+        if (saved[key]) inp.value = saved[key];
+        inp.addEventListener('input', function(){ saved[key] = inp.value; persist(); });
+        inp.addEventListener('keydown', function(e){ if (e.key === 'Enter' && inp.tagName === 'INPUT') { e.preventDefault(); checkCard(c, idx); } });
+      });
+      var btn = c.querySelector('.chk');
+      if (btn) btn.addEventListener('click', function(){ checkCard(c, idx); });
+      if (ins.some(function(i){ return norm(i.value); }) && saved['c' + idx]) checkCard(c, idx);
+      if (btn) btn.addEventListener('click', function(){ saved['c' + idx] = 1; persist(); });
+    }
+  });
+
+  var reset = document.getElementById('resetPractice');
+  if (reset) reset.addEventListener('click', function(){
+    saved = {}; persist(); location.reload();
+  });
+  updScore();
+})();
+
 </script>
 
 </body>

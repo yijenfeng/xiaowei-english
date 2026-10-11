@@ -224,6 +224,49 @@
   footer{ margin-top:3rem; padding-top:1.5rem; border-top:1px solid var(--line); color:var(--ink-muted); font-size:0.85rem; display:grid; gap:0.4rem; }
   footer .id{ font-family:var(--f-mono); font-size:0.8rem; display:flex; justify-content:space-between; flex-wrap:wrap; gap:0.5rem; margin-top:0.6rem; }
 </style>
+<style>
+  .opt-list{ display:grid; gap:0.4rem; }
+  .opt-btn{
+    display:block; width:100%; text-align:left; cursor:pointer;
+    font-family:var(--f-en); font-size:1rem; line-height:1.5; color:var(--ink);
+    background:var(--surface-2); border:1px solid var(--line); border-radius:6px; padding:0.45rem 0.8rem;
+  }
+  .opt-btn:hover{ border-color:var(--accent); }
+  .opt-btn.right{ background:var(--accent); color:var(--accent-ink); border-color:var(--accent); }
+  .opt-btn.wrong{ background:var(--bad-soft); color:var(--bad); border-color:var(--bad); }
+  .opt-btn:disabled{ cursor:default; }
+  .scorebar{ display:flex; flex-wrap:wrap; gap:0.5rem; align-items:center; font-size:0.9rem; color:var(--ink-muted); }
+  .scorebar .meter{ font-size:0.85rem; }
+  .passage{ background:var(--surface); border:1px solid var(--line); border-radius:8px; padding:1rem 1.2rem; font-family:var(--f-en); font-size:1.04rem; line-height:1.9; box-shadow:var(--shadow); }
+  .passage p + p{ margin-top:0.7rem; }
+  .blank{ font-family:var(--f-mono); font-size:0.85rem; font-weight:700; color:var(--accent); background:var(--accent-soft); border-radius:4px; padding:0 0.35rem; }
+  .optgrid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:0.4rem; font-family:var(--f-en); }
+  .optgrid span{ background:var(--surface-2); border:1px solid var(--line); border-radius:6px; padding:0.3rem 0.6rem; }
+  .fill{ width:100%; font:inherit; font-family:var(--f-en); background:var(--surface); color:var(--ink); border:1px solid var(--line); border-radius:6px; padding:0.4rem 0.6rem; }
+  .fill:focus{ outline:2px solid var(--accent); outline-offset:1px; }
+  .panels{ display:grid; grid-template-columns:repeat(auto-fit,minmax(160px,1fr)); gap:0.6rem; }
+  .panel{ background:var(--surface); border:1px solid var(--line); border-radius:8px; padding:0.7rem 0.8rem; font-size:0.9rem; }
+  .panel b{ font-family:var(--f-mono); color:var(--accent); display:block; font-size:0.78rem; }
+  .log-form{ display:grid; grid-template-columns:repeat(auto-fit,minmax(170px,1fr)); gap:0.6rem; align-items:end; }
+  .log-form label{ display:grid; gap:0.2rem; font-size:0.82rem; color:var(--ink-muted); }
+  select.fill{ appearance:auto; }
+</style>
+<style>
+  .chk-row{ display:flex; flex-wrap:wrap; gap:0.5rem; align-items:center; }
+  textarea.ans-in{ min-height:0; resize:vertical; font-size:1rem; line-height:1.6; padding:0.5rem 0.7rem; }
+  .verdict{ font-size:0.9rem; display:grid; gap:0.35rem; }
+  .verdict:empty{ display:none; }
+  .vd{ display:inline-block; font-weight:700; font-size:0.85rem; padding:0.1rem 0.6rem; border-radius:999px; }
+  .vd.good{ background:var(--accent); color:var(--accent-ink); }
+  .vd.bad{ background:var(--bad-soft); color:var(--bad); }
+  .vd.warn{ background:var(--surface-2); color:var(--ink-muted); }
+  .dx{ display:grid; gap:0.25rem; font-family:var(--f-en); font-size:1rem; background:var(--surface-2); border-radius:6px; padding:0.5rem 0.75rem; }
+  .dx b{ font-family:var(--f-body); font-size:0.75rem; color:var(--ink-muted); display:inline-block; min-width:4.5rem; }
+  .dx-bad{ color:var(--bad); text-decoration:underline wavy var(--bad); text-underline-offset:3px; }
+  .dx-good{ color:var(--accent); font-weight:600; text-decoration:underline; text-underline-offset:3px; }
+  .dx-note{ font-size:0.8rem; color:var(--ink-muted); }
+  td .verdict{ margin-top:0.3rem; }
+</style>
 
 <div class="page">
 
@@ -499,46 +542,32 @@
   <section class="practice" id="practice">
     <span class="part-kicker">練習</span>
     <h2>動手試試看</h2>
+  <div class="scorebar"><span>作答後點選答案或按「對答案」，作答紀錄會保留在這台裝置。</span><span class="meter" id="score"></span><button class="toggle" type="button" id="resetPractice" aria-pressed="false">清除作答</button></div>
 
-    <div class="qcard">
+    <div class="qcard mcq" data-ans="B">
       <div class="qhead"><span class="qnum">Q1</span><span>題目要求第二段「說明原因」。下列哪一句最適合當第二段的主題句？</span></div>
-      <ol class="opts" type="A">
-        <li>Food is very important in our daily life.</li>
-        <li>There are several reasons why people photograph their meals.</li>
-        <li>Last week I went to a restaurant with my family.</li>
-        <li>Taking photos is fun.</li>
-      </ol>
-      <details><summary>看解答</summary><div class="ans"><b>B。</b>只有 B 直接回答這一段的任務「原因」。A 太空泛，C 是在講經驗（適合當例子），D 是個人感受，都沒有點出這一段要說什麼。</div></details>
-    </div>
+      <div class="opt-list"><button class="opt-btn" type="button" data-k="A">(A) Food is very important in our daily life.</button><button class="opt-btn" type="button" data-k="B">(B) There are several reasons why people photograph their meals.</button><button class="opt-btn" type="button" data-k="C">(C) Last week I went to a restaurant with my family.</button><button class="opt-btn" type="button" data-k="D">(D) Taking photos is fun.</button></div>
+      <details><summary>看解析</summary><div class="ans"><b>B。</b>只有 B 直接回答這一段的任務「原因」。A 太空泛，C 是在講經驗（適合當例子），D 是個人感受，都沒有點出這一段要說什麼。</div></details></div>
 
-    <div class="qcard">
+    <div class="qcard txt">
       <div class="qhead"><span class="qnum">Q2</span><span>下面這段在說明「拍食物照的原因」，哪一句離題了？</span></div>
       <p class="en">(1) People photograph their food mainly because of social media. (2) A nice photo can bring many likes from friends. (3) Prices in restaurants have gone up a lot recently. (4) Some people also use the photos as a food diary.</p>
-      <details><summary>看解答</summary><div class="ans"><b>(3)。</b>餐廳漲價跟「為什麼要拍照」沒有關係。支持句必須能回頭支撐主題句，否則「內容」和「組織」都會被扣。</div></details>
-    </div>
+      <textarea class="fill ans-in" rows="2" id="essay-a1" autocomplete="off" spellcheck="false" aria-label="作答" placeholder="在這裡寫下你的答案" data-accept="3||(3)"></textarea><div class="verdict" data-for="essay-a1"></div><div class="chk-row"><button class="toggle chk" type="button">對答案</button></div><details><summary>看標準答案與解析</summary><div class="ans"><b>(3)。</b>餐廳漲價跟「為什麼要拍照」沒有關係。支持句必須能回頭支撐主題句，否則「內容」和「組織」都會被扣。</div></details></div>
 
-    <div class="qcard">
+    <div class="qcard mcq" data-ans="B">
       <div class="qhead"><span class="qnum">Q3</span><span>填入最適合的轉折語：</span></div>
       <p class="en">Small shops can become popular without paying for ads. ________, diners may stop talking to the people at their table.</p>
-      <ol class="opts" type="A">
-        <li>For example</li>
-        <li>On the other hand</li>
-        <li>As a result</li>
-        <li>In addition</li>
-      </ol>
-      <details><summary>看解答</summary><div class="ans"><b>B。</b>前一句是好處，後一句是壞處，關係是對比。A 是舉例、C 是因果、D 是補充同方向的內容。</div></details>
-    </div>
+      <div class="opt-list"><button class="opt-btn" type="button" data-k="A">(A) For example</button><button class="opt-btn" type="button" data-k="B">(B) On the other hand</button><button class="opt-btn" type="button" data-k="C">(C) As a result</button><button class="opt-btn" type="button" data-k="D">(D) In addition</button></div>
+      <details><summary>看解析</summary><div class="ans"><b>B。</b>前一句是好處，後一句是壞處，關係是對比。A 是舉例、C 是因果、D 是補充同方向的內容。</div></details></div>
 
-    <div class="qcard">
+    <div class="qcard txt">
       <div class="qhead"><span class="qnum">Q4</span><span>改寫成一句正確的英文：</span></div>
       <p class="en">I like to take photos. Because they help me remember the trip.</p>
-      <details><summary>看解答</summary><div class="ans"><p class="en">I like to take photos because they help me remember the trip.</p><p style="margin-top:0.3rem"><span class="mono">because</span> 是連接詞，後面的子句必須接在主要子句上，不能單獨用句點隔開。這是學測作文最常見的文法錯誤之一。</p></div></details>
-    </div>
+      <textarea class="fill ans-in" rows="2" id="essay-a2" autocomplete="off" spellcheck="false" aria-label="作答" placeholder="在這裡寫下你的答案" data-accept="I like to take photos because they help me remember the trip."></textarea><div class="verdict" data-for="essay-a2"></div><div class="chk-row"><button class="toggle chk" type="button">對答案</button></div><details><summary>看標準答案與解析</summary><div class="ans"><p class="en">I like to take photos because they help me remember the trip.</p><p style="margin-top:0.3rem"><span class="mono">because</span> 是連接詞，後面的子句必須接在主要子句上，不能單獨用句點隔開。這是學測作文最常見的文法錯誤之一。</p></div></details></div>
 
-    <div class="qcard">
+    <div class="qcard txt">
       <div class="qhead"><span class="qnum">Q5</span><span>小明的作文第一段寫了現象和原因，第二段只寫了影響，總字數 160 詞。他最可能在哪兩個面向被扣分？</span></div>
-      <details><summary>看解答</summary><div class="ans"><b>內容與組織。</b>三個任務雖然都有寫到，但「原因」放錯段落，等於沒有照題目指定的分段方式，閱卷時會被視為組織不佳；第一段也因為混進原因而顯得不夠聚焦。字數足夠，所以不會因字數扣分。</div></details>
-    </div>
+      <textarea class="fill ans-in" rows="2" id="essay-a3" autocomplete="off" spellcheck="false" aria-label="作答" placeholder="在這裡寫下你的答案" data-kw='[["內容", "content"], ["組織", "organization"]]'></textarea><div class="verdict" data-for="essay-a3"></div><div class="chk-row"><button class="toggle chk" type="button">對答案</button></div><details><summary>看標準答案與解析</summary><div class="ans"><b>內容與組織。</b>三個任務雖然都有寫到，但「原因」放錯段落，等於沒有照題目指定的分段方式，閱卷時會被視為組織不佳；第一段也因為混進原因而顯得不夠聚焦。字數足夠，所以不會因字數扣分。</div></details></div>
 
     <div class="draft">
       <h3>草稿區：照 PART 2 的題目寫一篇</h3>
@@ -601,6 +630,144 @@
   ta.addEventListener('input', function(){ update(); store(ta.value); });
   update();
 })();
+</script>
+<script>
+(function(){
+  var PAGE = (document.querySelector('.eyebrow') || {}).textContent || location.pathname;
+  var SKEY = 'practice-v1:' + PAGE;
+  var saved = {};
+  try { saved = JSON.parse(localStorage.getItem(SKEY) || '{}') || {}; } catch (e) { saved = {}; }
+  function persist(){ try { localStorage.setItem(SKEY, JSON.stringify(saved)); } catch (e) {} }
+
+  var cards = [].slice.call(document.querySelectorAll('.qcard.mcq[data-ans], .qcard.txt'));
+  var state = {};
+  var sb = document.getElementById('score');
+  function updScore(){
+    if (!sb) return;
+    var ok = 0, done = 0;
+    cards.forEach(function(c, i){ if (state[i] !== undefined) { done++; if (state[i]) ok++; } });
+    sb.textContent = '答對 ' + ok + ' / ' + cards.length + (done === cards.length && cards.length ? '・全部完成' : '');
+    sb.className = 'meter ' + (done === cards.length && cards.length ? (ok / cards.length >= 0.8 ? 'ok' : 'warn') : '');
+  }
+
+  /* ---------- multiple choice ---------- */
+  function lockMcq(q, k, idx){
+    var ans = q.getAttribute('data-ans');
+    var btn = q.querySelector('.opt-btn[data-k="' + k + '"]');
+    if (!btn) return;
+    if (k === ans) btn.classList.add('right');
+    else { btn.classList.add('wrong'); var r = q.querySelector('.opt-btn[data-k="' + ans + '"]'); if (r) r.classList.add('right'); }
+    q.querySelectorAll('.opt-btn').forEach(function(x){ x.disabled = true; });
+    var d = q.querySelector('details'); if (d) d.open = true;
+    state[idx] = (k === ans);
+  }
+
+  /* ---------- text answers ---------- */
+  function expand(s){
+    return s.replace(/[’‘`]/g, "'")
+      .replace(/\b(won)'t\b/g, 'will not').replace(/\bcan't\b/g, 'can not').replace(/\bcannot\b/g, 'can not')
+      .replace(/n't\b/g, ' not')
+      .replace(/\b(it|that|there|what|he|she|who)'s\b/g, '$1 is')
+      .replace(/'re\b/g, ' are').replace(/'ve\b/g, ' have').replace(/'ll\b/g, ' will').replace(/\bi'm\b/g, 'i am');
+  }
+  function norm(s){
+    s = expand(String(s).toLowerCase());
+    s = s.replace(/[（）()「」『』“”"]/g, ' ')
+         .replace(/[，。、！？；：,.!?;:／\/|]/g, ' ')
+         .replace(/(\w)-(\w)/g, '$1$2')
+         .replace(/\s+/g, ' ').trim();
+    return s;
+  }
+  function toks(s){ return norm(s) ? norm(s).split(' ') : []; }
+  function lcs(a, b){
+    var m = a.length, n = b.length, dp = [], i, j;
+    for (i = 0; i <= m; i++) { dp.push(new Array(n + 1).fill(0)); }
+    for (i = m - 1; i >= 0; i--) for (j = n - 1; j >= 0; j--)
+      dp[i][j] = a[i] === b[j] ? dp[i + 1][j + 1] + 1 : Math.max(dp[i + 1][j], dp[i][j + 1]);
+    var ka = {}, kb = {}; i = 0; j = 0;
+    while (i < m && j < n) {
+      if (a[i] === b[j]) { ka[i] = 1; kb[j] = 1; i++; j++; }
+      else if (dp[i + 1][j] >= dp[i][j + 1]) i++; else j++;
+    }
+    return { len: dp[0][0], ka: ka, kb: kb };
+  }
+  function esc(s){ return String(s).replace(/[&<>"]/g, function(c){ return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
+  function judge(inp){
+    var val = inp.value;
+    if (!norm(val)) return { empty: true };
+    var kw = inp.getAttribute('data-kw');
+    if (kw) {
+      var groups = JSON.parse(kw), low = val.toLowerCase();
+      var ok = groups.every(function(g){ return g.some(function(w){ return low.indexOf(String(w).toLowerCase()) !== -1; }); });
+      return { kw: true, ok: ok };
+    }
+    var accepts = (inp.getAttribute('data-accept') || '').split('||').filter(Boolean);
+    var you = toks(val), best = null;
+    for (var i = 0; i < accepts.length; i++) {
+      var ref = toks(accepts[i]);
+      if (ref.join(' ') === you.join(' ')) return { ok: true, exact: true };
+      var r = lcs(you, ref), sim = (2 * r.len) / (you.length + ref.length || 1);
+      if (!best || sim > best.sim) best = { sim: sim, r: r, ref: ref, raw: accepts[i] };
+    }
+    return { ok: false, best: best, you: you };
+  }
+  function render(inp, res){
+    var v = inp.parentNode.querySelector('.verdict[data-for="' + inp.id + '"]');
+    if (!v) return;
+    if (res.empty) { v.innerHTML = '<span class="vd warn">還沒有作答</span>'; return; }
+    if (res.ok && res.kw) { v.innerHTML = '<span class="vd good">✓ 關鍵答案正確</span>　請再看下方解析確認說法。'; return; }
+    if (res.ok) { v.innerHTML = '<span class="vd good">✓ 和標準答案相同</span>'; return; }
+    if (res.kw) { v.innerHTML = '<span class="vd bad">✗ 還沒寫到關鍵答案</span>　看看下方解析。'; return; }
+    var b = res.best, you = res.you;
+    var yl = you.map(function(t, i){ return b.r.ka[i] ? esc(t) : '<span class="dx-bad">' + esc(t) + '</span>'; }).join(' ');
+    var rl = b.ref.map(function(t, i){ return b.r.kb[i] ? esc(t) : '<span class="dx-good">' + esc(t) + '</span>'; }).join(' ');
+    v.innerHTML = '<span class="vd bad">✗ 和標準答案不同（相似度 ' + Math.round(b.sim * 100) + '%）</span>' +
+      '<div class="dx"><div><b>你的答案</b>' + yl + '</div><div><b>標準答案</b>' + rl + '</div></div>' +
+      '<p class="dx-note">紅色是和標準答案不同的字，綠色是標準答案有、你沒寫到的字。大小寫與標點不影響比對；翻譯和改寫可能有其他正確寫法，請對照解析判斷。</p>';
+  }
+  function checkCard(c, idx){
+    var ins = [].slice.call(c.querySelectorAll('.ans-in'));
+    var all = true, any = false;
+    ins.forEach(function(inp){ var r = judge(inp); render(inp, r); if (!r.empty) any = true; if (!r.ok) all = false; });
+    if (any) state[idx] = all;
+    var d = c.querySelector('details'); if (d && any) d.open = true;
+    updScore();
+  }
+
+  cards.forEach(function(c, idx){
+    if (c.classList.contains('mcq')) {
+      var answered = false;
+      c.querySelectorAll('.opt-btn').forEach(function(b){
+        b.addEventListener('click', function(){
+          if (answered) return; answered = true;
+          lockMcq(c, b.getAttribute('data-k'), idx);
+          saved['m' + idx] = b.getAttribute('data-k'); persist(); updScore();
+        });
+      });
+      if (saved['m' + idx]) { answered = true; lockMcq(c, saved['m' + idx], idx); }
+    } else {
+      var ins = [].slice.call(c.querySelectorAll('.ans-in'));
+      ins.forEach(function(inp, k){
+        if (!inp.id) inp.id = 'q' + idx + '_' + k;
+        var key = 't' + idx + '_' + k;
+        if (saved[key]) inp.value = saved[key];
+        inp.addEventListener('input', function(){ saved[key] = inp.value; persist(); });
+        inp.addEventListener('keydown', function(e){ if (e.key === 'Enter' && inp.tagName === 'INPUT') { e.preventDefault(); checkCard(c, idx); } });
+      });
+      var btn = c.querySelector('.chk');
+      if (btn) btn.addEventListener('click', function(){ checkCard(c, idx); });
+      if (ins.some(function(i){ return norm(i.value); }) && saved['c' + idx]) checkCard(c, idx);
+      if (btn) btn.addEventListener('click', function(){ saved['c' + idx] = 1; persist(); });
+    }
+  });
+
+  var reset = document.getElementById('resetPractice');
+  if (reset) reset.addEventListener('click', function(){
+    saved = {}; persist(); location.reload();
+  });
+  updScore();
+})();
+
 </script>
 
 </body>
