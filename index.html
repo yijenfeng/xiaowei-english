@@ -215,6 +215,17 @@
     display:flex; justify-content:space-between; flex-wrap:wrap; gap:0.5rem;
     margin-top:1rem;
   }
+
+  .pill.prog{ cursor:pointer; font-family:'JetBrains Mono',monospace; background:var(--surface); color:var(--ink-muted); border:1px solid var(--line); }
+  .pill.prog:hover{ border-color:var(--accent); color:var(--accent); }
+  .pill.prog[aria-pressed="true"]{ background:var(--accent); color:var(--accent-ink); border-color:var(--accent); }
+  .chap-prog{ font-family:'JetBrains Mono',monospace; font-size:0.72rem; color:var(--ink-muted); white-space:nowrap; }
+  .chap-prog.full{ color:var(--accent); font-weight:700; }
+  .stat-of{ font-size:1rem; color:var(--ink-muted); font-weight:500; }
+  .stat-label .mono{ font-size:0.72rem; }
+  #sMonth{ font-family:'Noto Sans TC',sans-serif; font-size:1.35rem; line-height:1.25; }
+  .phase.now{ border-color:var(--accent); background:var(--accent-soft); box-shadow:0 0 0 1px var(--accent) inset; }
+  .phase.now .when::after{ content:'・現在'; }
 </style>
 <style>
   .exam-card{
@@ -251,10 +262,10 @@
   </header>
 
   <div class="stats-grid">
-    <div class="stat-tile"><div class="stat-num muted">25</div><div class="stat-label">總主題數</div></div>
-    <div class="stat-tile"><div class="stat-num">25</div><div class="stat-label">情境教材</div></div>
-    <div class="stat-tile"><div class="stat-num" style="color:var(--b2);">0</div><div class="stat-label">基礎講義</div></div>
-    <div class="stat-tile"><div class="stat-num muted" style="color:var(--ink-muted);">0</div><div class="stat-label">規劃中</div></div>
+    <div class="stat-tile"><div class="stat-num" id="sDays">103</div><div class="stat-label">天後學測<br><span class="mono">2027/1/22 第一天</span></div></div>
+    <div class="stat-tile"><div class="stat-num muted"><span id="sDone">0</span><span class="stat-of">/25</span></div><div class="stat-label">我已讀完的主題<br><span class="mono">在各主題旁按「未讀」標記</span></div></div>
+    <div class="stat-tile"><div class="stat-num" style="color:var(--b2);" id="sMonth">文法・字彙</div><div class="stat-label" id="sMonthLabel">本月重點（10 月）</div></div>
+    <div class="stat-tile"><div class="stat-num muted">106</div><div class="stat-label">附解析的練習題<br><span class="mono">分散在 25 份教材</span></div></div>
   </div>
 
   <div class="exam-card">
@@ -276,17 +287,17 @@
     <h2>到學測前的節奏</h2>
     <p class="hint">字彙每天持續，不分階段；其餘依月份推進。</p>
     <div class="phases">
-      <div class="phase"><div class="when">10 月</div><div class="what">文法句構總整理・字彙 Level 3–4 補強</div></div>
-      <div class="phase"><div class="when">11 月</div><div class="what">選擇題各題型逐一練・中譯英句型</div></div>
-      <div class="phase"><div class="when">12 月</div><div class="what">作文每週一篇・歷屆試題整份計時</div></div>
-      <div class="phase"><div class="when">1 月</div><div class="what">錯題本回顧・高分句型與轉折語複習</div></div>
+      <div class="phase" data-m="10"><div class="when">10 月</div><div class="what">文法句構總整理・字彙 Level 3–4 補強</div></div>
+      <div class="phase" data-m="11"><div class="when">11 月</div><div class="what">選擇題各題型逐一練・中譯英句型</div></div>
+      <div class="phase" data-m="12"><div class="when">12 月</div><div class="what">作文每週一篇・歷屆試題整份計時</div></div>
+      <div class="phase" data-m="1"><div class="when">1 月</div><div class="what">錯題本回顧・高分句型與轉折語複習</div></div>
     </div>
   </div>
 
   <div class="legend">
-    <span><i class="done"></i>情境教材（可點開）</span>
-    <span><i class="ref"></i>基礎講義（在專案文件中）</span>
-    <span><i class="todo"></i>規劃中，尚未製作</span>
+    <span><i class="done"></i>已讀完（點按鈕切換）</span>
+    <span><i class="todo"></i>還沒讀</span>
+    <span>章節右側數字＝該章已讀完幾個主題</span>
   </div>
 
   <!-- ================= 字彙與片語 ================= -->
@@ -296,18 +307,18 @@
       <span class="book-sub">基礎能力・每天累積</span>
     </div>
 
-    <div class="chapter-head"><span>第一章　大考中心參考詞彙</span><span class="pill done">已完成</span></div>
-    <div class="topic-row"><a class="topic-link" href="高頻基礎字.html"><span class="name">1-1　Level 1–2 高頻基礎字</span><span class="go">→</span></a><span class="pill done">已完成</span></div>
+    <div class="chapter-head"><span>第一章　大考中心參考詞彙</span><span class="chap-prog"></span></div>
+    <div class="topic-row"><a class="topic-link" href="高頻基礎字.html"><span class="name">1-1　Level 1–2 高頻基礎字</span><span class="go">→</span></a><button class="pill prog" type="button" aria-pressed="false" data-key="Level 1–2 高頻基礎字">未讀</button></div>
     <div class="subnote">確認沒有漏洞・拼字正確・作文可以放心使用的字</div>
-    <div class="topic-row"><a class="topic-link" href="核心字.html"><span class="name">1-2　Level 3–4 核心字</span><span class="go">→</span></a><span class="pill done">已完成</span></div>
+    <div class="topic-row"><a class="topic-link" href="核心字.html"><span class="name">1-2　Level 3–4 核心字</span><span class="go">→</span></a><button class="pill prog" type="button" aria-pressed="false" data-key="Level 3–4 核心字">未讀</button></div>
     <div class="subnote">閱讀與綜合測驗最常出現・詞性變化・易混淆字</div>
-    <div class="topic-row"><a class="topic-link" href="鑑別字.html"><span class="name">1-3　Level 5–6 鑑別字</span><span class="go">→</span></a><span class="pill done">已完成</span></div>
+    <div class="topic-row"><a class="topic-link" href="鑑別字.html"><span class="name">1-3　Level 5–6 鑑別字</span><span class="go">→</span></a><button class="pill prog" type="button" aria-pressed="false" data-key="Level 5–6 鑑別字">未讀</button></div>
     <div class="subnote">詞彙題拉開差距的字・認得即可與需要會用的區分</div>
 
-    <div class="chapter-head"><span>第二章　構詞與搭配</span><span class="pill done">已完成</span></div>
-    <div class="topic-row"><a class="topic-link" href="字首字根字尾.html"><span class="name">2-1　字首・字根・字尾</span><span class="go">→</span></a><span class="pill done">已完成</span></div>
+    <div class="chapter-head"><span>第二章　構詞與搭配</span><span class="chap-prog"></span></div>
+    <div class="topic-row"><a class="topic-link" href="字首字根字尾.html"><span class="name">2-1　字首・字根・字尾</span><span class="go">→</span></a><button class="pill prog" type="button" aria-pressed="false" data-key="字首・字根・字尾">未讀</button></div>
     <div class="subnote">用構詞推測生字意思・詞性判斷</div>
-    <div class="topic-row"><a class="topic-link" href="片語與搭配詞.html"><span class="name">2-2　片語與搭配詞（collocation）</span><span class="go">→</span></a><span class="pill done">已完成</span></div>
+    <div class="topic-row"><a class="topic-link" href="片語與搭配詞.html"><span class="name">2-2　片語與搭配詞（collocation）</span><span class="go">→</span></a><button class="pill prog" type="button" aria-pressed="false" data-key="片語與搭配詞（collocation）">未讀</button></div>
     <div class="subnote">動詞片語・介系詞搭配・中譯英常用的固定說法</div>
   </div>
 
@@ -318,20 +329,20 @@
       <span class="book-sub">基礎能力・讀得懂也寫得對</span>
     </div>
 
-    <div class="chapter-head"><span>第一章　動詞系統</span><span class="pill done">已完成</span></div>
-    <div class="topic-row"><a class="topic-link" href="時態語態助動詞.html"><span class="name">1-1　時態・語態・助動詞</span><span class="go">→</span></a><span class="pill done">已完成</span></div>
+    <div class="chapter-head"><span>第一章　動詞系統</span><span class="chap-prog"></span></div>
+    <div class="topic-row"><a class="topic-link" href="時態語態助動詞.html"><span class="name">1-1　時態・語態・助動詞</span><span class="go">→</span></a><button class="pill prog" type="button" aria-pressed="false" data-key="時態・語態・助動詞">未讀</button></div>
     <div class="subnote">完成式的使用時機・被動語態・助動詞 + have p.p.</div>
-    <div class="topic-row"><a class="topic-link" href="不定詞動名詞分詞.html"><span class="name">1-2　不定詞・動名詞・分詞</span><span class="go">→</span></a><span class="pill done">已完成</span></div>
+    <div class="topic-row"><a class="topic-link" href="不定詞動名詞分詞.html"><span class="name">1-2　不定詞・動名詞・分詞</span><span class="go">→</span></a><button class="pill prog" type="button" aria-pressed="false" data-key="不定詞・動名詞・分詞">未讀</button></div>
     <div class="subnote">to V 與 V-ing 的選擇・分詞形容詞・分詞構句</div>
-    <div class="topic-row"><a class="topic-link" href="假設語氣.html"><span class="name">1-3　假設語氣</span><span class="go">→</span></a><span class="pill done">已完成</span></div>
+    <div class="topic-row"><a class="topic-link" href="假設語氣.html"><span class="name">1-3　假設語氣</span><span class="go">→</span></a><button class="pill prog" type="button" aria-pressed="false" data-key="假設語氣">未讀</button></div>
     <div class="subnote">與現在／過去事實相反・混合假設・wish / as if / if only</div>
 
-    <div class="chapter-head"><span>第二章　句子結構</span><span class="pill done">已完成</span></div>
-    <div class="topic-row"><a class="topic-link" href="名詞形容詞副詞子句.html"><span class="name">2-1　名詞・形容詞・副詞子句</span><span class="go">→</span></a><span class="pill done">已完成</span></div>
+    <div class="chapter-head"><span>第二章　句子結構</span><span class="chap-prog"></span></div>
+    <div class="topic-row"><a class="topic-link" href="名詞形容詞副詞子句.html"><span class="name">2-1　名詞・形容詞・副詞子句</span><span class="go">→</span></a><button class="pill prog" type="button" aria-pressed="false" data-key="名詞・形容詞・副詞子句">未讀</button></div>
     <div class="subnote">關係代名詞與關係副詞・限定與非限定・複合關係詞</div>
-    <div class="topic-row"><a class="topic-link" href="比較句型與連接詞.html"><span class="name">2-2　比較句型與連接詞</span><span class="go">→</span></a><span class="pill done">已完成</span></div>
+    <div class="topic-row"><a class="topic-link" href="比較句型與連接詞.html"><span class="name">2-2　比較句型與連接詞</span><span class="go">→</span></a><button class="pill prog" type="button" aria-pressed="false" data-key="比較句型與連接詞">未讀</button></div>
     <div class="subnote">原級・比較級・最高級・the more…the more・對等與從屬連接</div>
-    <div class="topic-row"><a class="topic-link" href="倒裝強調省略同位語.html"><span class="name">2-3　倒裝・強調・省略・同位語</span><span class="go">→</span></a><span class="pill done">已完成</span></div>
+    <div class="topic-row"><a class="topic-link" href="倒裝強調省略同位語.html"><span class="name">2-3　倒裝・強調・省略・同位語</span><span class="go">→</span></a><button class="pill prog" type="button" aria-pressed="false" data-key="倒裝・強調・省略・同位語">未讀</button></div>
     <div class="subnote">否定副詞倒裝・It is…that 強調句・長句拆解</div>
   </div>
 
@@ -342,18 +353,18 @@
       <span class="book-sub">約 62 分・建議 40 分鐘</span>
     </div>
 
-    <div class="chapter-head"><span>第一章　單句與短文</span><span class="pill done">已完成</span></div>
-    <div class="topic-row"><a class="topic-link" href="詞彙題.html"><span class="name">1-1　詞彙題 <span class="pts">10 題・10 分</span></span><span class="go">→</span></a><span class="pill done">已完成</span></div>
+    <div class="chapter-head"><span>第一章　單句與短文</span><span class="chap-prog"></span></div>
+    <div class="topic-row"><a class="topic-link" href="詞彙題.html"><span class="name">1-1　詞彙題 <span class="pts">10 題・10 分</span></span><span class="go">→</span></a><button class="pill prog" type="button" aria-pressed="false" data-key="詞彙題 10 題・10 分">未讀</button></div>
     <div class="subnote">從上下文找線索・刪去法・常見陷阱選項</div>
-    <div class="topic-row"><a class="topic-link" href="綜合測驗.html"><span class="name">1-2　綜合測驗 <span class="pts">10 題・10 分</span></span><span class="go">→</span></a><span class="pill done">已完成</span></div>
+    <div class="topic-row"><a class="topic-link" href="綜合測驗.html"><span class="name">1-2　綜合測驗 <span class="pts">10 題・10 分</span></span><span class="go">→</span></a><button class="pill prog" type="button" aria-pressed="false" data-key="綜合測驗 10 題・10 分">未讀</button></div>
     <div class="subnote">文法、字彙、轉折詞、片語四類題目的辨認與作答</div>
-    <div class="topic-row"><a class="topic-link" href="文意選填.html"><span class="name">1-3　文意選填 <span class="pts">10 題・10 分</span></span><span class="go">→</span></a><span class="pill done">已完成</span></div>
+    <div class="topic-row"><a class="topic-link" href="文意選填.html"><span class="name">1-3　文意選填 <span class="pts">10 題・10 分</span></span><span class="go">→</span></a><button class="pill prog" type="button" aria-pressed="false" data-key="文意選填 10 題・10 分">未讀</button></div>
     <div class="subnote">先依詞性分組・空格前後的搭配・最後檢查剩下的選項</div>
 
-    <div class="chapter-head"><span>第二章　長篇閱讀</span><span class="pill done">已完成</span></div>
-    <div class="topic-row"><a class="topic-link" href="篇章結構.html"><span class="name">2-1　篇章結構 <span class="pts">4 題・8 分</span></span><span class="go">→</span></a><span class="pill done">已完成</span></div>
+    <div class="chapter-head"><span>第二章　長篇閱讀</span><span class="chap-prog"></span></div>
+    <div class="topic-row"><a class="topic-link" href="篇章結構.html"><span class="name">2-1　篇章結構 <span class="pts">4 題・8 分</span></span><span class="go">→</span></a><button class="pill prog" type="button" aria-pressed="false" data-key="篇章結構 4 題・8 分">未讀</button></div>
     <div class="subnote">段落主題句・指代詞與轉折詞的銜接・一題 2 分要特別穩</div>
-    <div class="topic-row"><a class="topic-link" href="閱讀測驗.html"><span class="name">2-2　閱讀測驗 <span class="pts">12 題・24 分</span></span><span class="go">→</span></a><span class="pill done">已完成</span></div>
+    <div class="topic-row"><a class="topic-link" href="閱讀測驗.html"><span class="name">2-2　閱讀測驗 <span class="pts">12 題・24 分</span></span><span class="go">→</span></a><button class="pill prog" type="button" aria-pressed="false" data-key="閱讀測驗 12 題・24 分">未讀</button></div>
     <div class="subnote">主旨題・細節題・推論題・字義題・作者態度題・先看題目再讀文章</div>
   </div>
 
@@ -363,8 +374,8 @@
       <h2>第貳部分　混合題</h2>
       <span class="book-sub">約 10 分・建議 10 分鐘</span>
     </div>
-    <div class="chapter-head"><span>第一章　混合題型</span><span class="pill done">已完成</span></div>
-    <div class="topic-row"><a class="topic-link" href="混合題.html"><span class="name">1-1　圖表判讀・填表・簡答</span><span class="go">→</span></a><span class="pill done">已完成</span></div>
+    <div class="chapter-head"><span>第一章　混合題型</span><span class="chap-prog"></span></div>
+    <div class="topic-row"><a class="topic-link" href="混合題.html"><span class="name">1-1　圖表判讀・填表・簡答</span><span class="go">→</span></a><button class="pill prog" type="button" aria-pressed="false" data-key="圖表判讀・填表・簡答">未讀</button></div>
     <div class="subnote">選擇與非選擇混合・從文章或圖表擷取資訊・拼字與文法要正確</div>
   </div>
 
@@ -375,18 +386,18 @@
       <span class="book-sub">28 分・建議 45 分鐘</span>
     </div>
 
-    <div class="chapter-head"><span>第一章　中譯英 <span class="pts">2 題・8 分</span></span><span class="pill done">已完成</span></div>
-    <div class="topic-row"><a class="topic-link" href="中譯英.html"><span class="name">1-1　中譯英句型與常見失分點</span><span class="go">→</span></a><span class="pill done">已完成</span></div>
+    <div class="chapter-head"><span>第一章　中譯英 <span class="pts">2 題・8 分</span></span><span class="chap-prog"></span></div>
+    <div class="topic-row"><a class="topic-link" href="中譯英.html"><span class="name">1-1　中譯英句型與常見失分點</span><span class="go">→</span></a><button class="pill prog" type="button" aria-pressed="false" data-key="中譯英句型與常見失分點">未讀</button></div>
     <div class="subnote">先抓主詞與主要動詞・時態一致・用有把握的字・按語意單位給分</div>
 
-    <div class="chapter-head"><span>第二章　英文作文 <span class="pts">1 題・20 分</span></span><span class="pill done">已完成</span></div>
-    <div class="topic-row"><a class="topic-link" href="段落結構與評分標準.html"><span class="name">2-1　段落結構與評分標準</span><span class="go">→</span></a><span class="pill done">已完成</span></div>
+    <div class="chapter-head"><span>第二章　英文作文 <span class="pts">1 題・20 分</span></span><span class="chap-prog"></span></div>
+    <div class="topic-row"><a class="topic-link" href="段落結構與評分標準.html"><span class="name">2-1　段落結構與評分標準</span><span class="go">→</span></a><button class="pill prog" type="button" aria-pressed="false" data-key="段落結構與評分標準">未讀</button></div>
     <div class="subnote">內容・組織・文法句構・字彙拼字四個面向・主題句與結論句</div>
-    <div class="topic-row"><a class="topic-link" href="看圖寫作.html"><span class="name">2-2　看圖寫作（單圖・連環圖）</span><span class="go">→</span></a><span class="pill done">已完成</span></div>
+    <div class="topic-row"><a class="topic-link" href="看圖寫作.html"><span class="name">2-2　看圖寫作（單圖・連環圖）</span><span class="go">→</span></a><button class="pill prog" type="button" aria-pressed="false" data-key="看圖寫作（單圖・連環圖）">未讀</button></div>
     <div class="subnote">描述圖片・補出合理情節・時間順序與轉場</div>
-    <div class="topic-row"><a class="topic-link" href="主題寫作.html"><span class="name">2-3　主題寫作（議題・圖表・書信）</span><span class="go">→</span></a><span class="pill done">已完成</span></div>
+    <div class="topic-row"><a class="topic-link" href="主題寫作.html"><span class="name">2-3　主題寫作（議題・圖表・書信）</span><span class="go">→</span></a><button class="pill prog" type="button" aria-pressed="false" data-key="主題寫作（議題・圖表・書信）">未讀</button></div>
     <div class="subnote">兩段式要求的對應・表達立場與理由・用親身經驗舉例</div>
-    <div class="topic-row"><a class="topic-link" href="轉折語與高分句型庫.html"><span class="name">2-4　轉折語與高分句型庫</span><span class="go">→</span></a><span class="pill done">已完成</span></div>
+    <div class="topic-row"><a class="topic-link" href="轉折語與高分句型庫.html"><span class="name">2-4　轉折語與高分句型庫</span><span class="go">→</span></a><button class="pill prog" type="button" aria-pressed="false" data-key="轉折語與高分句型庫">未讀</button></div>
     <div class="subnote">開頭與結尾句型・因果、對比、舉例的連接詞・避免中式英文</div>
   </div>
 
@@ -396,17 +407,17 @@
       <h2>歷屆試題與實戰</h2>
       <span class="book-sub">12 月起每週一份</span>
     </div>
-    <div class="chapter-head"><span>第一章　整份演練</span><span class="pill done">已完成</span></div>
-    <div class="topic-row"><a class="topic-link" href="歷屆學測試題分析.html"><span class="name">1-1　歷屆學測試題分析</span><span class="go">→</span></a><span class="pill done">已完成</span></div>
+    <div class="chapter-head"><span>第一章　整份演練</span><span class="chap-prog"></span></div>
+    <div class="topic-row"><a class="topic-link" href="歷屆學測試題分析.html"><span class="name">1-1　歷屆學測試題分析</span><span class="go">→</span></a><button class="pill prog" type="button" aria-pressed="false" data-key="歷屆學測試題分析">未讀</button></div>
     <div class="subnote">新課綱題型（111 學年起）各年出題重點・作文題目回顧</div>
-    <div class="topic-row"><a class="topic-link" href="時間配置.html"><span class="name">1-2　100 分鐘時間配置</span><span class="go">→</span></a><span class="pill done">已完成</span></div>
+    <div class="topic-row"><a class="topic-link" href="時間配置.html"><span class="name">1-2　100 分鐘時間配置</span><span class="go">→</span></a><button class="pill prog" type="button" aria-pressed="false" data-key="100 分鐘時間配置">未讀</button></div>
     <div class="subnote">選擇 40・混合 10・非選 45・檢查 5・作文先打大綱再下筆</div>
-    <div class="topic-row"><a class="topic-link" href="錯題本.html"><span class="name">1-3　錯題本與弱點追蹤</span><span class="go">→</span></a><span class="pill done">已完成</span></div>
+    <div class="topic-row"><a class="topic-link" href="錯題本.html"><span class="name">1-3　錯題本與弱點追蹤</span><span class="go">→</span></a><button class="pill prog" type="button" aria-pressed="false" data-key="錯題本與弱點追蹤">未讀</button></div>
     <div class="subnote">依題型記錄錯誤原因・生字回收到字彙表・考前一週只看錯題</div>
   </div>
 
   <footer>
-    <p>「基礎講義」指放在專案文件中、已整理好觀念與練習題的內容；「情境教材」是可互動的獨立頁面。全部 25 個主題的情境教材都已完成。</p>
+    <p>學習進度只記錄在這台裝置的瀏覽器裡；換手機或電腦需要重新標記。</p>
     <p>配分與建議時間依近年學測英文試卷結構整理，正式比例以大考中心公告為準。這份地圖會隨著新教材陸續完成持續更新。</p>
     <div class="id">
       <span>筱葳學測英文</span>
@@ -415,6 +426,41 @@
   </footer>
 
 </div>
+
+<script>
+(function(){
+  var KEY='en-map-progress-v1', done={};
+  try{ done=JSON.parse(localStorage.getItem(KEY)||'{}')||{}; }catch(e){ done={}; }
+  function save(){ try{ localStorage.setItem(KEY, JSON.stringify(done)); }catch(e){} }
+  var btns=[].slice.call(document.querySelectorAll('.pill.prog'));
+  function paint(){
+    var c=0;
+    btns.forEach(function(b){ var on=!!done[b.getAttribute('data-key')]; if(on) c++; b.setAttribute('aria-pressed',on?'true':'false'); b.textContent=on?'已讀完':'未讀'; });
+    document.getElementById('sDone').textContent=c;
+    document.querySelectorAll('.chapter-head').forEach(function(ch){
+      var sp=ch.querySelector('.chap-prog'); if(!sp) return;
+      var rows=[], el=ch.nextElementSibling;
+      while(el && !el.classList.contains('chapter-head')){ var b=el.querySelector && el.querySelector('.pill.prog'); if(b) rows.push(b); el=el.nextElementSibling; }
+      var d=rows.filter(function(b){ return done[b.getAttribute('data-key')]; }).length;
+      sp.textContent=d+'/'+rows.length; sp.className='chap-prog'+(rows.length&&d===rows.length?' full':'');
+    });
+  }
+  btns.forEach(function(b){ b.addEventListener('click',function(){ var k=b.getAttribute('data-key'); if(done[k]) delete done[k]; else done[k]=1; save(); paint(); }); });
+  paint();
+  // countdown to 2027-01-22 (Taiwan time)
+  var exam=Date.UTC(2027,0,21,16,0,0);
+  var days=Math.ceil((exam-Date.now())/86400000);
+  var sd=document.getElementById('sDays');
+  if(days>0){ sd.textContent=days; } else { sd.textContent='0'; sd.nextElementSibling.firstChild.textContent='學測已開始'; }
+  // month focus
+  var tw=new Date(Date.now()+8*3600000), m=tw.getUTCMonth()+1;
+  var focus={10:'文法・字彙',11:'各題型・中譯英',12:'作文・歷屆試題',1:'錯題・句型複習'};
+  var key = focus[m] ? m : (m>=2&&m<=9 ? 10 : 1);
+  document.getElementById('sMonth').textContent=focus[key];
+  document.getElementById('sMonthLabel').textContent=(focus[m]?'本月重點（'+m+' 月）':'建議重點');
+  var ph=document.querySelector('.phase[data-m="'+key+'"]'); if(ph && focus[m]) ph.classList.add('now');
+})();
+</script>
 
 </body>
 </html>
