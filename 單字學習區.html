@@ -521,7 +521,7 @@ var LEVEL_COUNTS = {"1": 1002, "2": 999, "3": 1002, "4": 1020, "5": 1078, "6": 1
   };
   function loadVex(lv){
     if(vexReq[lv]) return; vexReq[lv]=1;
-    var s=document.createElement('script'); s.src='vocab-ex/L'+lv+'.js?v=3'; s.async=true;
+    var s=document.createElement('script'); s.src='vocab-ex/L'+lv+'.js?v=4'; s.async=true;
     s.onerror=function(){ vexReq[lv]=0; };
     document.head.appendChild(s);
   }
