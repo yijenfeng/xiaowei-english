@@ -608,7 +608,7 @@ var LEVEL_COUNTS = {"1": 1002, "2": 999, "3": 1002, "4": 1020, "5": 1078, "6": 1
   // ---------- STUDY (spaced repetition) ----------
   var queue=[], flipped=false, again=[];
   // same shuffle all day (reloading keeps the same cards), new shuffle each day
-  function dh(x){ var str=x[0]+'|'+x[3]+'|'+T, h=2166136261; for(var i=0;i<str.length;i++){ h^=str.charCodeAt(i); h=Math.imul(h,16777619); } return h>>>0; }
+  function dh(x){ var str=x.w+'|'+x.lv+'|'+T, h=2166136261; for(var i=0;i<str.length;i++){ h^=str.charCodeAt(i); h=Math.imul(h,16777619); } return h>>>0; }
   function buildQueue(){
     W.forEach(function(x){ delete x._new; });
     var lvWords=byLv[S.lv]||[];
