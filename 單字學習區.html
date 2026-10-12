@@ -323,6 +323,21 @@
   .vz-pos{ font-family:var(--f-mono); font-size:0.85rem; color:var(--ink-muted); }
   .vz-mean{ font-size:1.35rem; font-weight:500; }
   .vz-meta{ font-family:var(--f-mono); font-size:0.75rem; color:var(--ink-muted); }
+  .vx-sent{ font-family:var(--f-en); font-size:clamp(1.1rem,4.4vw,1.35rem); line-height:1.6; max-width:34rem; }
+  .vx-hl{ color:var(--accent); font-weight:700; }
+  .vz-card.vx-open{ justify-items:stretch; text-align:left; }
+  .vz-card.vx-open .vz-word, .vz-card.vx-open .vz-pos, .vz-card.vx-open .vz-meta, .vz-card.vx-open > .vz-say{ justify-self:center; text-align:center; }
+  .vx-block{ display:grid; gap:0.45rem; border-top:1px solid var(--line); padding-top:0.75rem; }
+  .vx-tag{ font-size:0.75rem; font-weight:700; color:var(--ink-muted); letter-spacing:0.04em; }
+  .vx-tag.main{ color:var(--accent); }
+  .vx-block .vz-mean{ font-size:1.3rem; }
+  .vx-sub{ display:grid; gap:0.25rem; }
+  .vx-sub + .vx-sub{ margin-top:0.35rem; }
+  .vx-m{ font-size:1.05rem; font-weight:600; }
+  .vx-ex{ display:grid; gap:0.1rem; }
+  .vx-ex .en{ font-family:var(--f-en); font-size:1rem; line-height:1.55; }
+  .vx-ex .zh{ font-size:0.86rem; color:var(--ink-muted); }
+  .vx-say{ font:inherit; font-size:0.8rem; cursor:pointer; border:none; background:transparent; padding:0 0.2rem; }
   .vz-hint{ font-size:0.82rem; color:var(--ink-muted); }
   .vz-say{ font:inherit; font-size:0.85rem; cursor:pointer; border:1px solid var(--line); background:var(--surface-2); color:var(--ink); border-radius:999px; padding:0.25rem 0.8rem; }
   .vz-rate{ display:grid; grid-template-columns:repeat(3,1fr); gap:0.5rem; }
@@ -496,6 +511,24 @@ var LEVEL_COUNTS = {"1": 1002, "2": 999, "3": 1002, "4": 1020, "5": 1078, "6": 1
   // words: [word,pos,meaning,level]
   var W=VOCAB.map(function(a,i){ return {id:i, w:a[0], p:a[1], m:a[2], lv:a[3]}; });
   var byLv={}; W.forEach(function(x){ (byLv[x.lv]=byLv[x.lv]||[]).push(x); });
+
+  // ---------- example sentences & extra meanings (loaded per level from vocab-ex/L{n}.js) ----------
+  // entry: [word, sentence, sentence_zh, main_meaning, [[pos, other_meaning, example, example_zh], ...]]
+  var VEX={}, vexReq={};
+  window.VEXADD=function(lv,rows){
+    rows.forEach(function(r){ VEX[r[0]+'|'+lv]=r; });
+    if(cur==='study' && !flipped) renderStudy();
+  };
+  function loadVex(lv){
+    if(vexReq[lv]) return; vexReq[lv]=1;
+    var s=document.createElement('script'); s.src='vocab-ex/L'+lv+'.js?v=2'; s.async=true;
+    s.onerror=function(){ vexReq[lv]=0; };
+    document.head.appendChild(s);
+  }
+  function vex(x){ return VEX[x.w+'|'+x.lv]||null; }
+  function hl(s){ return esc(s).replace(/\*(.+?)\*/g,'<b class="vx-hl">$1</b>'); }
+  function plain(s){ return String(s).replace(/\*/g,''); }
+  [1,2,3,4,5,6].forEach(function(lv){ loadVex(lv); });
   function rec(x){ return S.w[x.w+'|'+x.lv]; }
   function setRec(x,r){ S.w[x.w+'|'+x.lv]=r; }
   function bank(x){ var r=rec(x); return (r&&r.k)||''; }
@@ -591,12 +624,33 @@ var LEVEL_COUNTS = {"1": 1002, "2": 999, "3": 1002, "4": 1020, "5": 1078, "6": 1
     }
     var r=rec(x);
     var tag = x._new ? '新字' : ('複習・已間隔 '+(r?INTERVALS[r.b]:0)+' 天');
-    var h='<div class="vz-card" id="flip" tabindex="0" role="button" aria-label="翻面">'+
+    var ex=vex(x);
+    if(ex && flipped===1){ /* step 1: sentence */ }
+    else if(flipped) flipped=2;
+    var body;
+    if(!flipped){
+      body='<div class="vz-hint">'+(ex?'先想想意思，點一下看例句':'先在心裡說出中文意思，再點一下翻面')+'</div>';
+    } else if(flipped===1){
+      body='<div class="vx-sent">'+hl(ex[1])+'</div>'+
+        '<button class="vz-say" type="button" data-say="'+esc(plain(ex[1]))+'">🔊 念句子</button>'+
+        '<div class="vz-hint">從句子猜猜看意思，再點一下看中文</div>';
+    } else if(ex){
+      body='<div class="vx-block"><span class="vx-tag main">主要意思</span>'+
+        '<div class="vz-mean">'+esc(ex[3])+'</div>'+
+        '<div class="vx-ex"><span class="en">'+hl(ex[1])+'</span><span class="zh">'+esc(ex[2])+'</span></div></div>'+
+        '<div class="vx-block"><span class="vx-tag">一字多義・其他意思</span>'+
+        ex[4].map(function(s){
+          return '<div class="vx-sub"><div class="vx-m"><span class="vz-pos">'+esc(s[0])+'</span> '+esc(s[1])+'</div>'+
+            '<div class="vx-ex"><span class="en">'+hl(s[2])+' <button class="vx-say" type="button" data-say="'+esc(plain(s[2]))+'" aria-label="念句子">🔊</button></span><span class="zh">'+esc(s[3])+'</span></div></div>';
+        }).join('')+'</div>';
+    } else {
+      body='<div class="vz-mean">'+esc(x.m)+'</div>';
+    }
+    var h='<div class="vz-card'+(flipped===2&&ex?' vx-open':'')+'" id="flip" tabindex="0" role="button" aria-label="翻面">'+
       '<span class="vz-meta">第'+x.lv+'級・'+tag+'</span>'+
       '<div class="vz-word">'+esc(x.w)+'</div><div class="vz-pos">'+esc(x.p)+'</div>'+
-      (flipped ? '<div class="vz-mean">'+esc(x.m)+'</div>' : '<div class="vz-hint">先在心裡說出中文意思，再點一下翻面</div>')+
-      sayBtn(x.w)+'</div>';
-    if(flipped){
+      body+(flipped===1?'':sayBtn(x.w))+'</div>';
+    if(flipped===2){
       var nb = r ? Math.min(6,r.b+1) : 1;
       h+='<div class="vz-rate four">'+
         '<button class="r0" type="button" data-g="0">不認得<small>放進不熟悉庫</small></button>'+
@@ -605,10 +659,17 @@ var LEVEL_COUNTS = {"1": 1002, "2": 999, "3": 1002, "4": 1020, "5": 1078, "6": 1
         '<button class="r3" type="button" data-g="3">很熟<small>移到熟悉庫</small></button></div>';
     }
     $('studyBox').innerHTML=h;
-    $('flip').addEventListener('click',function(){ if(!flipped){ flipped=true; renderStudy(); say(x.w); } });
+    $('flip').addEventListener('click',function(){ advance(); });
     document.querySelectorAll('#studyBox [data-g]').forEach(function(b){ b.addEventListener('click',function(){ rate(+b.getAttribute('data-g')); }); });
   }
+  function advance(){
+    var x=queue[0]; if(!x || flipped===2) return;
+    var ex=vex(x);
+    if(!flipped){ flipped = ex ? 1 : 2; renderStudy(); if(ex) say(plain(ex[1])); else say(x.w); }
+    else { flipped=2; renderStudy(); }
+  }
   function rate(g){
+    if(flipped!==2) return;
     var x=queue.shift(); if(!x) return;
     if(x._new){ S.newToday++; delete x._new; }
     if(g===3){ setBank(x,'f'); touchStreak(); flipped=false; save(); renderStudy(); return; }
@@ -618,8 +679,8 @@ var LEVEL_COUNTS = {"1": 1002, "2": 999, "3": 1002, "4": 1020, "5": 1078, "6": 1
   }
   document.addEventListener('keydown',function(e){
     if(cur!=='study' || /input|textarea/i.test((e.target.tagName||''))) return;
-    if(e.code==='Space'){ e.preventDefault(); if(!flipped && queue[0]){ flipped=true; renderStudy(); say(queue[0].w); } }
-    if(flipped && (e.key==='1'||e.key==='2'||e.key==='3'||e.key==='4')){ rate(+e.key-1); }
+    if(e.code==='Space'){ e.preventDefault(); advance(); }
+    if(flipped===2 && (e.key==='1'||e.key==='2'||e.key==='3'||e.key==='4')){ rate(+e.key-1); }
   });
 
   // ---------- QUIZ ----------
