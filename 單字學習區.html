@@ -410,6 +410,11 @@
   <button class="vz-chip" type="button" data-goal="30">30 字</button>
   <button class="vz-chip" type="button" data-goal="50">50 字</button>
 </div>
+<div class="vz-row" style="margin-top:0.5rem" role="group" aria-label="出字順序">
+  <span class="vz-hint" style="margin-right:0.3rem">出字順序</span>
+  <button class="vz-chip" type="button" data-ord="rand">隨機</button>
+  <button class="vz-chip" type="button" data-ord="abc">字母順序</button>
+</div>
 <p class="vz-hint" id="lvNote" style="margin-top:0.4rem"></p>
 
 <div class="vz-tabs" role="tablist">
@@ -499,7 +504,7 @@ var LEVEL_COUNTS = {"1": 1002, "2": 999, "3": 1002, "4": 1020, "5": 1078, "6": 1
 <script>
 (function(){
   var KEY='vocab7000-v1', S;
-  function blank(){ return { w:{}, day:null, newToday:0, streak:0, lastDay:null, goal:20, lv:1, qdir:'e2c', src:'lv' }; }
+  function blank(){ return { w:{}, day:null, newToday:0, streak:0, lastDay:null, goal:20, lv:1, qdir:'e2c', src:'lv', ord:'rand' }; }
   try{ S=JSON.parse(localStorage.getItem(KEY)||'null')||blank(); }catch(e){ S=blank(); }
   var B=blank(); for(var k in B){ if(S[k]===undefined) S[k]=B[k]; }
   function save(){ try{ localStorage.setItem(KEY, JSON.stringify(S)); }catch(e){} }
@@ -573,10 +578,12 @@ var LEVEL_COUNTS = {"1": 1002, "2": 999, "3": 1002, "4": 1020, "5": 1078, "6": 1
       if(!avail(lv)) b.title='即將加入';
     });
     document.querySelectorAll('[data-goal]').forEach(function(b){ b.setAttribute('aria-pressed', S.goal===+b.getAttribute('data-goal')?'true':'false'); });
+    document.querySelectorAll('[data-ord]').forEach(function(b){ b.setAttribute('aria-pressed', S.ord===b.getAttribute('data-ord')?'true':'false'); });
     var missing=[1,2,3,4,5,6].filter(function(l){return !avail(l);});
     $('lvNote').textContent = missing.length ? '第'+missing.join('、')+'級即將加入。' : '';
   }
   document.querySelectorAll('[data-lv]').forEach(function(b){ b.addEventListener('click',function(){ S.lv=+b.getAttribute('data-lv'); save(); paintChips(); resetAll(); }); });
+  document.querySelectorAll('[data-ord]').forEach(function(b){ b.addEventListener('click',function(){ S.ord=b.getAttribute('data-ord'); save(); paintChips(); resetAll(); }); });
   document.querySelectorAll('[data-goal]').forEach(function(b){ b.addEventListener('click',function(){ S.goal=+b.getAttribute('data-goal'); save(); paintChips(); resetAll(); }); });
 
   function stats(){
@@ -600,13 +607,18 @@ var LEVEL_COUNTS = {"1": 1002, "2": 999, "3": 1002, "4": 1020, "5": 1078, "6": 1
 
   // ---------- STUDY (spaced repetition) ----------
   var queue=[], flipped=false, again=[];
+  // same shuffle all day (reloading keeps the same cards), new shuffle each day
+  function dh(x){ var str=x[0]+'|'+x[3]+'|'+T, h=2166136261; for(var i=0;i<str.length;i++){ h^=str.charCodeAt(i); h=Math.imul(h,16777619); } return h>>>0; }
   function buildQueue(){
     W.forEach(function(x){ delete x._new; });
     var lvWords=byLv[S.lv]||[];
     var due=W.filter(function(x){ var r=rec(x); return r && r.b && r.k!=='f' && r.d<=T; }).sort(function(a,b){ return rec(a).d-rec(b).d; });
     var room=Math.max(0, S.goal-S.newToday);
-    var fresh=lvWords.filter(function(x){ return !rec(x); }).slice(0, room);
+    var pool=lvWords.filter(function(x){ return !rec(x); });
+    if(S.ord==='rand') pool=pool.slice().sort(function(a,b){ return dh(a)-dh(b); });
+    var fresh=pool.slice(0, room);
     queue=due.concat(fresh.map(function(x){ x._new=true; return x; }));
+    if(S.ord==='rand') queue.sort(function(a,b){ return dh(a)-dh(b); });
     again=[]; flipped=false;
   }
   function renderStudy(){
