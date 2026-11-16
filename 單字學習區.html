@@ -403,6 +403,7 @@
   .vq-sent{ font-family:var(--f-en); font-size:1.15rem; line-height:1.65; flex:1; min-width:0; }
   .vq-blank{ font-family:var(--f-mono); color:var(--accent); letter-spacing:-0.05em; white-space:nowrap; }
   .vq-fill{ color:var(--accent); border-bottom:2px solid var(--accent); padding:0 0.15em; }
+  .vq-seen{ color:var(--amber) !important; font-weight:600; }
   .vq-pass{ color:var(--accent) !important; font-weight:600; font-size:0.92rem; }
   .vq-tr{ flex-basis:100%; font-size:0.92rem; color:var(--ink-muted); }
   .vq-opts .om{ font-size:0.88rem; opacity:0.85; }
@@ -563,7 +564,7 @@ var VOCAB = [["a/an","art.","一個",1],["ability","n.","能力",1],["able","adj
 var LEVEL_COUNTS = {"1": 1002, "2": 999, "3": 1002, "4": 1020, "5": 1078, "6": 1062};
 </script>
 <script>var VQ_BANK={b:[],a:[]}; function VQ(t,rows){ if(VQ_BANK[t] && Array.isArray(rows)) VQ_BANK[t]=VQ_BANK[t].concat(rows); }</script>
-<script src="vocab-quiz.js?v=2"></script>
+<script src="vocab-quiz.js?v=3"></script>
 <script>
 (function(){
   var KEY='vocab7000-v1', S;
@@ -1014,6 +1015,7 @@ var LEVEL_COUNTS = {"1": 1002, "2": 999, "3": 1002, "4": 1020, "5": 1078, "6": 1
     var el=$('pExam'); if(el && el.scrollIntoView) el.scrollIntoView({block:'start'});
   }
   function dayStr(d){ var t=new Date(d*86400000); return (t.getUTCMonth()+1)+'/'+t.getUTCDate(); }
+  function seenYears(x){ var Y=window.VQ_YEARS||{}, vs=variants(x.w), i; for(i=0;i<vs.length;i++) if(Y[vs[i]]) return Y[vs[i]]; return null; }
   function stemHtml(q, fill){ return esc(q.s).replace(/\*(.+?)\*/, fill ? '<b class="vq-fill">$1</b>' : '<span class="vq-blank" aria-label="空格">＿＿＿＿</span>'); }
   function renderExam(){
     var box=$('examBox'); if(!box) return;
@@ -1126,6 +1128,7 @@ var LEVEL_COUNTS = {"1": 1002, "2": 999, "3": 1002, "4": 1020, "5": 1078, "6": 1
           '<span class="vq-badge '+(q.ok?'ok':'bad')+'">'+(q.ok?'✓ 答對':(q.sel<0?'✗ 沒作答':'✗ 答錯'))+'</span>'+
           '<span class="vq-sent" style="flex-basis:100%">'+stemHtml(q,true)+' <button class="vx-say" type="button" data-say="'+esc(plain(q.s))+'" aria-label="念句子">🔊</button></span>'+
           (q.zh?'<span class="vq-tr">'+esc(q.zh)+'</span>':'')+
+          (seenYears(x)?'<span class="vq-tr vq-seen">學測 '+seenYears(x).join('、')+' 學年度詞彙題考過這個字</span>':'')+
           (q.passed?'<span class="vq-tr vq-pass">★ 這個字已連續答對 '+EX_PASS+' 次，自動移到熟悉單字庫，之後不再考</span>':(q.ok?'<span class="vq-tr">這個字已連續答對 '+q.cnt+' 次，下次再答對就移到熟悉單字庫（答錯會重新計算）</span>':''))+'</div>'+
           '<div class="vq-opts">'+q.opts.map(function(o,k){
             var right=k===q.ans, mine=q.sel===k;
