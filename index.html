@@ -309,6 +309,16 @@
     <span>章節右側數字＝該章已讀完幾個主題</span>
   </div>
 
+  <!-- ================= 考前 60 天 ================= -->
+  <div class="book-card">
+    <div class="book-head">
+      <h2>考前 60 天複習計畫</h2>
+      <span class="book-sub">11/23 – 1/21・每天 30 分鐘</span>
+    </div>
+    <div class="topic-row"><a class="topic-link" href="考前60天複習.html"><span class="name">打開 60 天進度表</span><span class="go">→</span></a><span class="pill todo" id="plan60Pill">每天打勾</span></div>
+    <div class="subnote">四個階段：補洞 → 題型強化 → 歷屆實戰 → 收心；每天 8 分鐘單字＋20 分鐘主任務＋2 分鐘訂正</div>
+  </div>
+
   <!-- ================= 單字學習區 ================= -->
   <div class="book-card">
     <div class="book-head">
@@ -489,6 +499,7 @@
   }
   btns.forEach(function(b){ b.addEventListener('click',function(){ var k=b.getAttribute('data-key'); if(done[k]) delete done[k]; else done[k]=1; save(); paint(); }); });
   paint();
+  try{ var p60=JSON.parse(localStorage.getItem('plan60-v1')||'null'), pe=document.getElementById('plan60Pill'); if(p60 && p60.done && pe){ var pc=Object.keys(p60.done).length; if(pc){ pe.textContent='已完成 '+pc+' / 60'; if(pc>=60) pe.className='pill done'; } } }catch(e){}
   // countdown to 2027-01-22 (Taiwan time)
   var exam=Date.UTC(2027,0,21,16,0,0);
   var days=Math.ceil((exam-Date.now())/86400000);
