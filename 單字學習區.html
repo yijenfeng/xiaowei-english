@@ -545,7 +545,7 @@
   <ul class="clean">
     <li><b>每天先做「今日任務」</b>：先複習到期的字，再學新字。翻面前先在心裡說出中文，說不出來就按「不認得」，不要對自己客氣。</li>
     <li><b>評分的意思</b>：不認得＝明天再見；有點印象＝隔 1 天再見；記得＝間隔加倍（1 → 2 → 4 → 7 → 15 → 30 天）。間隔到 7 天以上算「已熟記」。</li>
-    <li><b>20 題測驗</b>：選「基礎單字」（第一～三級）或「進階單字」（第四～六級），一次 20 題。每題是一個中間有空格的英文句子，從四個單字選出最適合的一個（學測詞彙題型），全部作答後交卷才批改、算分數。批改後每一題都會列出完整句子、中文翻譯和四個選項的中文意思；同一個單字在測驗裡累計答對兩次，就會自動移到熟悉單字庫、之後不再出題（想再考可以到熟悉單字庫按「不熟」移回來）；答錯的字會放進不熟悉單字庫，下一次測驗優先再考。</li>
+    <li><b>20 題測驗</b>：選「基礎單字」（第一～三級）或「進階單字」（第四～六級），一次 20 題。每題是一個中間有空格的英文句子，從四個單字選出最適合的一個（學測詞彙題型），全部作答後交卷才批改、算分數。批改後每一題都會列出完整句子、中文翻譯和四個選項的中文意思；同一個單字在測驗裡連續答對兩次（中間答錯就重新計算），就會自動移到熟悉單字庫、之後不再出題（想再考可以到熟悉單字庫按「不熟」移回來）；答錯的字會放進不熟悉單字庫，下一次測驗優先再考。</li>
     <li><b>拼字練習</b>：第三級以內的字，作文和中譯英都可能要寫出來，學過的字每週至少拼一輪。</li>
     <li><b>熟悉／不熟悉單字庫</b>：測驗和閃卡中按「熟悉」，這個字就移出所有測驗與複習；答錯或按「不熟」的字會留在不熟悉單字庫，四選一和拼字可以只考這一庫，直到它清空。熟悉單字庫裡的字隨時可以移回來。</li>
     <li><b>難字加星號</b>：在單字表按 ★，之後可以只看難字。</li>
@@ -922,8 +922,8 @@ var LEVEL_COUNTS = {"1": 1002, "2": 999, "3": 1002, "4": 1020, "5": 1078, "6": 1
   var TIERS={ b:{name:'基礎單字', lvs:[1,2,3], note:'第一～三級'}, a:{name:'進階單字', lvs:[4,5,6], note:'第四～六級'} };
   if(!Array.isArray(S.exam)) S.exam=[];
   if(S.xtier!=='a') S.xtier='b';
-  if(!S.xc || typeof S.xc!=='object') S.xc={}; // 20題測驗裡每個字累計答對幾次
-  var EX_PASS=2; // 累計答對這麼多次就自動移到熟悉單字庫
+  if(!S.xc || typeof S.xc!=='object') S.xc={}; // 20題測驗裡每個字連續答對幾次（答錯歸零）
+  var EX_PASS=2; // 連續答對這麼多次就自動移到熟悉單字庫
   var EXM=null, exView='all', exWarned=false, clozeMemo={};
   function shuffle(a){ a=a.slice(); for(var i=a.length-1;i>0;i--){ var j=Math.floor(Math.random()*(i+1)), t=a[i]; a[i]=a[j]; a[j]=t; } return a; }
   function tierWords(t){ var out=[]; TIERS[t].lvs.forEach(function(lv){ out=out.concat(byLv[lv]||[]); }); return out; }
@@ -1088,6 +1088,7 @@ var LEVEL_COUNTS = {"1": 1002, "2": 999, "3": 1002, "4": 1020, "5": 1078, "6": 1
         if(S.xc[k]>=EX_PASS){ setBank(x,'f'); delete S.xc[k]; q.passed=true; }
       } else {
         if(rec(x) && rec(x).b) grade(x,0); else setBank(x,'u');
+        delete S.xc[k]; // 答錯就歸零：要「連續」答對才移到熟悉庫
       }
     });
     EXM.ok=ok; EXM.done=true; touchStreak();
@@ -1112,7 +1113,7 @@ var LEVEL_COUNTS = {"1": 1002, "2": 999, "3": 1002, "4": 1020, "5": 1078, "6": 1
     var n=EXM.qs.length, ok=EXM.ok, sc=Math.round(ok/n*100), wrong=EXM.qs.filter(function(q){ return !q.ok; }), nPass=EXM.qs.filter(function(q){ return q.passed; }).length;
     var msg = sc===100 ? '全對！這一輪的字都穩了。' : sc>=85 ? '很好，把錯的幾個字再看一次意思。' : sc>=60 ? '及格了，錯的字已經放進不熟悉單字庫，下一輪會優先再考。' : '還不熟沒關係，先把下面每一題的句子和四個選項的意思看過一遍，再重考錯題。';
     var h='<div class="vq-score'+(sc<60?' low':'')+'"><div class="num">'+sc+'<small> 分</small></div>'+
-      '<div><b>答對 '+ok+' / '+n+'</b>・'+TIERS[EXM.tier].name+(EXM.retry?'・錯題重考':'')+'</div><div class="vz-hint">'+msg+'</div>'+(nPass?'<div class="vq-pass">★ 這一輪有 '+nPass+' 個字累計答對 '+EX_PASS+' 次，已移到熟悉單字庫</div>':'')+'</div>'+
+      '<div><b>答對 '+ok+' / '+n+'</b>・'+TIERS[EXM.tier].name+(EXM.retry?'・錯題重考':'')+'</div><div class="vz-hint">'+msg+'</div>'+(nPass?'<div class="vq-pass">★ 這一輪有 '+nPass+' 個字連續答對 '+EX_PASS+' 次，已移到熟悉單字庫</div>':'')+'</div>'+
       '<div class="vq-tiers">'+(wrong.length?'<button class="vq-go" type="button" id="xRetry">重考這 '+wrong.length+' 題錯題</button>':'')+
       '<button class="vq-go ghost" type="button" id="xAgain">再考 '+EX_N+' 題新的</button></div>'+
       '<div class="vz-row"><button class="vz-chip" type="button" data-xv="all" aria-pressed="'+(exView==='all')+'">全部 '+n+' 題</button>'+
@@ -1125,7 +1126,7 @@ var LEVEL_COUNTS = {"1": 1002, "2": 999, "3": 1002, "4": 1020, "5": 1078, "6": 1
           '<span class="vq-badge '+(q.ok?'ok':'bad')+'">'+(q.ok?'✓ 答對':(q.sel<0?'✗ 沒作答':'✗ 答錯'))+'</span>'+
           '<span class="vq-sent" style="flex-basis:100%">'+stemHtml(q,true)+' <button class="vx-say" type="button" data-say="'+esc(plain(q.s))+'" aria-label="念句子">🔊</button></span>'+
           (q.zh?'<span class="vq-tr">'+esc(q.zh)+'</span>':'')+
-          (q.passed?'<span class="vq-tr vq-pass">★ 這個字已答對 '+EX_PASS+' 次，自動移到熟悉單字庫，之後不再考</span>':(q.ok?'<span class="vq-tr">這個字已答對 '+q.cnt+' 次，再答對 '+(EX_PASS-q.cnt)+' 次就移到熟悉單字庫</span>':''))+'</div>'+
+          (q.passed?'<span class="vq-tr vq-pass">★ 這個字已連續答對 '+EX_PASS+' 次，自動移到熟悉單字庫，之後不再考</span>':(q.ok?'<span class="vq-tr">這個字已連續答對 '+q.cnt+' 次，下次再答對就移到熟悉單字庫（答錯會重新計算）</span>':''))+'</div>'+
           '<div class="vq-opts">'+q.opts.map(function(o,k){
             var right=k===q.ans, mine=q.sel===k;
             return '<div class="o'+(right?' right':(mine?' wrong':''))+'"><span class="k">('+'ABCD'[k]+')</span><span class="en-t">'+esc(o.f)+'</span>'+
